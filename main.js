@@ -17,4 +17,3 @@ async function askAI(prompt) {
     return data.candidates[0].content.parts[0].text;
 }
 
-askAI("How does the 74LS181 Work?").then(console.log);
