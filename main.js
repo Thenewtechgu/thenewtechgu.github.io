@@ -1,19 +1,13 @@
 const API_KEY = "AIzaSyACUiew2xvOhoLEQXiUtcqld7xl0BG4YwY"; // Replace with your API key
-const API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=" + API_KEY;
+//const API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=" + API_KEY;
 
-async function askAI(prompt) {
-    const response = await fetch(API_URL, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            contents: [{ parts: [{ text: prompt }] }]
-        })
-    });
+const { GoogleGenerativeAI } = require("@google/generative-ai");
 
-    const data = await response.json();
-    console.log(data);
-    return data.candidates[0].content.parts[0].text;
+const genAI = new GoogleGenerativeAI(API_KEY);
+const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+async function tester() {
+  const prompt = "Explain how AI works";
+
+  const result = await model.generateContent(prompt);
+  console.log(result.response.text());
 }
-
