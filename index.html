@@ -1,38 +1,32 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>The4BrainStormers</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      media="screen"
-      href="normalize.css"
-    />
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" media="screen" href="style.css">
+    <link rel="stylesheet" media="screen" href="normalize.css">
   </head>
   <body>
     <div class="main">
         <header></header>
         <div class="userface"><div class="selbox" id="contest">
-            <div class="selbox_inner">
-              <h3>The4Brainstormers</h3>
-              <p>Welcome to The4BrainStormers! Let's get to work.</p>
+            <div class="selbox-inner">
+              <h3>The4BrainStormers</h3>
+              <p>Welcome to The4BrainStormers Writing Practice! Let's get started!</p>
               <p>What would you like to practice for?</p>
-              <div class="gridder">
+              <div class="grid">
                 <button class="selector" onclick="selectIelts()">IELTS</button>
                 <button class="selector" onclick="selectToeic()">TOEIC</button>
               </div>
             </div>
           </div>
           <div class="selbox hidden" id="format">
-            <div class="selbox_inner">
-              <h3 id="titl">idk</h3>
+            <div class="selbox-inner">
+              <h3 id="title">How would you like to send us your writing?</h3>
               <p>idk</p>
-              <div class="gridder">
+              <div class="grid">
                 <button class="selector">Upload</button>
                 <button class="selector">Write Directly</button>
               </div>
@@ -40,33 +34,10 @@
           </div>
           <div class="mainbox hidden"></div></div>
         <footer>
-            <button class="selector" onclick="goBack()">Back</button>
+            <button class="selector" onclick="goBack()">&LeftArrow;Back</button>
         </footer>
     </div>
     <div></div>
-    
   </body>
-  <script>
-    var type = "";
-    contest = document.getElementById("contest");
-    format = document.getElementById("format");
-    titl = document.getElementById("titl");
-    function selectIelts() {
-      type = "IELTS";
-      contest.className="selbox hidden";
-      format.className="selbox"
-      titl.innerHTML="How To Upload Your Ielts"
-    
-    }
-    function selectToeic() {
-      type = "TOEIC";
-      contest.className="selbox hidden";
-      format.className="selbox"
-      titl.innerHTML="How To Upload Your Toeic"
-    }
-    function goBack(){
-        contest.className="selbox";
-      format.className="selbox hidden"
-    }
-  </script>
+  <script src="script.js"></script>
 </html>
