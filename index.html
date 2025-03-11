@@ -15,42 +15,58 @@
     
   </head>
   <body>
-    <div class="selbox" id="contest">
-      <div class="selbox_inner">
-        <h3>The4Brainstormers</h3>
-        <p>Welcome to The4BrainStormers! Let's get to work.</p>
-        <p>What would you like to practice for?</p>
-        <div class="gridder">
-          <button class="selector" onclick="selectIelts()">IELTS</button>
-          <button class="selector" onclick="selectToeic()">TOEIC</button>
-        </div>
-      </div>
+    <div class="main">
+        <header></header>
+        <div class="userface"><div class="selbox" id="contest">
+            <div class="selbox_inner">
+              <h3>The4Brainstormers</h3>
+              <p>Welcome to The4BrainStormers! Let's get to work.</p>
+              <p>What would you like to practice for?</p>
+              <div class="gridder">
+                <button class="selector" onclick="selectIelts()">IELTS</button>
+                <button class="selector" onclick="selectToeic()">TOEIC</button>
+              </div>
+            </div>
+          </div>
+          <div class="selbox hidden" id="format">
+            <div class="selbox_inner">
+              <h3 id="titl">idk</h3>
+              <p>idk</p>
+              <div class="gridder">
+                <button class="selector">Upload</button>
+                <button class="selector">Write Directly</button>
+              </div>
+            </div>
+          </div>
+          <div class="mainbox hidden"></div></div>
+        <footer>
+            <button class="selector" onclick="goBack()">Back</button>
+        </footer>
     </div>
-    <div class="selbox hidden" id="format">
-      <div class="selbox_inner">
-        <h3>idk</h3>
-        <p>idk</p>
-        <div class="gridder">
-          <button class="selector">Upload</button>
-          <button class="selector">Write Directly</button>
-        </div>
-      </div>
-    </div>
-    <div class="mainbox hidden"></div>
+    <div></div>
+    
   </body>
   <script>
     var type = "";
     contest = document.getElementById("contest");
     format = document.getElementById("format");
+    titl = document.getElementById("titl");
     function selectIelts() {
       type = "IELTS";
       contest.className="selbox hidden";
       format.className="selbox"
+      titl.innerHTML="How To Upload Your Ielts"
+    
     }
     function selectToeic() {
       type = "TOEIC";
       contest.className="selbox hidden";
       format.className="selbox"
+      titl.innerHTML="How To Upload Your Toeic"
+    }
+    function goBack(){
+        contest.className="selbox";
+      format.className="selbox hidden"
     }
   </script>
 </html>

@@ -11,7 +11,7 @@ body{
     align-items: center;
     justify-content: center;
     width:100%;
-    height:100vh;
+    height:85vh;
     
 }
 .selbox_inner{
@@ -46,4 +46,10 @@ body{
 }
 .selector:hover{
     background-color: goldenrod;
+}
+header{
+    height:5vh;
+}
+footer{
+    height:5vh;
 }
