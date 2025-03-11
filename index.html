@@ -6,21 +6,51 @@
     <title>Page Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="normalize.css" />
-    <script src="main.js"></script>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      media="screen"
+      href="normalize.css"
+    />
+    
   </head>
   <body>
-    <div class="selbox">
+    <div class="selbox" id="contest">
       <div class="selbox_inner">
         <h3>The4Brainstormers</h3>
         <p>Welcome to The4BrainStormers! Let's get to work.</p>
         <p>What would you like to practice for?</p>
         <div class="gridder">
-          <button class="selector">IELTS</button>
-          <button class="selector">TOEIC</button>
+          <button class="selector" onclick="selectIelts()">IELTS</button>
+          <button class="selector" onclick="selectToeic()">TOEIC</button>
+        </div>
+      </div>
+    </div>
+    <div class="selbox hidden" id="format">
+      <div class="selbox_inner">
+        <h3>idk</h3>
+        <p>idk</p>
+        <div class="gridder">
+          <button class="selector">Upload</button>
+          <button class="selector">Write Directly</button>
         </div>
       </div>
     </div>
     <div class="mainbox hidden"></div>
   </body>
+  <script>
+    var type = "";
+    contest = document.getElementById("contest");
+    format = document.getElementById("format");
+    function selectIelts() {
+      type = "IELTS";
+      contest.className="selbox hidden";
+      format.className="selbox"
+    }
+    function selectToeic() {
+      type = "TOEIC";
+      contest.className="selbox hidden";
+      format.className="selbox"
+    }
+  </script>
 </html>
