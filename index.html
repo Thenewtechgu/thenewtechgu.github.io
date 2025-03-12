@@ -1,20 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>The4BrainStormers</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" media="screen" href="style.css">
-    <link rel="stylesheet" media="screen" href="normalize.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      media="screen"
+      href="normalize.css"
+    />
+    
   </head>
   <body>
     <div class="main">
         <header></header>
         <div class="userface"><div class="selbox" id="contest">
             <div class="selbox-inner">
-              <h3>The4BrainStormers</h3>
-              <p>Welcome to The4BrainStormers Writing Practice! Let's get started!</p>
+              <h3>The4Brainstormers</h3>
+              <p>Welcome to The4BrainStormers! Let's get to work.</p>
               <p>What would you like to practice for?</p>
               <div class="grid">
                 <button class="selector" onclick="selectIelts()">IELTS</button>
@@ -24,20 +30,48 @@
           </div>
           <div class="selbox hidden" id="format">
             <div class="selbox-inner">
-              <h3 id="title">idk</h3>
-              <p>How would you like to send us your writing?</p>
+              <h3 id="titl">idk</h3>
+              <p>idk</p>
               <div class="grid">
                 <button class="selector">Upload</button>
                 <button class="selector">Write Directly</button>
               </div>
             </div>
           </div>
-          <div class="mainbox hidden"></div></div>
+          <div class="selbox mainbox hidden" id="mainer"></div></div>
         <footer>
-            <button class="selector" onclick="goBack()">&LeftArrow;Back</button>
+            <button class="selector" onclick="goBack()">Back</button>
         </footer>
     </div>
     <div></div>
+    
   </body>
-  <script src="script.js"></script>
+  <script>
+    var type = "";
+    contest = document.getElementById("contest");
+    format = document.getElementById("format");
+    titl = document.getElementById("titl");
+    mainer = document.getElementById("mainer");
+    function selectIelts() {
+      type = "IELTS";
+      contest.className="selbox hidden";
+      format.className="selbox"
+      titl.innerHTML="How To Upload Your Ielts"
+    
+    }
+    function selectToeic() {
+      type = "TOEIC";
+      contest.className="selbox hidden";
+      format.className="selbox"
+      titl.innerHTML="How To Upload Your Toeic"
+    }
+    function selWD(){
+      mainer.className="selbox mainbox"
+      format.className="selbox hidden"
+    }
+    function goBack(){
+        contest.className="selbox";
+      format.className="selbox hidden"
+    }
+  </script>
 </html>
