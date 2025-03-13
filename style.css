@@ -45,7 +45,8 @@ body {
 .divider1{
     display: grid;
     grid-template-rows: 1fr 7fr;
-    grid-template-columns: 3fr 1fr;
+    grid-template-columns: 5fr 1fr;
+    gap: 20px;
 }
 .grid {
     display:grid;
