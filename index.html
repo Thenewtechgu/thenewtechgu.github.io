@@ -5,13 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>The4BrainStormers</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
     <link
       rel="stylesheet"
       type="text/css"
       media="screen"
       href="normalize.css"
     />
+    <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
   </head>
   <body>
     <div class="main">
@@ -33,9 +33,24 @@
             <h3 id="title">idk</h3>
             <p>idk</p>
             <div class="grid">
-              <button class="selector">Upload</button>
+              <input type="file" name="filer" id="filer" class="selector">
               <button class="selector" onclick="selWD()">Write Directly</button>
             </div>
+          </div>
+        </div>
+        <div class="selbox hidden" id="ielts">
+          <div class="selbox-inner">
+            <h3>What tasks would you like to do?</h3>
+            <p></p>
+            <button class="selector" onclick="mode='1';UpdateWD()">
+              Writing Task 1
+            </button>
+            <button class="selector" onclick="mode='2';UpdateWD()">
+              Writing Task 2
+            </button>
+            <button class="selector" onclick="mode='both';UpdateWD()">
+              Both
+            </button>
           </div>
         </div>
         <div class="selbox mainbox hidden" id="mainer">
