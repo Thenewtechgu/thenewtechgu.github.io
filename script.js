@@ -1,164 +1,167 @@
 let type = "";
 const contest = document.getElementById("contest");
 const format = document.getElementById("format");
-const main = document.getElementById("mainer");
+const main = document.getElementById("main");
 const title = document.getElementById("title");
 const timer = document.getElementById("timer");
-const tbwritten = document.getElementById("tbwritten");
-const backer = document.getElementById("backer");
+const tbWrite = document.getElementById("tbWrite");
+const backButton = document.getElementById("back");
 const question = document.getElementById("question");
 const ielts = document.getElementById("ielts");
-const filer = document.getElementById("filer");
-var timerInProgress = false;
-function HideAll() {
+const fileInput = document.getElementById("file");
+let progressing = false;
+
+const HideAll = () => {
   contest.className = "selbox hidden";
   format.className = "selbox hidden";
   ielts.className = "selbox hidden";
   main.className = "selbox mainbox hidden";
   backer.className = "selector hidden";
 }
-function selectIelts() {
+const selectIELTS = () => {
   type = "IELTS";
   HideAll();
   format.className = "selbox";
   title.innerHTML = "IELTS Practice";
   backer.className = "selector";
 }
-function selectToeic() {
+const selectToeic = () => {
   type = "TOEIC";
   HideAll();
   format.className = "selbox";
   title.innerHTML = "TOEIC Practice";
   backer.className = "selector";
 }
-function goBack() {
+const goBack = () => {
   HideAll();
   contest.className = "selbox";
   backer.className = "selector";
 }
-const fr=new FileReader();
-fr.onload = function(e) {
+const fr = new FileReader();
+fr.onload = e => {
   const text = e.target.result; // File contents as text
   console.log(text); // Log to console
 };
-filer.addEventListener("change", function (event) {
+fileInput.addEventListener('change', event => {
   console.log(fr.readAsText(event.target.files[0]));
-
-
 });
-var cdate = 0;
-var time;
-var second;
-var minute;
-var stage = 0;
-function selWD() {
+
+let cdate = 0, time, second, minute, stage = 0;
+const selWD = () => {
   HideAll();
-  if (type == "IELTS") {
+  if (type === "IELTS") {
     ielts.className = "selbox";
     backer.className = "selector";
-  } else {
+  } 
+  else {
     main.className = "selbox mainbox";
     stage = 0;
-    setInterval(UpdateStuff, 100);
+    setInterval(timerProgression, 1);
   }
 }
-function UpdateWD() {
+UpdateWD = () => {
   HideAll();
   main.className = "selbox mainbox";
   stage = 0;
-  setInterval(UpdateStuff, 100);
+  setInterval(timerProgression, 1);
 }
-function Question(content, timer) {
-  if (!timerInProgress) {
-    console.log(tbwritten.value);
-    tbwritten.value = "";
+const Question = (content = '', timer = 0) => {
+  if (!progressing) {
+    console.log(tbWrite.value);
+    tbWrite.value = '';
     question.innerHTML = content;
     BeginTimer(timer);
     stage++;
   }
 }
-function UpdateStuff() {
+const timerProgression = () => {
   if (type == "IELTS") {
     if (stage == 0) {
-      if (mode != "2") {
+      if (mode != '2') {
         Question("Writing Task 1", 60);
-      } else {
+      } 
+      else {
         stage++;
       }
-    } else if (stage == 1) {
+    } 
+    else if (stage == 1) {
       if (mode != "1") {
         Question("Writing Task 2", 120);
-      } else {
+      } 
+      else {
         stage++;
       }
-    } else if (stage == 2) {
-      if (!timerInProgress) {
-        console.log(tbwritten.value);
-        tbwritten.value = "";
+    } 
+    else if (stage == 2) {
+      if (!timerProgression) {
+        console.log(tbWrite.value);
+        tbWrite.value = "";
         alert("Results are being processed...");
         stage = 9999;
       }
     }
-  } else {
+  } 
+  else {
     if (stage == 0) {
-      Question("Task 1 - write task based on pic", 60);
+      Question("Question 1: Picture", 60);
     }
     if (stage == 1) {
-      Question("Task 2 - write task based on pic", 60);
+      Question("Question 2: Picture", 60);
     }
     if (stage == 2) {
-      Question("Task 3 - write task based on pic", 60);
+      Question("Question 3: Picture", 60);
     }
     if (stage == 3) {
-      Question("Task 4 - write task based on pic", 60);
+      Question("Question 4: Picture", 60);
     }
     if (stage == 4) {
-      Question("Task 5 - write task based on pic", 60);
+      Question("Question 5: Picture", 60);
     }
     if (stage == 5) {
-      Question("Task 6 - Respond", 120);
+      Question("Question 6: Written Request", 120);
     }
     if (stage == 6) {
-      Question("Task 7 - Respond", 120);
+      Question("Question 7: Written Request", 120);
     }
     if (stage == 7) {
-      Question("Task 8 - Essay", 300);
+      Question("Question 8: Opinion Essay", 300);
     }
     if (stage == 8) {
-      if (!timerInProgress) {
+      if (!timerProgression) {
         alert("Results are being processed...");
         stage = 9999;
       }
     }
   }
 }
-var id;
-function BeginTimer(time) {
-  timerInProgress = true;
+let id;
+function BeginTimer(time = 0) {
+  timerProgression = true;
   cdate = Date.now() + time * 1000;
-  id = setInterval(UpdateTimer, 100);
+  id = setInterval(UpdateTimer, 1);
 }
 
 function UpdateTimer() {
   time = Math.floor((cdate - Date.now()) / 1000);
   if (time <= 0) {
     timer.innerHTML = "0:00";
-    tbwritten.ariaDisabled = true;
-    tbwritten.ariaReadOnly = true;
-    tbwritten.disabled = true;
-    tbwritten.readOnly = true;
+    tbWrite.ariaDisabled = true;
+    tbWrite.ariaReadOnly = true;
+    tbWrite.disabled = true;
+    tbWrite.readOnly = true;
     clearInterval(id);
-    timerInProgress = false;
+    timerProgression = false;
     return;
-  } else {
-    tbwritten.ariaDisabled = false;
-    tbwritten.ariaReadOnly = false;
-    tbwritten.disabled = false;
-    tbwritten.readOnly = false;
+  } 
+  else {
+    tbWrite.ariaDisabled = false;
+    tbWrite.ariaReadOnly = false;
+    tbWrite.disabled = false;
+    tbWrite.readOnly = false;
   }
   second = time % 60;
   minute = (time - second) / 60;
-  timer.innerHTML = minute + ":" + (second >= 10 ? "" : "0") + second;
+  timer.innerHTML = `${minute}:${second.toString().padStart(2, '0')}`;
 }
 function submit() {
   cdate = 0;
