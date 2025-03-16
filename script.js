@@ -16,83 +16,82 @@ const HideAll = () => {
   format.className = "selbox hidden";
   ielts.className = "selbox hidden";
   main.className = "selbox mainbox hidden";
-  backer.className = "selector hidden";
-}
+  backButton.className = "selector hidden";
+};
 const selectIELTS = () => {
   type = "IELTS";
   HideAll();
   format.className = "selbox";
   title.innerHTML = "IELTS Practice";
-  backer.className = "selector";
-}
+  backButton.className = "selector";
+};
 const selectToeic = () => {
   type = "TOEIC";
   HideAll();
   format.className = "selbox";
   title.innerHTML = "TOEIC Practice";
-  backer.className = "selector";
-}
+  backButton.className = "selector";
+};
 const goBack = () => {
   HideAll();
   contest.className = "selbox";
-  backer.className = "selector";
-}
+  backButton.className = "selector";
+};
 const fr = new FileReader();
-fr.onload = e => {
+fr.onload = (e) => {
   const text = e.target.result; // File contents as text
   console.log(text); // Log to console
 };
-fileInput.addEventListener('change', event => {
+fileInput.addEventListener("change", (event) => {
   console.log(fr.readAsText(event.target.files[0]));
 });
 
-let cdate = 0, time, second, minute, stage = 0;
+let cdate = 0,
+  time,
+  second,
+  minute,
+  stage = 0;
 const selWD = () => {
   HideAll();
   if (type === "IELTS") {
     ielts.className = "selbox";
-    backer.className = "selector";
-  } 
-  else {
+    backButton.className = "selector";
+  } else {
     main.className = "selbox mainbox";
     stage = 0;
     setInterval(timerProgression, 1);
   }
-}
+};
 UpdateWD = () => {
   HideAll();
   main.className = "selbox mainbox";
   stage = 0;
   setInterval(timerProgression, 1);
-}
-const Question = (content = '', timer = 0) => {
+};
+const Question = (content = "", timer = 0) => {
   if (!timerInProgress) {
     console.log(tbWrite.value);
-    tbWrite.value = '';
+    tbWrite.value = "";
     question.innerHTML = content;
     BeginTimer(timer);
     stage++;
   }
-}
+};
 const timerProgression = () => {
   if (type == "IELTS") {
     if (stage == 0) {
-      if (mode != '2') {
+      if (mode != "2") {
         Question("Writing Task 1", 60);
-      } 
-      else {
+      } else {
         stage++;
       }
-    } 
-    else if (stage == 1) {
+    } else if (stage == 1) {
       if (mode != "1") {
         Question("Writing Task 2", 120);
-      } 
-      else {
+      } else {
         stage++;
       }
-    } 
-    else if (stage == 2) {
+    } else if (stage == 2) {
       if (!timerInProgress) {
         console.log(tbWrite.value);
         tbWrite.value = "";
@@ -100,8 +99,7 @@ const timerProgression = () => {
         stage = 9999;
       }
     }
-  } 
-  else {
+  } else {
     if (stage == 0) {
       Question("Question 1: Picture", 60);
     }
@@ -133,7 +131,7 @@ const timerProgression = () => {
       }
     }
   }
-}
+};
 let id;
 function BeginTimer(time = 0) {
   timerInProgress = true;
@@ -150,10 +148,9 @@ function UpdateTimer() {
     tbWrite.disabled = true;
     tbWrite.readOnly = true;
     clearInterval(id);
-    timerProgression = false;
+    timerInProgress = false;
     return;
-  } 
-  else {
+  } else {
     tbWrite.ariaDisabled = false;
     tbWrite.ariaReadOnly = false;
     tbWrite.disabled = false;
@@ -161,7 +158,7 @@ function UpdateTimer() {
   }
   second = time % 60;
   minute = (time - second) / 60;
-  timer.innerHTML = `${minute}:${second.toString().padStart(2, '0')}`;
+  timer.innerHTML = `${minute}:${second.toString().padStart(2, "0")}`;
 }
 function submit() {
   cdate = 0;
