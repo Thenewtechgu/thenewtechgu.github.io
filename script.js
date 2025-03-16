@@ -9,7 +9,7 @@ const backButton = document.getElementById("back");
 const question = document.getElementById("question");
 const ielts = document.getElementById("ielts");
 const fileInput = document.getElementById("file");
-let progressing = false;
+let timerInProgress = false;
 
 const HideAll = () => {
   contest.className = "selbox hidden";
@@ -66,7 +66,7 @@ UpdateWD = () => {
   setInterval(timerProgression, 1);
 }
 const Question = (content = '', timer = 0) => {
-  if (!progressing) {
+  if (!timerInProgress) {
     console.log(tbWrite.value);
     tbWrite.value = '';
     question.innerHTML = content;
@@ -93,7 +93,7 @@ const timerProgression = () => {
       }
     } 
     else if (stage == 2) {
-      if (!timerProgression) {
+      if (!timerInProgress) {
         console.log(tbWrite.value);
         tbWrite.value = "";
         alert("Results are being processed...");
@@ -127,7 +127,7 @@ const timerProgression = () => {
       Question("Question 8: Opinion Essay", 300);
     }
     if (stage == 8) {
-      if (!timerProgression) {
+      if (!timerInProgress) {
         alert("Results are being processed...");
         stage = 9999;
       }
@@ -136,7 +136,7 @@ const timerProgression = () => {
 }
 let id;
 function BeginTimer(time = 0) {
-  timerProgression = true;
+  timerInProgress = true;
   cdate = Date.now() + time * 1000;
   id = setInterval(UpdateTimer, 1);
 }
