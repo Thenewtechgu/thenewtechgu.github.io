@@ -18,7 +18,7 @@ const HideAll = () => {
   main.className = "selbox mainbox hidden";
   backButton.className = "selector hidden";
 };
-const selectIELTS = () => {
+const selectIelts = () => {
   type = "IELTS";
   HideAll();
   format.className = "selbox";
