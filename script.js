@@ -164,12 +164,9 @@ function submit() {
   cdate = 0;
 }
 
-async function getAIResponse(prompt) {
+async function getAIResponse(prompt = "") {
   const apiKey = "AIzaSyACUiew2xvOhoLEQXiUtcqld7xl0BG4YwY"; // Replace with your actual API key
-  const url =
-    atob(
-      "aHR0cHM6Ly9nZW5lcmF0aXZlbGFuZ3VhZ2UuZ29vZ2xlYXBpcy5jb20vdjFiZXRhL21vZGVscy9nZW1pbmktMi4wLWZsYXNoOmdlbmVyYXRlQ29udGVudD9rZXk9"
-    ) + apiKey;
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
   const requestBody = {
     contents: [{ parts: [{ text: prompt }] }],
