@@ -59,14 +59,16 @@ const selWD = () => {
   } else {
     main.className = "selbox mainbox";
     stage = 0;
-    setInterval(timerProgression, 1);
+    setInterval(timerProgression, 100);
   }
+  
 };
 UpdateWD = () => {
   HideAll();
   main.className = "selbox mainbox";
   stage = 0;
-  setInterval(timerProgression, 1);
+  progressing=false;
+  setInterval(timerProgression, 100);
 };
 let Task = "";
 let questions = [];
@@ -74,7 +76,7 @@ let answers = [];
 const Question = (content = "", timer = 0) => {
   if (!progressing) {
     console.log(tbWrite.value);
-    questions = questions.concat([task]);
+    questions = questions.concat([Task]);
     answers = answers.concat([tbWrite.value]);
 
     tbWrite.value = "";
@@ -86,36 +88,21 @@ const Question = (content = "", timer = 0) => {
 
 const timerProgression = () => {
   if (type == "IELTS") {
-    if (stage == 0) {
-      if (mode != "2") {
-        if (!progressing) {
-          MakeWT("IELTS", "Writing Task 1", "question", "Writing Task 1:");
-        }
-        Question("Writing Task 1: Loading...", 20 * 60);
-      } else {
-        stage++;
-        
+    if(stage==0){
+      if(mode=="2"){
+        stage=1;
+        Question("Debug"+Math.random(),5*60)
       }
-    } else if (stage == 1) {
-      if (mode != "1") {
-        if (!progressing) {
-          MakeWT("IELTS", "Writing Task 2", "question", "Writing Task 2:");
-        }
-        Question("Writing Task 2: Loading...", 40 * 60);
-      } else {
-        stage++;
+    }
+    if(stage==1){
+      if(mode=="1"){
+        stage=2;
+        Question("2Debug"+Math.random(),5*60)
       }
-    } else if (stage == 2) {
-      if (!progressing) {
-        answers = answers.concat([tbWrite.value]);
-        tbWrite.value = "";
-        questions = questions.concat([task]);
-        answers = answers.concat([tbWrite.value]);
-        questions.shift();
-        answers.shift();
-        alert("Results are being processed...");
-        stage = 9999;
-      }
+    }
+    if(stage==2){
+      alert("Results are being processed...")
+      stage==3;
     }
   } else {
     if (stage == 0) {
@@ -154,7 +141,7 @@ let id;
 function BeginTimer(time = 0) {
   progressing = true;
   cdate = Date.now() + time * 1000;
-  id = setInterval(UpdateTimer, 1);
+  id = setInterval(UpdateTimer, 100);
 }
 
 function UpdateTimer() {
