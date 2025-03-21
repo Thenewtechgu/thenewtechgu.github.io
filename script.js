@@ -68,14 +68,14 @@ UpdateWD = () => {
   stage = 0;
   setInterval(timerProgression, 1);
 };
-var Task = "";
-var Questions = [];
-var Answers = [];
+let task = "";
+let questions = [];
+let answers = [];
 const Question = (content = "", timer = 0) => {
   if (!progressing) {
     console.log(tbWrite.value);
-    Questions = Questions.concat([Task]);
-    Answers = Answers.concat([tbWrite.value]);
+    questions = questions.concat([task]);
+    answers = answers.concat([tbWrite.value]);
 
     tbWrite.value = "";
     question.innerHTML = content;
@@ -101,12 +101,12 @@ const timerProgression = () => {
       }
     } else if (stage == 2) {
       if (!progressing) {
-        Answers = Answers.concat([tbWrite.value]);
+        answers = answers.concat([tbWrite.value]);
         tbWrite.value = "";
-        Questions = Questions.concat([Task]);
-        Answers = Answers.concat([tbWrite.value]);
-        Questions.shift();
-        Answers.shift();
+        questions = questions.concat([task]);
+        answers = answers.concat([tbWrite.value]);
+        questions.shift();
+        answers.shift();
         alert("Results are being processed...");
         stage = 9999;
       }
@@ -195,7 +195,8 @@ async function getAIResponse(prompt = "") {
   const data = await response.json();
   return data.candidates[0].content.parts[0].text;
 }
-function cleanGeneratedText(text) {
+
+const cleanGeneratedText = (text = "") => {
   // Define common leading phrases using regex
   const leadingPhrasesRegex =
     /^(Okay,|Sure! H|Here|Try an).*?:\s*/i;
@@ -209,11 +210,12 @@ function cleanGeneratedText(text) {
 
   return text;
 }
-function MakeWT(contest, wanted, id, prefix) {
+
+const MakeWT = (contest = 'IELTS', wanted = 'foo', id = '', prefix = '') => {
   getAIResponse(
     `I'm practicing for ${contest}, can you generate a ${wanted} question for me? I don't want any tips, as I'd like this to be a sort of mock test. Try emulating real tests as closely as possible`
-  ).then((r) => {
-    Task = cleanGeneratedText(r);
-    document.getElementById(id).innerHTML = prefix + Task;
+  ).then(r => {
+    task = cleanGeneratedText(r);
+    document.getElementById(id).innerHTML = prefix + task;
   });
 }
