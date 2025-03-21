@@ -92,10 +92,7 @@ const timerProgression = () => {
         if (mode == "2") {
           stage++;
         } else {
-          Question(
-            "Please wait... (speed depends on your Internet connection)",
-            20 * 60
-          );
+          Question(/*html*/ `Please wait...<br><span class='loader'>`, 20 * 60);
           MakeWT("IELTS", "Writing Task 1", "question", "Writing Task 1:\n");
         }
       }
@@ -104,10 +101,7 @@ const timerProgression = () => {
         if (mode == "1") {
           stage++;
         } else {
-          Question(
-            "Please wait... (speed depends on your Internet connection)",
-            40 * 60
-          );
+          Question(/*html*/ `Please wait...<br><span class='loader'>`, 40 * 60);
           MakeWT("IELTS", "Writing Task 2", "question", "Writing Task 2:\n");
         }
       }
@@ -186,10 +180,14 @@ let lastCallTime = 0; // Stores the last time the function was called
 const RATE_LIMIT = 60000; // 60 seconds in milliseconds
 
 async function getAIResponse(prompt = "") {
+  //debugging, don't need AI *yet*
+  return Promise.resolve(null);
   const now = Date.now(); // Current timestamp
 
   if (now - lastCallTime < RATE_LIMIT) {
-    console.warn(`AI request is on cooldown from ${btoa(prompt)}. Try again later.`);
+    console.warn(
+      `AI request is on cooldown from ${btoa(prompt)}. Try again later.`
+    );
     return Promise.resolve(null); // Return a resolved promise to prevent breaking async code
   }
 
