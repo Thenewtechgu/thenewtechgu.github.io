@@ -222,9 +222,5 @@ const MakeWT = (contest = 'IELTS', wanted = 'foo', id = '', prefix = '') => {
     Task = cleanGeneratedText(r);
     document.getElementById(id).innerHTML =
       marked.parse(prefix + Task);
-<<<<<<< Updated upstream
-      
-=======
->>>>>>> Stashed changes
   });
 }
