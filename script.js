@@ -68,20 +68,28 @@ UpdateWD = () => {
   stage = 0;
   setInterval(timerProgression, 1);
 };
+var Task = "";
+var Questions = [];
+var Answers = [];
 const Question = (content = "", timer = 0) => {
   if (!progressing) {
     console.log(tbWrite.value);
+    Questions = Questions.concat([Task]);
+    Answers = Answers.concat([tbWrite.value]);
+
     tbWrite.value = "";
     question.innerHTML = content;
     BeginTimer(timer);
     stage++;
   }
 };
+
 const timerProgression = () => {
   if (type == "IELTS") {
     if (stage == 0) {
       if (mode != "2") {
-        Question("Writing Task 1", 60);
+        Question("Writing Task 1: Loading...", 300);
+        MakeWT("IELTS", "Writing Task 1", "question", "Writing Task 1:");
       } else {
         stage++;
       }
@@ -93,8 +101,12 @@ const timerProgression = () => {
       }
     } else if (stage == 2) {
       if (!progressing) {
-        console.log(tbWrite.value);
+        Answers = Answers.concat([tbWrite.value]);
         tbWrite.value = "";
+        Questions = Questions.concat([Task]);
+        Answers = Answers.concat([tbWrite.value]);
+        Questions.shift();
+        Answers.shift();
         alert("Results are being processed...");
         stage = 9999;
       }
@@ -165,6 +177,9 @@ function submit() {
 }
 
 async function getAIResponse(prompt) {
+  //debugging
+  console.log(prompt);
+  //return;
   const apiKey = "AIzaSyACUiew2xvOhoLEQXiUtcqld7xl0BG4YwY"; // Replace with your actual API key
   const url =
     atob(
@@ -184,6 +199,27 @@ async function getAIResponse(prompt) {
   });
 
   const data = await response.json();
-  console.log(data);
   return data.candidates[0].content.parts[0].text;
+}
+function cleanGeneratedText(text) {
+  // Define common leading phrases using regex
+  const leadingPhrasesRegex =
+    /^(Okay,|Sure! Here|Here's a sample|Try answering).*?:\s*/i;
+  const encouragementRegex = /(Good luck!|Remember to aim.*?\d+\s*words\.)/gi;
+
+  // Remove leading phrases
+  text = text.replace(leadingPhrasesRegex, "").trim();
+
+  // Remove extra encouragement sentences
+  text = text.replace(encouragementRegex, "").trim();
+
+  return text;
+}
+function MakeWT(contest, wanted, id, prefix) {
+  getAIResponse(
+    `I'm practicing for ${contest}, can you generate a ${wanted} question for me? I don't want any tips, as I'd like this to be a sort of mock test. Try emulating real tests as closely as possible`
+  ).then((r) => {
+    Task = cleanGeneratedText(r);
+    document.getElementById(id).innerHTML = prefix + Task;
+  });
 }
