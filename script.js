@@ -61,13 +61,12 @@ const selWD = () => {
     stage = 0;
     setInterval(timerProgression, 100);
   }
-  
 };
 UpdateWD = () => {
   HideAll();
   main.className = "selbox mainbox";
   stage = 0;
-  progressing=false;
+  progressing = false;
   setInterval(timerProgression, 100);
 };
 let Task = "";
@@ -88,21 +87,35 @@ const Question = (content = "", timer = 0) => {
 
 const timerProgression = () => {
   if (type == "IELTS") {
-    if(stage==0){
-      if(mode=="2"){
-        stage=1;
-        Question("Debug"+Math.random(),5*60)
+    if (stage == 0) {
+      if (!progressing) {
+        if (mode == "2") {
+          stage++;
+        } else {
+          Question(
+            "Please wait... (speed depends on your Internet connection)",
+            20 * 60
+          );
+          MakeWT("IELTS", "Writing Task 1", "question", "Writing Task 1:\n");
+        }
       }
-    }
-    if(stage==1){
-      if(mode=="1"){
-        stage=2;
-        Question("2Debug"+Math.random(),5*60)
+    } else if (stage == 1) {
+      if (!progressing) {
+        if (mode == "1") {
+          stage++;
+        } else {
+          Question(
+            "Please wait... (speed depends on your Internet connection)",
+            40 * 60
+          );
+          MakeWT("IELTS", "Writing Task 2", "question", "Writing Task 2:\n");
+        }
       }
-    }
-    if(stage==2){
-      alert("Results are being processed...")
-      stage==3;
+    } else if (stage == 2) {
+      if (!progressing) {
+        alert("Results are being processed...");
+        stage = 3;
+      }
     }
   } else {
     if (stage == 0) {
@@ -167,9 +180,20 @@ function UpdateTimer() {
 }
 function submit() {
   cdate = 0;
+  progressing = false;
 }
+let lastCallTime = 0; // Stores the last time the function was called
+const RATE_LIMIT = 60000; // 60 seconds in milliseconds
 
 async function getAIResponse(prompt = "") {
+  const now = Date.now(); // Current timestamp
+
+  if (now - lastCallTime < RATE_LIMIT) {
+    console.warn(`AI request is on cooldown from ${btoa(prompt)}. Try again later.`);
+    return Promise.resolve(null); // Return a resolved promise to prevent breaking async code
+  }
+
+  lastCallTime = now; // Update the last call time
   const apiKey = "AIzaSyACUiew2xvOhoLEQXiUtcqld7xl0BG4YwY"; // Replace with your actual API key
   const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
@@ -191,8 +215,8 @@ async function getAIResponse(prompt = "") {
 
 const cleanGeneratedText = (text = "") => {
   // Define common leading phrases using regex
-  const leadingPhrasesRegex = /^(Okay,|Sure! H|Here|Try an).*?:\s*/i;
-  const encouragementRegex = /(Good luck!|Remember to aim.*?\d+\s*words\.)/gi;
+  const leadingPhrasesRegex = /^(Okay,|Sure! H|Here|Try a).*$/gim;
+  const encouragementRegex = /(Good luck!|Remember to)/gim;
 
   // Remove leading phrases
   text = text.replace(leadingPhrasesRegex, "").trim();
@@ -201,14 +225,13 @@ const cleanGeneratedText = (text = "") => {
   text = text.replace(encouragementRegex, "").trim();
 
   return text;
-}
+};
 
-const MakeWT = (contest = 'IELTS', wanted = 'foo', id = '', prefix = '') => {
+const MakeWT = (contest = "IELTS", wanted = "foo", id = "", prefix = "") => {
   getAIResponse(
     `I'm practicing for ${contest}, can you generate a ${wanted} question for me? I don't want any tips, as I'd like this to be a sort of mock test.\nNotes: Please don't use photo diagrams - I heard AI's like you have a hard time drawing them. Tables are OK though.`
   ).then((r) => {
     Task = cleanGeneratedText(r);
-    document.getElementById(id).innerHTML =
-      marked.parse(prefix + Task);
+    document.getElementById(id).innerHTML = marked.parse(prefix + Task);
   });
-}
+};

@@ -8,6 +8,8 @@
 body {
     margin: 0;
     padding: 0;
+    background-image: url(download.jpg);
+    background-size:cover;
 }
 .selbox {
     display: flex;
@@ -54,6 +56,9 @@ textarea {
 #question{
     height:inherit;
     overflow: scroll;
+    background-color: #ffffff;
+    margin:0px;
+    padding: 0px;
 }
 .qcontain{
     height:100%;
@@ -87,3 +92,27 @@ header {
 footer {
     height: 5vh;
 }
+table {
+    width: 100%;
+    border-collapse: collapse; /* Ensures borders are clean */
+    margin: 16px 0;
+  }
+  
+  /* Table borders */
+  th, td {
+    border: 1px solid #ddd; /* Light gray border */
+    padding: 8px; /* Space inside cells */
+    text-align: left;
+    
+  }
+  
+  /* Table header styling */
+  th {
+    background-color: #f4f4f4; /* Light gray header background */
+    font-weight: bold;
+  }
+  
+  /* Add alternating row colors for better readability */
+  tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
