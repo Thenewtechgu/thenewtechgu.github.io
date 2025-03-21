@@ -204,7 +204,7 @@ async function getAIResponse(prompt) {
 function cleanGeneratedText(text) {
   // Define common leading phrases using regex
   const leadingPhrasesRegex =
-    /^(Okay,|Sure! Here|Here's a sample|Try answering).*?:\s*/i;
+    /^(Okay,|Sure! H|Here|Try an).*?:\s*/i;
   const encouragementRegex = /(Good luck!|Remember to aim.*?\d+\s*words\.)/gi;
 
   // Remove leading phrases
