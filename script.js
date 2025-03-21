@@ -94,6 +94,7 @@ const timerProgression = () => {
         Question("Writing Task 1: Loading...", 20 * 60);
       } else {
         stage++;
+        
       }
     } else if (stage == 1) {
       if (mode != "1") {
