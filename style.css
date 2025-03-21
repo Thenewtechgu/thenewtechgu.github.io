@@ -28,7 +28,7 @@ body {
 }
 .mainbox-inner {
     width: 100%;
-    height: 80%;
+    height: 100%;
     text-align: center;
     border: 2px outset black;
     border-radius: 10px;
@@ -45,9 +45,18 @@ textarea {
 }
 .divider1 {
     display: grid;
-    grid-template-rows: 1fr 7fr;
-    grid-template-columns: 5fr 1fr;
+    grid-template-rows: 80% 20%;
+    grid-template-columns: 50% 50%;
     gap: 20px;
+    height: inherit;
+    width:inherit;
+}
+#question{
+    height:inherit;
+    overflow: scroll;
+}
+.qcontain{
+    height:100%;
 }
 .grid {
     display: grid;

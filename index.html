@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>The4BrainStormers</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="normalize.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="normalize.css" />
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
   </head>
   <body>
     <div class="main">
@@ -28,7 +30,13 @@
             <h3 id="title"></h3>
             <p>IELTS Practice</p>
             <div class="grid">
-              <input title="Select" type="file" name="file" id="file" class="selector">
+              <input
+                title="Select"
+                type="file"
+                name="file"
+                id="file"
+                class="selector"
+              />
               <button class="selector" onclick="selWD()">Write Directly</button>
             </div>
           </div>
@@ -37,22 +45,30 @@
           <div class="selbox-inner">
             <h3>Choose one task.</h3>
             <p></p>
-            <button class="selector" onclick="mode='1'; UpdateWD()">Writing Task 1</button>
-            <button class="selector" onclick="mode='2'; UpdateWD()">Writing Task 2</button>
-            <button class="selector" onclick="mode='both'; UpdateWD()">Both Tasks</button>
+            <button class="selector" onclick="mode='1'; UpdateWD()">
+              Writing Task 1
+            </button>
+            <button class="selector" onclick="mode='2'; UpdateWD()">
+              Writing Task 2
+            </button>
+            <button class="selector" onclick="mode='both'; UpdateWD()">
+              Both Tasks
+            </button>
           </div>
         </div>
         <div class="selbox mainbox hidden" id="main">
           <div class="mainbox-inner divider1">
-            <div><h3 id="question">Question: [foo]</h3></div>
-            <div></div>
             <div>
               <textarea title="Input" name="" id="tbWrite"></textarea>
             </div>
+
+            <div class="qcontain"><h3 id="question">Question: [foo]</h3></div>
             <div>
               <h3>Time Remaining</h3>
               <h1 id="timer">60:00</h1>
-              <br/><button class="selector" onclick="submit()">Submit</button>
+            </div>
+            <div>
+              <br /><button class="selector" onclick="submit()">Submit</button>
             </div>
           </div>
         </div>

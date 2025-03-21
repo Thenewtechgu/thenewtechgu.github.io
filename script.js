@@ -68,7 +68,7 @@ UpdateWD = () => {
   stage = 0;
   setInterval(timerProgression, 1);
 };
-let task = "";
+let Task = "";
 let questions = [];
 let answers = [];
 const Question = (content = "", timer = 0) => {
@@ -88,14 +88,19 @@ const timerProgression = () => {
   if (type == "IELTS") {
     if (stage == 0) {
       if (mode != "2") {
-        Question("Writing Task 1: Loading...", 300);
-        MakeWT("IELTS", "Writing Task 1", "question", "Writing Task 1:");
+        if (!progressing) {
+          MakeWT("IELTS", "Writing Task 1", "question", "Writing Task 1:");
+        }
+        Question("Writing Task 1: Loading...", 20 * 60);
       } else {
         stage++;
       }
     } else if (stage == 1) {
       if (mode != "1") {
-        Question("Writing Task 2", 120);
+        if (!progressing) {
+          MakeWT("IELTS", "Writing Task 2", "question", "Writing Task 2:");
+        }
+        Question("Writing Task 2: Loading...", 40 * 60);
       } else {
         stage++;
       }
@@ -198,8 +203,7 @@ async function getAIResponse(prompt = "") {
 
 const cleanGeneratedText = (text = "") => {
   // Define common leading phrases using regex
-  const leadingPhrasesRegex =
-    /^(Okay,|Sure! H|Here|Try an).*?:\s*/i;
+  const leadingPhrasesRegex = /^(Okay,|Sure! H|Here|Try an).*?:\s*/i;
   const encouragementRegex = /(Good luck!|Remember to aim.*?\d+\s*words\.)/gi;
 
   // Remove leading phrases
@@ -213,9 +217,14 @@ const cleanGeneratedText = (text = "") => {
 
 const MakeWT = (contest = 'IELTS', wanted = 'foo', id = '', prefix = '') => {
   getAIResponse(
-    `I'm practicing for ${contest}, can you generate a ${wanted} question for me? I don't want any tips, as I'd like this to be a sort of mock test. Try emulating real tests as closely as possible`
-  ).then(r => {
-    task = cleanGeneratedText(r);
-    document.getElementById(id).innerHTML = prefix + task;
+    `I'm practicing for ${contest}, can you generate a ${wanted} question for me? I don't want any tips, as I'd like this to be a sort of mock test.\nNotes: Please don't use photo diagrams - I heard AI's like you have a hard time drawing them. Tables are OK though.`
+  ).then((r) => {
+    Task = cleanGeneratedText(r);
+    document.getElementById(id).innerHTML =
+      marked.parse(prefix + Task);
+<<<<<<< Updated upstream
+      
+=======
+>>>>>>> Stashed changes
   });
 }
