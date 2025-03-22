@@ -145,7 +145,7 @@ const timerProgression = () => {
   }
 };
 let id;
-function BeginTimer(time = 0) {
+const BeginTimer = (time = 0) => {
   progressing = true;
   cdate = Date.now() + time * 1000;
   id = setInterval(UpdateTimer, 100);
@@ -176,22 +176,22 @@ function submit() {
   cdate = 0;
   progressing = false;
 }
-let lastCallTime = 0; // Stores the last time the function was called
+let lastCall = 0; // Stores the last time the function was called
 const RATE_LIMIT = 60000; // 60 seconds in milliseconds
-let ENABLE_AI=false;
+let ENABLE_AI = false;
 async function getAIResponse(prompt = "") {
   //debugging, don't need AI *yet*
-  if(!ENABLE_AI){return Promise.resolve(null)};
+  if (!ENABLE_AI) {
+    return Promise.resolve(null)
+  }
   const now = Date.now(); // Current timestamp
 
-  if (now - lastCallTime < RATE_LIMIT) {
-    console.warn(
-      `AI request is on cooldown from ${btoa(prompt)}. Try again later.`
-    );
+  if (now - lastCall < RATE_LIMIT) {
+    console.warn(`AI request is on cooldown from ${btoa(prompt)}. Wait and try again.`);
     return Promise.resolve(null); // Return a resolved promise to prevent breaking async code
   }
 
-  lastCallTime = now; // Update the last call time
+  lastCall = now; // Update the last call time
   const apiKey = "AIzaSyACUiew2xvOhoLEQXiUtcqld7xl0BG4YwY"; // Replace with your actual API key
   const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 

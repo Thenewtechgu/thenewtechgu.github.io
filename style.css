@@ -1,21 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Winky+Sans:ital,wght@0,300..900;1,300..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Serif:ital,opsz,wght@0,8..144,100..900;1,8..144,100..900&family=Space+Grotesk:wght@300..700&display=swap');
 * {
-  font-family: Comfortaa,sans-serif;
+    --first-font: 'Winky Sans', sans-serif, system-ui;
+    --second-font: 'Roboto Serif', serif;
+    --third-font: 'Space Grotesk', sans-serif;
+    font-family: var(--first-font);
+    font-variant-ligatures: normal common-ligatures discretionary-ligatures contextual;
+    font-variant-numeric: tabular-nums;
   
-  transition: 100ms ease-in-out;
-  /*animation:rotation 30s linear infinite;*/
+    transition: 100ms ease-in-out;
+    /*animation: rotation 30s linear infinite;*/
 }
-h1,h2,h3,h4,h5,h6{
+h1, h2, h3, h4, h5, h6 {
     font-optical-sizing: auto;
-  font-weight: 700;
-  font-style: normal;
+    font-weight: 700;
+    font-style: normal;
 }
 .hidden {
-  display: none !important;
+    display: none !important;
 }
 body {
-  margin: 0;
-  padding: 0;
-  background:white;
+    margin: 0;
+    padding: 0;
+    background:white;
   
 }
 body {
@@ -27,29 +34,30 @@ body {
     background-attachment: fixed;
   }
   
-body,html,.main{
-    height:100%;
+body, html, .main{
+    height: 100%;
 }
 .selbox {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height:100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
 }
-.selbox-inner,.mainbox-inner{
-    box-shadow: 0px 0px 33px 4px rgba(0,0,0,0.4);
--webkit-box-shadow: 0px 0px 33px 4px rgba(0,0,0,0.4);
--moz-box-shadow: 0px 0px 33px 4px rgba(0,0,0,0.4);
+.selbox-inner, .mainbox-inner{
+    -webkit-box-shadow: 0 0 33px 4px rgba(0, 0, 0, .4);
+    -moz-box-shadow: 0 0 33px 4px rgba(0, 0, 0, .4);
+    box-shadow: 0 0 33px 4px rgba(0, 0, 0, .4);
+
 }
 .selbox-inner {
-  width: fit-content;
-  height: fit-content;
-  text-align: center;
-  border: none;
-  border-radius: 10px;
-  padding: 10px;
-  background-color: #ffffff !important;
+    width: fit-content;
+    height: fit-content;
+    text-align: center;
+    border: none;
+    border-radius: 13px;
+    padding: 10px;
+    background-color: #ffffff !important;
 }
 .main{
     display:grid;
@@ -57,126 +65,126 @@ body,html,.main{
     
 }
 .mainbox-inner {
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  border: none;
-  border-radius: 10px;
-  padding: 10px;
-  background-color: #ffffff !important;
-  margin: 20px;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: #ffffff !important;
+    margin: 20px;
 }
 textarea {
-  width: 100%;
-  height: 100%;
-  box-sizing: border-box;
-  resize: none;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    resize: none;
 }
 .divider1 {
-  display: grid;
-  grid-template-rows: 80% 20%;
-  grid-template-columns: 50% 50%;
-  gap: 20px;
-  height: inherit;
-  width: inherit;
+    display: grid;
+    grid-template-rows: 80% 20%;
+    grid-template-columns: 50% 50%;
+    gap: 20px;
+    height: inherit;
+    width: inherit;
 }
 #question {
-  height: inherit;
-  overflow: scroll;
-  background-color: #ffffff;
-  margin: 0px;
-  padding: 0px;
+    height: inherit;
+    overflow: scroll;
+    background-color: #ffffff;
+    margin: 0;
+    padding: 0;
   
 }
-#tcontain{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
+#tcontain {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }
-#tcontain>h3{
-    padding:0px;
-    margin:0px !important;
+#tcontain > h3 {
+    padding: 0;
+    margin: 0 !important;
 }
   
-#question>p,#question>p>strong,#question>table>thead>tr>th,#question>table>tbody>tr>td{
+#question > p, #question > p > strong, #question > table > thead > tr > th, #question > table > tbody > tr > td{
     text-align: left;
-    font-family: 'Times New Roman', Times, serif;
-    font-size:larger;
+    font-family: var(--second-font);
+    font-size: larger;
 }
 .qcontain {
-  height: 100%;
+    height: 100%;
 }
 .grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr;
-  gap: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    gap: 10px;
 }
 @media screen and (max-width: 600px) {
-  .grid {
-    grid-template-rows: 1fr 1fr;
-    grid-template-columns: 1fr;
-  }
+    .grid {
+      grid-template-rows: 1fr 1fr;
+      grid-template-columns: 1fr;
+    }
 }
 .selector {
-  background-color: gold;
-  padding: 10px;
-  border-radius: 10px;
-  border: none;
-  /*font-size: larger;*/
-  font-weight: bolder;
+    background-color: #0090ff;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    /*font-size: larger;*/
+    font-weight: bolder;
 }
 .selector:hover {
-  background-color: goldenrod;
+    background-color: #006dc1;
+    transform: scale(1.05);
 }
 
 table {
-  width: 100%;
-  border-collapse: collapse; /* Ensures borders are clean */
-  margin: 16px 0;
+    width: 100%;
+    border-collapse: collapse; /* Ensures borders are clean */
+    margin: 16px 0;
 }
-#timer{
-    font-family: 'Space Mono','Courier New', Courier, monospace;
-    padding:0px !important;
-    margin:0px !important;
+#timer {
+    font-family: var(--third-font), monospace;
+    padding: 0;
+    margin: 0;
     /*font-size:xx-large;*/
 }
 /* Table borders */
-th,
-td {
-  border: 1px solid #ddd; /* Light gray border */
-  padding: 8px; /* Space inside cells */
-  text-align: left;
+th, td {
+    border: 1px solid #ddd; /* Light gray border */
+    padding: 8px; /* Space inside cells */
+    text-align: left;
 }
 
 /* Table header styling */
 th {
-  background-color: #f4f4f4; /* Light gray header background */
-  font-weight: bold;
+    background-color: #f4f4f4; /* Light gray header background */
+    font-weight: bold;
 }
 
 /* Add alternating row colors for better readability */
 tr:nth-child(even) {
-  background-color: #f9f9f9;
+    background-color: #f9f9f9;
 }
 .loader {
-  width: 96px;
-  height: 96px;
-  border: 15px solid #000;
-  border-bottom-color: transparent;
-  border-top-color: transparent;
-  border-radius: 50%;
-  display: inline-block;
-  box-sizing: border-box;
-  animation: rotation 0.5s linear infinite;
+    width: 96px;
+    height: 96px;
+    border: 15px solid #000;
+    border-bottom-color: transparent;
+    border-top-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 450ms linear infinite;
 }
 
 @keyframes rotation {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
 }
