@@ -88,14 +88,17 @@ textarea {
   padding: 0px;
   
 }
-#tcontain>p{
-    padding:0px;
-    margin:0px !important;
+#tcontain{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 #tcontain>h3{
     padding:0px;
-    margin:0px;
+    margin:0px !important;
 }
+
 #question>p,#question>p>strong,#question>table>thead>tr>th,#question>table>tbody>tr>td{
     text-align: left;
     font-family: 'Times New Roman', Times, serif;
@@ -135,6 +138,8 @@ table {
 }
 #timer{
     font-family: 'Space Mono','Courier New', Courier, monospace;
+    padding:0px !important;
+    margin:0px !important;
     /*font-size:xx-large;*/
 }
 /* Table borders */
