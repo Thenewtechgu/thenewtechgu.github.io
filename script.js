@@ -178,10 +178,10 @@ function submit() {
 }
 let lastCallTime = 0; // Stores the last time the function was called
 const RATE_LIMIT = 60000; // 60 seconds in milliseconds
-
+let ENABLE_AI=false;
 async function getAIResponse(prompt = "") {
   //debugging, don't need AI *yet*
-  return Promise.resolve(null);
+  if(!ENABLE_AI){return Promise.resolve(null)};
   const now = Date.now(); // Current timestamp
 
   if (now - lastCallTime < RATE_LIMIT) {
