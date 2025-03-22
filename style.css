@@ -2,12 +2,14 @@
     --first-font: 'Winky Sans', sans-serif, system-ui;
     --second-font: 'Roboto Serif', serif;
     --third-font: 'Space Grotesk', sans-serif;
-    font-family: var(--first-font);
     font-variant-ligatures: normal common-ligatures discretionary-ligatures contextual;
     font-variant-numeric: tabular-nums;
   
     transition: 100ms ease-in-out;
     /*animation: rotation 30s linear infinite;*/
+}
+html {
+    font-family: var(--first-font);
 }
 h1, h2, h3, h4, h5, h6 {
     font-optical-sizing: auto;
