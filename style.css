@@ -60,7 +60,7 @@ body, html, .main{
     background-color: #ffffff !important;
 }
 .main{
-    display:grid;
+    display: grid;
     grid-template-rows: 10% 80% 10%;
     
 }
@@ -129,6 +129,7 @@ textarea {
 }
 .selector {
     background-color: #0090ff;
+    color: whitesmoke;
     padding: 10px;
     border-radius: 10px;
     border: none;
