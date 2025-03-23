@@ -2,7 +2,7 @@
     --first-font: 'Winky Sans', sans-serif, system-ui;
     --second-font: 'Roboto Serif', serif;
     --third-font: 'Space Grotesk', sans-serif;
-    font-variant-ligatures: normal common-ligatures discretionary-ligatures contextual;
+    font-variant-ligatures: common-ligatures discretionary-ligatures contextual;
     font-variant-numeric: tabular-nums;
   
     transition: 100ms ease-in-out;
@@ -34,7 +34,7 @@ body {
     background-attachment: fixed;
   }
   
-body, html, .main{
+body, html, .main {
     height: 100%;
 }
 .selbox {
@@ -44,7 +44,7 @@ body, html, .main{
     width: 100%;
     height: 100%;
 }
-.selbox-inner, .mainbox-inner{
+.selbox-inner, .mainbox-inner {
     -webkit-box-shadow: 0 0 33px 4px rgba(0, 0, 0, .4);
     -moz-box-shadow: 0 0 33px 4px rgba(0, 0, 0, .4);
     box-shadow: 0 0 33px 4px rgba(0, 0, 0, .4);
@@ -59,7 +59,7 @@ body, html, .main{
     padding: 10px;
     background-color: #ffffff !important;
 }
-.main{
+.main {
     display: grid;
     grid-template-rows: 10% 80% 10%;
     
@@ -107,7 +107,7 @@ textarea {
     margin: 0 !important;
 }
   
-#question > p, #question > p > strong, #question > table > thead > tr > th, #question > table > tbody > tr > td{
+#question > p, #question > p > strong, #question > table > thead > tr > th, #question > table > tbody > tr > td {
     text-align: left;
     font-family: var(--second-font);
     font-size: larger;
@@ -141,7 +141,7 @@ textarea {
     transform: scale(1.05);
 }
 #back {
-    margin-left: 8px;
+    margin-left: 8px !important;
 }
 table {
     width: 100%;
@@ -152,7 +152,6 @@ table {
     font-family: var(--third-font), monospace;
     padding: 0;
     margin: 0;
-    /*font-size:xx-large;*/
 }
 /* Table borders */
 th, td {
