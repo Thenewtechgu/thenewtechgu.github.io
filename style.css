@@ -79,6 +79,9 @@ textarea {
     height: 100%;
     box-sizing: border-box;
     resize: none;
+
+    font-family: sans-serif;
+    padding: 6px;
 }
 .divider1 {
     display: grid;
