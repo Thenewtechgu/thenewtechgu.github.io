@@ -140,7 +140,9 @@ textarea {
     background-color: #006dc1;
     transform: scale(1.05);
 }
-
+#back {
+    margin-left: 8px;
+}
 table {
     width: 100%;
     border-collapse: collapse; /* Ensures borders are clean */
