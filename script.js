@@ -9,6 +9,7 @@ const backButton = document.getElementById("back");
 const question = document.getElementById("question");
 const ielts = document.getElementById("ielts");
 const fileInput = document.getElementById("file");
+const results = document.getElementById("results");
 let progressing = false;
 
 const HideAll = () => {
@@ -17,6 +18,7 @@ const HideAll = () => {
   ielts.className = "selbox hidden";
   main.className = "selbox mainbox hidden";
   backButton.className = "selector hidden";
+  document.getElementById("results-outer").className = "selbox mainbox hidden";
 };
 const selectIelts = () => {
   type = "IELTS";
@@ -59,6 +61,7 @@ const selWD = () => {
   } else {
     main.className = "selbox mainbox";
     stage = 0;
+    TestForMarked()
     setInterval(timerProgression, 100);
   }
 };
@@ -67,8 +70,18 @@ UpdateWD = () => {
   main.className = "selbox mainbox";
   stage = 0;
   progressing = false;
+  TestForMarked()
   setInterval(timerProgression, 100);
 };
+function TestForMarked() {
+  try {
+    marked.parse("test :)");
+  } catch {
+    alert(
+      "Markdown parser cannot load, which means your experience might not be as good as we intended. Sorry."
+    );
+  }
+}
 let Task = "";
 let questions = [];
 let answers = [];
@@ -108,7 +121,23 @@ const timerProgression = () => {
     } else if (stage == 2) {
       if (!progressing) {
         alert("Results are being processed...");
+        questions = questions.concat([Task]);
+        answers = answers.concat([tbWrite.value]);
         stage = 3;
+        questions.shift();
+        answers.shift();
+        HideAll();
+        document.getElementById("results-outer").className = "selbox mainbox";
+        for (let i = 0; i < questions.length; i++) {
+          getAIResponse(
+            `I'm currently practicing for IELTS, can you review my answer? Please provide detailed feedback, and potential places for improvement.
+            Question:${questions[i]}
+            My answer:
+            ${answers[i]}`
+          ).then((r) => {
+            results.innerHTML += parseAIOutput(r + "\n\n\n");
+          });
+        }
       }
     }
   } else {
@@ -149,7 +178,7 @@ const BeginTimer = (time = 0) => {
   progressing = true;
   cdate = Date.now() + time * 1000;
   id = setInterval(UpdateTimer, 100);
-}
+};
 
 function UpdateTimer() {
   time = Math.floor((cdate - Date.now()) / 1000);
@@ -176,19 +205,33 @@ function submit() {
   cdate = 0;
   progressing = false;
 }
+function parseAIOutput(s) {
+  try {
+    return marked.parse(s);
+  } catch {
+    console.warn("Marked does not work. UI may not be as good as expected.");
+    return s;
+  }
+}
 let lastCall = 0; // Stores the last time the function was called
 const RATE_LIMIT = 60000; // 60 seconds in milliseconds
 let ENABLE_AI = false;
 async function getAIResponse(prompt = "") {
   //debugging, don't need AI *yet*
   if (!ENABLE_AI) {
-    return Promise.resolve(null)
+    return Promise.resolve(
+      `This is a test response from \`\`${prompt.replace(/[*`]/gm, '"')}\`\``
+    );
   }
   const now = Date.now(); // Current timestamp
 
   if (now - lastCall < RATE_LIMIT) {
-    console.warn(`AI request is on cooldown from ${btoa(prompt)}. Wait and try again.`);
-    return Promise.resolve(null); // Return a resolved promise to prevent breaking async code
+    console.warn(
+      `AI request is on cooldown from "${prompt}". Wait and try again.`
+    );
+    return Promise.resolve(
+      `AI request is on cooldown from "${prompt}". Wait and try again.`
+    ); // Return a resolved promise to prevent breaking async code
   }
 
   lastCall = now; // Update the last call time
@@ -230,6 +273,6 @@ const MakeWT = (contest = "IELTS", wanted = "foo", id = "", prefix = "") => {
     `I'm practicing for ${contest}, can you generate a ${wanted} question for me? I don't want any tips, as I'd like this to be a sort of mock test.\nNotes: Please don't use photo diagrams - I heard AI's like you have a hard time drawing them. Tables are OK though.`
   ).then((r) => {
     Task = cleanGeneratedText(r);
-    document.getElementById(id).innerHTML = marked.parse(prefix + Task);
+    document.getElementById(id).innerHTML = parseAIOutput(prefix + Task);
   });
 };
