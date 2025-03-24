@@ -141,7 +141,7 @@ textarea {
 }
 .selector:hover {
     background-color: #006dc1;
-    transform: scale(1.05);
+    transform: scale(1.025);
 }
 #back {
     margin-left: 8px !important;
@@ -151,7 +151,7 @@ table {
     border-collapse: collapse; /* Ensures borders are clean */
     margin: 16px 0;
 }
-#timer,code {
+#timer, code {
     font-family: var(--third-font), monospace !important;
     padding: 0;
     margin: 0;
