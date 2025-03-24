@@ -78,7 +78,7 @@ function TestForMarked() {
     marked.parse("test :)");
   } catch {
     alert(
-      "Markdown parser cannot load, which means your experience might not be as good as we intended. Sorry."
+      "The markdown parser cannot load. Your experience might not be good as intended."
     );
   }
 }
@@ -180,7 +180,7 @@ const BeginTimer = (time = 0) => {
   id = setInterval(UpdateTimer, 100);
 };
 
-function UpdateTimer() {
+const UpdateTimer = () => {
   time = Math.floor((cdate - Date.now()) / 1000);
   if (time <= 0) {
     timer.innerHTML = "0:00";
@@ -201,7 +201,7 @@ function UpdateTimer() {
   minute = (time - second) / 60;
   timer.innerHTML = `${minute}:${second.toString().padStart(2, "0")}`;
 }
-function submit() {
+const submit = () => {
   cdate = 0;
   progressing = false;
 }
@@ -209,7 +209,7 @@ function parseAIOutput(s) {
   try {
     return marked.parse(s);
   } catch {
-    console.warn("Marked does not work. UI may not be as good as expected.");
+    console.warn("Marked does not work. The UI might not be good as expected.");
     return s;
   }
 }
@@ -227,10 +227,10 @@ async function getAIResponse(prompt = "") {
 
   if (now - lastCall < RATE_LIMIT) {
     console.warn(
-      `AI request is on cooldown from "${prompt}". Wait and try again.`
+      `AI request is on cooldown from "${prompt}". Please wait before making another request.`
     );
     return Promise.resolve(
-      `AI request is on cooldown from "${prompt}". Wait and try again.`
+      `AI request is on cooldown from "${prompt}". Please wait before making another request.`
     ); // Return a resolved promise to prevent breaking async code
   }
 
@@ -266,7 +266,7 @@ const cleanGeneratedText = (text = "") => {
   text = text.replace(encouragementRegex, "").trim();
 
   return text;
-};
+}
 
 const MakeWT = (contest = "IELTS", wanted = "foo", id = "", prefix = "") => {
   getAIResponse(
