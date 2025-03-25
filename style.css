@@ -1,5 +1,5 @@
 * {
-    --first-font: Nunito,sans-serif,system-ui;
+    --first-font: Nunito, sans-serif, system-ui;
     --second-font:  serif;
     --third-font: monospace;
     font-variant-ligatures: common-ligatures discretionary-ligatures contextual;
@@ -155,6 +155,9 @@ table {
     font-family: var(--third-font), monospace !important;
     padding: 0;
     margin: 0;
+}
+#enableAI {
+    margin-left: 7.5px;
 }
 /* Table borders */
 th, td {

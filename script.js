@@ -21,10 +21,10 @@ const HideAll = () => {
   backButton.className = "selector hidden";
   enableAI.className = "selector hidden";
   document.getElementById("results-outer").className = "selbox mainbox hidden";
-};
-const turnAIOn=()=>{
-  enableAI.className="selector hidden"
-  ENABLE_AI=true;
+}
+const turnAIOn = () => {
+  enableAI.className = "selector hidden";
+  ENABLE_AI = true;
 }
 const selectIelts = () => {
   type = "IELTS";
@@ -32,25 +32,25 @@ const selectIelts = () => {
   format.className = "selbox";
   title.innerHTML = "IELTS Practice";
   backButton.className = "selector";
-};
+}
 const selectToeic = () => {
   type = "TOEIC";
   HideAll();
   format.className = "selbox";
   title.innerHTML = "TOEIC Practice";
   backButton.className = "selector";
-};
+}
 const goBack = () => {
   HideAll();
   contest.className = "selbox";
   enableAI.className = "selector";
-};
+}
 goBack();
 const fr = new FileReader();
 fr.onload = (e) => {
   const text = e.target.result; // File contents as text
   console.log(text); // Log to console
-};
+}
 fileInput.addEventListener("change", (e) => {
   console.log(fr.readAsText(e.target.files[0]));
 });
@@ -71,7 +71,7 @@ const selWD = () => {
     TestForMarked();
     setInterval(timerProgression, 100);
   }
-};
+}
 UpdateWD = () => {
   HideAll();
   main.className = "selbox mainbox";
@@ -79,7 +79,7 @@ UpdateWD = () => {
   progressing = false;
   TestForMarked();
   setInterval(timerProgression, 100);
-};
+}
 function TestForMarked() {
   try {
     marked.parse("test :)");
@@ -103,7 +103,7 @@ const Question = (content = "", timer = 0) => {
     BeginTimer(timer);
     stage++;
   }
-};
+}
 
 const timerProgression = () => {
   if (type == "IELTS") {
@@ -138,7 +138,7 @@ const timerProgression = () => {
         for (let i = 0; i < questions.length; i++) {
           getAIResponse(
             `I'm currently practicing for IELTS, can you review my answer? Please provide detailed feedback, and potential places for improvement.
-            Question:${questions[i]}
+            Question: ${questions[i]}
             My answer:
             ${answers[i]}`
           ).then((r) => {
@@ -211,7 +211,8 @@ const UpdateTimer = () => {
 const submit = () => {
   cdate = 0;
   progressing = false;
-};
+}
+
 function parseAIOutput(s) {
   try {
     return marked.parse(s);
@@ -220,9 +221,11 @@ function parseAIOutput(s) {
     return s;
   }
 }
+
 let lastCall = 0; // Stores the last time the function was called
 const RATE_LIMIT = 60000; // 60 seconds in milliseconds
 let ENABLE_AI = false;
+
 async function getAIResponse(prompt = "") {
   //debugging, don't need AI *yet*
   if (!ENABLE_AI) {
