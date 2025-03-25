@@ -1,7 +1,7 @@
 * {
-    --first-font: 'Winky Sans', sans-serif, system-ui;
-    --second-font: 'Roboto Serif', serif;
-    --third-font: 'Space Grotesk', sans-serif;
+    --first-font: Nunito,sans-serif,system-ui;
+    --second-font:  serif;
+    --third-font: monospace;
     font-variant-ligatures: common-ligatures discretionary-ligatures contextual;
     font-variant-numeric: tabular-nums;
   

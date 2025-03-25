@@ -10,6 +10,7 @@ const question = document.getElementById("question");
 const ielts = document.getElementById("ielts");
 const fileInput = document.getElementById("file");
 const results = document.getElementById("results");
+const enableAI = document.getElementById("enableAI");
 let progressing = false;
 
 const HideAll = () => {
@@ -18,8 +19,13 @@ const HideAll = () => {
   ielts.className = "selbox hidden";
   main.className = "selbox mainbox hidden";
   backButton.className = "selector hidden";
+  enableAI.className = "selector hidden";
   document.getElementById("results-outer").className = "selbox mainbox hidden";
 };
+const turnAIOn=()=>{
+  enableAI.className="selector hidden"
+  ENABLE_AI=true;
+}
 const selectIelts = () => {
   type = "IELTS";
   HideAll();
@@ -37,8 +43,9 @@ const selectToeic = () => {
 const goBack = () => {
   HideAll();
   contest.className = "selbox";
-  backButton.className = "selector";
+  enableAI.className = "selector";
 };
+goBack();
 const fr = new FileReader();
 fr.onload = (e) => {
   const text = e.target.result; // File contents as text
@@ -61,7 +68,7 @@ const selWD = () => {
   } else {
     main.className = "selbox mainbox";
     stage = 0;
-    TestForMarked()
+    TestForMarked();
     setInterval(timerProgression, 100);
   }
 };
@@ -70,7 +77,7 @@ UpdateWD = () => {
   main.className = "selbox mainbox";
   stage = 0;
   progressing = false;
-  TestForMarked()
+  TestForMarked();
   setInterval(timerProgression, 100);
 };
 function TestForMarked() {
@@ -200,11 +207,11 @@ const UpdateTimer = () => {
   second = time % 60;
   minute = (time - second) / 60;
   timer.innerHTML = `${minute}:${second.toString().padStart(2, "0")}`;
-}
+};
 const submit = () => {
   cdate = 0;
   progressing = false;
-}
+};
 function parseAIOutput(s) {
   try {
     return marked.parse(s);
@@ -266,7 +273,7 @@ const cleanGeneratedText = (text = "") => {
   text = text.replace(encouragementRegex, "").trim();
 
   return text;
-}
+};
 
 const MakeWT = (contest = "IELTS", wanted = "foo", id = "", prefix = "") => {
   getAIResponse(
