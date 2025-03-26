@@ -37,9 +37,6 @@ body {
 body, html, .main {
     height: 100%;
 }
-p {
-    font-size: 15px;
-}
 .selbox {
     display: flex;
     align-items: center;
@@ -116,6 +113,7 @@ textarea {
 #question > p, #question > p > strong, #question > table > thead > tr > th, #question > table > tbody > tr > td {
     text-align: left;
     font-family: var(--second-font);
+    font-size: 22px;
 }
 .qcontain {
     height: 100%;
