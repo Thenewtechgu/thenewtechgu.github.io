@@ -1,9 +1,12 @@
 * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
     --first-font: Nunito, sans-serif, system-ui;
     --second-font: 'Roboto Serif', serif;
     --third-font: 'Space Grotesk', monospace;
     font-variant-ligatures: common-ligatures discretionary-ligatures contextual;
-    font-variant-numeric: tabular-nums;
+    font-variant-numeric: ;
   
     transition: 100ms ease-in-out;
     /*animation: rotation 30s linear infinite;*/
@@ -11,7 +14,7 @@
 html {
     font-family: var(--first-font);
 }
-strong,tr{
+strong, tr {
     font-weight: 400 !important;
 }
 h1, h2, h3, h4, h5, h6 {
@@ -23,10 +26,7 @@ h1, h2, h3, h4, h5, h6 {
     display: none !important;
 }
 body {
-    margin: 0;
-    padding: 0;
-    background:white;
-  
+    background: white;
 }
 body {
     background: radial-gradient(circle at 20% 30%, rgba(183, 253, 255, 0.4), transparent 50%),
@@ -39,6 +39,9 @@ body {
   
 body, html, .main {
     height: 100%;
+}
+p {
+    font-size: 15px;
 }
 .selbox {
     display: flex;
@@ -116,7 +119,6 @@ textarea {
 #question > p, #question > p > strong, #question > table > thead > tr > th, #question > table > tbody > tr > td {
     text-align: left;
     font-family: var(--second-font);
-    font-size: larger;
 }
 .qcontain {
     height: 100%;
