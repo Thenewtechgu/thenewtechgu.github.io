@@ -22,7 +22,7 @@ const HideAll = () => {
   enableAI.className = "selector hidden";
   document.getElementById("results-outer").className = "selbox mainbox hidden";
 }
-const turnAIOn = () => {
+const turnOnAI = () => {
   enableAI.className = "selector hidden";
   ENABLE_AI = true;
 }
