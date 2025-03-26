@@ -3,10 +3,10 @@
     padding: 0;
     box-sizing: border-box;
     --first-font: Nunito, sans-serif, system-ui;
-    --second-font: 'Roboto Serif', serif;
+    --second-font: 'IBM Plex Serif', serif;
     --third-font: 'Space Grotesk', monospace;
     font-variant-ligatures: common-ligatures discretionary-ligatures contextual;
-    font-variant-numeric: ;
+    font-variant-numeric: tabular-nums;
   
     transition: 100ms ease-in-out;
     /*animation: rotation 30s linear infinite;*/
