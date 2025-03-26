@@ -1,4 +1,7 @@
 * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
     --first-font: Nunito, sans-serif, system-ui;
     --second-font: 'Roboto Serif', serif;
     --third-font: 'Space Grotesk', monospace;
@@ -11,6 +14,9 @@
 html {
     font-family: var(--first-font);
 }
+strong, tr {
+    font-weight: 400 !important;
+}
 h1, h2, h3, h4, h5, h6 {
     font-optical-sizing: auto;
     font-weight: 700;
@@ -20,10 +26,7 @@ h1, h2, h3, h4, h5, h6 {
     display: none !important;
 }
 body {
-    margin: 0;
-    padding: 0;
-    background:white;
-  
+    background: white;
 }
 body {
     background: radial-gradient(circle at 20% 30%, rgba(183, 253, 255, 0.4), transparent 50%),
@@ -36,6 +39,9 @@ body {
   
 body, html, .main {
     height: 100%;
+}
+p {
+    font-size: 15px;
 }
 .selbox {
     display: flex;
@@ -113,7 +119,6 @@ textarea {
 #question > p, #question > p > strong, #question > table > thead > tr > th, #question > table > tbody > tr > td {
     text-align: left;
     font-family: var(--second-font);
-    font-size: larger;
 }
 .qcontain {
     height: 100%;
