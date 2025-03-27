@@ -238,7 +238,7 @@ function parseAIOutput(s) {
 }
 
 let lastCall = 0; // Stores the last time the function was called
-const RATE_LIMIT = 60000; // 60 seconds in milliseconds
+const RATE_LIMIT = 100; // 60 seconds in milliseconds
 let ENABLE_AI = false;
 
 async function getAIResponse(prompt = "") {
