@@ -9,7 +9,7 @@ const backButton = document.getElementById("back");
 const question = document.getElementById("question");
 const ielts = document.getElementById("ielts");
 const fileInput = document.getElementById("file");
-const results = document.getElementById("results");
+const results = document.getElementById("results-inner");
 const enableAI = document.getElementById("enableAI");
 let progressing = false;
 
@@ -21,36 +21,36 @@ const HideAll = () => {
   backButton.className = "selector hidden";
   enableAI.className = "selector hidden";
   document.getElementById("results-outer").className = "selbox mainbox hidden";
-}
+};
 const turnOnAI = () => {
   enableAI.className = "selector hidden";
   ENABLE_AI = true;
-}
+};
 const selectIelts = () => {
   type = "IELTS";
   HideAll();
   format.className = "selbox";
   title.innerHTML = "IELTS Practice";
   backButton.className = "selector";
-}
+};
 const selectToeic = () => {
   type = "TOEIC";
   HideAll();
   format.className = "selbox";
   title.innerHTML = "TOEIC Practice";
   backButton.className = "selector";
-}
+};
 const goBack = () => {
   HideAll();
   contest.className = "selbox";
   enableAI.className = "selector";
-}
+};
 goBack();
 const fr = new FileReader();
 fr.onload = (e) => {
   const text = e.target.result; // File contents as text
   console.log(text); // Log to console
-}
+};
 fileInput.addEventListener("change", (e) => {
   console.log(fr.readAsText(e.target.files[0]));
 });
@@ -71,7 +71,7 @@ const selWD = () => {
     TestForMarked();
     setInterval(timerProgression, 100);
   }
-}
+};
 UpdateWD = () => {
   HideAll();
   main.className = "selbox mainbox";
@@ -79,7 +79,7 @@ UpdateWD = () => {
   progressing = false;
   TestForMarked();
   setInterval(timerProgression, 100);
-}
+};
 function TestForMarked() {
   try {
     marked.parse("test :)");
@@ -89,10 +89,11 @@ function TestForMarked() {
     );
   }
 }
+let GenerationInProgress = false;
 let Task = "";
 let questions = [];
 let answers = [];
-const Question = (content = "", timer = 0) => {
+const Question = (content = "") => {
   if (!progressing) {
     console.log(tbWrite.value);
     questions = questions.concat([Task]);
@@ -100,10 +101,10 @@ const Question = (content = "", timer = 0) => {
 
     tbWrite.value = "";
     question.innerHTML = content;
-    BeginTimer(timer);
     stage++;
+    progressing = true;
   }
-}
+};
 
 const timerProgression = () => {
   if (type == "IELTS") {
@@ -112,8 +113,15 @@ const timerProgression = () => {
         if (mode == "2") {
           stage++;
         } else {
-          Question(/*html*/ `Please wait...<br><span class='loader'>`, 20 * 60);
-          MakeWT("IELTS", "Writing Task 1", "question", "Writing Task 1:\n");
+          GenerationInProgress = true;
+          Question(/*html*/ `Please wait...<br><span class='loader'>`);
+          MakeWT(
+            "IELTS",
+            "Writing Task 1",
+            "question",
+            "Writing Task 1:\n",
+            20 * 60
+          );
         }
       }
     } else if (stage == 1) {
@@ -121,8 +129,15 @@ const timerProgression = () => {
         if (mode == "1") {
           stage++;
         } else {
-          Question(/*html*/ `Please wait...<br><span class='loader'>`, 40 * 60);
-          MakeWT("IELTS", "Writing Task 2", "question", "Writing Task 2:\n");
+          GenerationInProgress = true;
+          Question(/*html*/ `Please wait...<br><span class='loader'>`);
+          MakeWT(
+            "IELTS",
+            "Writing Task 2",
+            "question",
+            "Writing Task 2:\n",
+            40 * 60
+          );
         }
       }
     } else if (stage == 2) {
@@ -181,7 +196,7 @@ const timerProgression = () => {
   }
 };
 let id;
-const BeginTimer = (time = 0) => {
+const BeginTimer = (time = 9999) => {
   progressing = true;
   cdate = Date.now() + time * 1000;
   id = setInterval(UpdateTimer, 100);
@@ -211,7 +226,7 @@ const UpdateTimer = () => {
 const submit = () => {
   cdate = 0;
   progressing = false;
-}
+};
 
 function parseAIOutput(s) {
   try {
@@ -230,7 +245,11 @@ async function getAIResponse(prompt = "") {
   //debugging, don't need AI *yet*
   if (!ENABLE_AI) {
     return Promise.resolve(
-      `This is a test response from \`\`${prompt.replace(/[*`]/gm, '"')}\`\``
+      `This is a test response from \`\`${prompt.replace(
+        /[*`]/gm,
+        '"'
+      )}\`\` And here is a very long text to test oveflowing:` +
+        "aaaaaaa ".repeat(1000)
     );
   }
   const now = Date.now(); // Current timestamp
@@ -278,11 +297,21 @@ const cleanGeneratedText = (text = "") => {
   return text;
 };
 
-const MakeWT = (contest = "IELTS", wanted = "foo", id = "", prefix = "") => {
+const MakeWT = (
+  contest = "IELTS",
+  wanted = "foo",
+  id = "",
+  prefix = "",
+  time = 9999
+) => {
+  cdate = 0;
+  timer.innerHTML = "Loading...";
   getAIResponse(
     `I'm practicing for ${contest}, can you generate a ${wanted} question for me? I don't want any tips, as I'd like this to be a sort of mock test.\nNotes: Please don't use photo diagrams - I heard AI's like you have a hard time drawing them. Tables are OK though.`
   ).then((r) => {
+    GenerationInProgress = false;
     Task = cleanGeneratedText(r);
     document.getElementById(id).innerHTML = parseAIOutput(prefix + Task);
+    BeginTimer(time);
   });
 };
