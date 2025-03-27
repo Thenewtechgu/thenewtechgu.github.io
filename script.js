@@ -252,18 +252,7 @@ async function getAIResponse(prompt = "") {
         "aaaaaaa ".repeat(1000)
     );
   }
-  const now = Date.now(); // Current timestamp
 
-  if (now - lastCall < RATE_LIMIT) {
-    console.warn(
-      `AI request is on cooldown from "${prompt}". Please wait before making another request.`
-    );
-    return Promise.resolve(
-      `AI request is on cooldown from "${prompt}". Please wait before making another request.`
-    ); // Return a resolved promise to prevent breaking async code
-  }
-
-  lastCall = now; // Update the last call time
   const apiKey = "AIzaSyACUiew2xvOhoLEQXiUtcqld7xl0BG4YwY"; // Replace with your actual API key
   const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
