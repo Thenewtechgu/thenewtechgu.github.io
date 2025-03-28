@@ -72,7 +72,7 @@ const selWD = () => {
     setInterval(timerProgression, 100);
   }
 };
-UpdateWD = () => {
+const UpdateWD = () => {
   HideAll();
   main.className = "selbox mainbox";
   stage = 0;
@@ -89,7 +89,7 @@ function TestForMarked() {
     );
   }
 }
-let GenerationInProgress = false;
+let generationProgressing = false;
 let Task = "";
 let questions = [];
 let answers = [];
@@ -113,8 +113,8 @@ const timerProgression = () => {
         if (mode == "2") {
           stage++;
         } else {
-          GenerationInProgress = true;
-          Question(/*html*/ `Please wait...<br><span class='loader'>`);
+          generationProgressing = true;
+          Question(`Please wait...<br><span class='loader'>`);
           MakeWT(
             "IELTS",
             "Writing Task 1",
@@ -129,8 +129,8 @@ const timerProgression = () => {
         if (mode == "1") {
           stage++;
         } else {
-          GenerationInProgress = true;
-          Question(/*html*/ `Please wait...<br><span class='loader'>`);
+          generationProgressing = true;
+          Question(`Please wait...<br><span class='loader'>`);
           MakeWT(
             "IELTS",
             "Writing Task 2",
@@ -228,14 +228,14 @@ const submit = () => {
   progressing = false;
 };
 
-function parseAIOutput(s) {
+const parseAIOutput = (s) => {
   try {
     return marked.parse(s);
   } catch {
     console.warn("Marked does not work. The UI might not be good as expected.");
     return s;
   }
-}
+};
 
 let lastCall = 0; // Stores the last time the function was called
 const RATE_LIMIT = 100; // 60 seconds in milliseconds
@@ -298,7 +298,7 @@ const MakeWT = (
   getAIResponse(
     `I'm practicing for ${contest}, can you generate a ${wanted} question for me? I don't want any tips, as I'd like this to be a sort of mock test.\nNotes: Please don't use photo diagrams - I heard AI's like you have a hard time drawing them. Tables are OK though.`
   ).then((r) => {
-    GenerationInProgress = false;
+    generationProgressing = false;
     Task = cleanGeneratedText(r);
     document.getElementById(id).innerHTML = parseAIOutput(prefix + Task);
     BeginTimer(time);
