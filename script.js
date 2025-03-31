@@ -254,7 +254,7 @@ async function getAIResponse(prompt = "") {
   }
 
   const apiKey = "AIzaSyACUiew2xvOhoLEQXiUtcqld7xl0BG4YwY"; // Replace with your actual API key
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/models/gemini-2.5-pro-exp-03-25:generateContent?key=${apiKey}`;
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
   const requestBody = {
     contents: [{ parts: [{ text: prompt }] }],
