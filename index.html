@@ -1,113 +1,142 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>The4BrainStormers</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="normalize.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=home"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Space+Grotesk:wght@300..700&display=swap"
-    />
-    <style>
-      .material-symbols-outlined {
-        font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
-        font-family: "Material Symbols Outlined";
-      }
-    </style>
-  </head>
-  <body>
-    <div class="main">
-      <header></header>
-      <div class="userface">
-        <div class="selbox" id="contest">
-          <div class="selbox-inner">
-            <h3>The4BrainStormers</h3>
-            <p>Welcome to The4BrainStormers! Let's start practicing!</p>
-            <p>What would you like to practice for?</p>
-            <div class="grid">
-              <button class="selector" onclick="selectIelts()">IELTS</button>
-              <button class="selector" onclick="selectToeic()">TOEIC</button>
-            </div>
-          </div>
-        </div>
-        <div class="selbox hidden" id="format">
-          <div class="selbox-inner">
-            <h3 id="title"></h3>
-            <p>IELTS Practice</p>
-            <div class="grid">
-              <input
-                title="Select"
-                type="file"
-                name="file"
-                id="file"
-                class="selector"
-              />
-              <button class="selector" onclick="selWD()">Write Directly</button>
-            </div>
-          </div>
-        </div>
-        <div class="selbox hidden" id="ielts">
-          <div class="selbox-inner">
-            <h3>Choose one task.</h3>
-            <p></p>
-            <button class="selector" onclick="mode='1'; UpdateWD()">
-              Writing Task 1
-            </button>
-            <button class="selector" onclick="mode='2'; UpdateWD()">
-              Writing Task 2
-            </button>
-            <button class="selector" onclick="mode='both'; UpdateWD()">
-              Both Tasks
-            </button>
-          </div>
-        </div>
-        <div class="selbox mainbox hidden" id="main">
-          <div class="mainbox-inner divider1">
-            <div>
-              <textarea title="Input" name="" id="tbWrite"></textarea>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>The4BrainStormers</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="style.css" />
+        <link rel="stylesheet" href="normalize.css" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=home"
+        />
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Space+Grotesk:wght@300..700&display=swap"
+        />
+        <style>
+            .material-symbols-outlined {
+                font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0,
+                    'opsz' 24;
+                font-family: 'Material Symbols Outlined';
+            }
+        </style>
+    </head>
+    <body>
+        <div class="main">
+            <header></header>
+            <div class="userface">
+                <div class="selbox" id="contest">
+                    <div class="selbox-inner">
+                        <h3>The4BrainStormers</h3>
+                        <p>
+                            Welcome to The4BrainStormers! Let's start
+                            practicing!
+                        </p>
+                        <p>What would you like to practice for?</p>
+                        <div class="grid">
+                            <button class="selector" onclick="selectIelts()">
+                                IELTS
+                            </button>
+                            <button class="selector" onclick="selectToeic()">
+                                TOEIC
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="selbox hidden" id="format">
+                    <div class="selbox-inner">
+                        <h3 id="title"></h3>
+                        <p>IELTS Practice</p>
+                        <div class="grid">
+                            <input
+                                title="Select"
+                                type="file"
+                                name="file"
+                                id="file"
+                                class="selector"
+                            />
+                            <button class="selector" onclick="selWD()">
+                                Write Directly
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="selbox hidden" id="ielts">
+                    <div class="selbox-inner">
+                        <h3>Choose one task.</h3>
+                        <p></p>
+                        <button class="selector" onclick="mode='1'; UpdateWD()">
+                            Writing Task 1
+                        </button>
+                        <button class="selector" onclick="mode='2'; UpdateWD()">
+                            Writing Task 2
+                        </button>
+                        <button
+                            class="selector"
+                            onclick="mode='both'; UpdateWD()"
+                        >
+                            Both Tasks
+                        </button>
+                    </div>
+                </div>
+                <div class="selbox mainbox hidden" id="main">
+                    <div class="mainbox-inner divider1">
+                        <div>
+                            <textarea
+                                title="Input"
+                                name=""
+                                id="tbWrite"
+                            ></textarea>
+                        </div>
+
+                        <div class="qcontain">
+                            <h3 id="question">Question: [foo]</h3>
+                        </div>
+                        <div id="tcontain">
+                            <h3>Time Remaining</h3>
+                            <h1 id="timer">60:00</h1>
+                        </div>
+                        <div>
+                            <br /><button class="selector" onclick="submit()">
+                                Submit
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="selbox mainbox hidden" id="results-outer">
+                    <div class="mainbox-inner" id="results">
+                        <h1>
+                            Waiting for AI's response. Duration may differ based
+                            on your Internet speed.
+                        </h1>
+                        <div id="results-inner"></div>
+                    </div>
+                </div>
             </div>
 
-            <div class="qcontain"><h3 id="question">Question: [foo]</h3></div>
-            <div id="tcontain">
-              <h3>Time Remaining</h3>
-              <h1 id="timer">60:00</h1>
-            </div>
-            <div>
-              <br /><button class="selector" onclick="submit()">Submit</button>
-            </div>
-          </div>
+            <footer>
+                <button
+                    title="GoBack"
+                    class="selector"
+                    onclick="goBack()"
+                    id="back"
+                >
+                    <span class="material-symbols-outlined"></span>
+                </button>
+                <button
+                    class="selector hidden"
+                    onclick="turnOnAI()"
+                    id="enableAI"
+                >
+                    Turn on AI
+                </button>
+            </footer>
         </div>
-        <div class="selbox mainbox hidden" id="results-outer">
-          <div class="mainbox-inner" id="results">
-            <h1>
-              Waiting for AI's response. Duration may differ based on your
-              Internet speed.
-            </h1>
-            <div id="results-inner"></div>
-          </div>
-        </div>
-      </div>
-
-      <footer>
-        <button class="selector" onclick="goBack()" id="back">
-          <span class="material-symbols-outlined"> </span>
-        </button>
-        <button class="selector hidden" onclick="turnOnAI()" id="enableAI">
-          Turn on AI
-        </button>
-      </footer>
-    </div>
-    <div></div>
-  </body>
-  <script src="script.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    </body>
+    <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/lib/marked.umd.min.js"></script>
 </html>
