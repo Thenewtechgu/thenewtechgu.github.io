@@ -18,7 +18,7 @@ function CheckForBox(){
   enableAI=checkbox.checked;
 }
   */
-setInterval(CheckForBox,1000)
+//setInterval(CheckForBox,1000)
 const HideAll = () => {
     contest.className = 'selbox hidden';
     format.className = 'selbox hidden';
