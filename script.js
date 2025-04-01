@@ -10,12 +10,14 @@ const question = document.getElementById("question");
 const ielts = document.getElementById("ielts");
 const fileInput = document.getElementById("file");
 const results = document.getElementById("results-inner");
-const checkbox = document.getElementById("toggle");
+//const checkbox = document.getElementById("toggle");
 let progressing = false;
-let enableAI=true;
+//let enableAI=true;
+/*
 function CheckForBox(){
   enableAI=checkbox.checked;
 }
+  */
 setInterval(CheckForBox,1000)
 const HideAll = () => {
     contest.className = 'selbox hidden';
