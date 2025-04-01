@@ -88,12 +88,16 @@ function getBase64FromImageUrl(url, callback) {
     })
     .catch((error) => console.error("Fetch error: ", error));
 }
-function MakeTOEICQuestion() {
-  let question = TOEICS[Math.floor(TOEICS.length() * Math.random())];
+let curr = "";
+function MakeTOEICQuestion(task, result) {
+  let question = TOEICS[Math.floor(TOEICS.length * (Math.random() * 0.99))];
+  curr = question.split(/(?=[A-Z])/);
   getBase64FromImageUrl(
     `Questions/TOEIC/Part 1 (Questions 1-5)/${question}.png`,
     (r) => {
-      console.log(r);
+      document.getElementById(
+        result
+      ).innerHTML = /*html*/ `Writing Task ${task}:<br>Describe the following image using the given words<br><img src="${r}"><br><h1>${curr}</h1>`;
     }
   );
 }
@@ -216,19 +220,39 @@ const timerProgression = () => {
     }
   } else {
     if (stage == 0) {
-      Question("Question 1: Picture", 60);
+      if (!progressing) {
+        Question("Question 1: Picture");
+        MakeTOEICQuestion("1", "question");
+        BeginTimer(60);
+      }
     }
     if (stage == 1) {
-      Question("Question 2: Picture", 60);
+      if (!progressing) {
+        Question("Question 2: Picture");
+        MakeTOEICQuestion("2", "question");
+        BeginTimer(60);
+      }
     }
     if (stage == 2) {
-      Question("Question 3: Picture", 60);
+      if (!progressing) {
+        Question("Question 3: Picture");
+        MakeTOEICQuestion("3", "question");
+        BeginTimer(60);
+      }
     }
     if (stage == 3) {
-      Question("Question 4: Picture", 60);
+      if (!progressing) {
+        Question("Question 4: Picture");
+        MakeTOEICQuestion("4", "question");
+        BeginTimer(60);
+      }
     }
     if (stage == 4) {
-      Question("Question 5: Picture", 60);
+      if (!progressing) {
+        Question("Question 5: Picture");
+        MakeTOEICQuestion("5", "question");
+        BeginTimer(60);
+      }
     }
     if (stage == 5) {
       Question("Question 6: Written Request", 120);
