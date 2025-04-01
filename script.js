@@ -1,17 +1,22 @@
-let type = '';
-const contest = document.getElementById('contest');
-const format = document.getElementById('format');
-const main = document.getElementById('main');
-const title = document.getElementById('title');
-const timer = document.getElementById('timer');
-const tbWrite = document.getElementById('tbWrite');
-const backButton = document.getElementById('back');
-const question = document.getElementById('question');
-const ielts = document.getElementById('ielts');
-const fileInput = document.getElementById('file');
-const results = document.getElementById('results-inner');
+let type = "";
+const contest = document.getElementById("contest");
+const format = document.getElementById("format");
+const main = document.getElementById("main");
+const title = document.getElementById("title");
+const timer = document.getElementById("timer");
+const tbWrite = document.getElementById("tbWrite");
+const backButton = document.getElementById("back");
+const question = document.getElementById("question");
+const ielts = document.getElementById("ielts");
+const fileInput = document.getElementById("file");
+const results = document.getElementById("results-inner");
+const checkbox = document.getElementById("toggle");
 let progressing = false;
-
+let enableAI=true;
+function CheckForBox(){
+  enableAI=checkbox.checked;
+}
+setInterval(CheckForBox,1000)
 const HideAll = () => {
     contest.className = 'selbox hidden';
     format.className = 'selbox hidden';
