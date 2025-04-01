@@ -8,6 +8,9 @@
     transition: 100ms ease-in-out;
     /*animation: rotation 30s linear infinite;*/
 }
+.serif{
+	font-family: var(--second-font);
+}
 html {
     font-family: var(--first-font);
 }
@@ -182,7 +185,20 @@ td {
     padding: 8px; /* Space inside cells */
     text-align: left;
 }
-
+header{
+	height:20vh;
+	font-size: x-large;
+}
+.mid{
+	text-align: center;
+}
+.right{
+	text-align: right;
+}
+img{
+	height:20vh;
+	width:auto;
+}
 /* Table header styling */
 th {
     background-color: #f4f4f4; /* Light gray header background */
@@ -204,6 +220,12 @@ tr:nth-child(even) {
     box-sizing: border-box;
     animation: rotation 450ms linear infinite;
 }
+.grid3{
+	height:inherit;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+}
+
 #toggle{
 	opacity: 0;
 	cursor: pointer;
