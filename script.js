@@ -1,4 +1,23 @@
 let type = "";
+let TOEICS=`AtBreathtaking
+BookshelfLibrary
+BreakfastToast
+BroomAutumn
+CashierItems
+CheckupX-ray
+ChefKitchen
+ColleaguesBrainstorm
+FallBlock
+FamilyBackyard
+generateNames
+GuitarPark
+LaptopCoffee shop
+LaptopOffice
+PaintbrushCanvas
+StudentLaboratory
+StudentsHomework
+SuitcaseAirport
+UmbrellaRainy`.split("\n")
 const contest = document.getElementById("contest");
 const format = document.getElementById("format");
 const main = document.getElementById("main");
@@ -45,6 +64,9 @@ const goBack = () => {
     HideAll();
     contest.className = 'selbox';
 };
+function MakeTOEICQuestion(){
+  let question=TOEICS[Math.floor(TOEICS.length()*Math.random())]
+}
 goBack();
 const fr = new FileReader();
 fr.onload = (e) => {
