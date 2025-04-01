@@ -258,6 +258,7 @@ async function getAIResponse(prompt = "") {
 
   const requestBody = {
     contents: [{ parts: [{ text: prompt }] }],
+    
   };
 
   const response = await fetch(url, {
