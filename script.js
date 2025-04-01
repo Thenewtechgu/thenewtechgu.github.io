@@ -257,18 +257,30 @@ const timerProgression = () => {
       }
     }
     if (stage == 5) {
+      //skipped
+      stage++;
       Question("Question 6: Written Request", 120);
     }
     if (stage == 6) {
+      //skipped
+      stage++;
       Question("Question 7: Written Request", 120);
     }
     if (stage == 7) {
+      //skipped
+      stage++;
       Question("Question 8: Opinion Essay", 300);
     }
     if (stage == 8) {
       if (!progressing) {
         alert("Results are being processed...");
         stage = 9999;
+        questions = questions.concat([Task]);
+        answers = answers.concat([tbWrite.value]);
+        questions.shift();
+        answers.shift();
+        HideAll();
+        document.getElementById("results-outer").className = "selbox mainbox";
       }
     }
   }
