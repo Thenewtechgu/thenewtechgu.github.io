@@ -19,8 +19,7 @@
         />
         <style>
             .material-symbols-outlined {
-                font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0,
-                    'opsz' 24;
+                font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
                 font-family: 'Material Symbols Outlined';
             }
         </style>
@@ -31,19 +30,12 @@
             <div class="userface">
                 <div class="selbox" id="contest">
                     <div class="selbox-inner">
-                        <h3>The4BrainStormers</h3>
-                        <p>
-                            Welcome to The4BrainStormers! Let's start
-                            practicing!
-                        </p>
+                        <h3>WriteMaster</h3>
+                        <p>Welcome to WriteMaster! Let's start practicing!</p>
                         <p>What would you like to practice for?</p>
                         <div class="grid">
-                            <button class="selector" onclick="selectIelts()">
-                                IELTS
-                            </button>
-                            <button class="selector" onclick="selectToeic()">
-                                TOEIC
-                            </button>
+                            <button class="selector" onclick="selectIelts()">IELTS</button>
+                            <button class="selector" onclick="selectToeic()">TOEIC</button>
                         </div>
                     </div>
                 </div>
@@ -59,9 +51,7 @@
                                 id="file"
                                 class="selector"
                             />
-                            <button class="selector" onclick="selWD()">
-                                Write Directly
-                            </button>
+                            <button class="selector" onclick="selWD()">Write Directly</button>
                         </div>
                     </div>
                 </div>
@@ -75,10 +65,7 @@
                         <button class="selector" onclick="mode='2'; UpdateWD()">
                             Writing Task 2
                         </button>
-                        <button
-                            class="selector"
-                            onclick="mode='both'; UpdateWD()"
-                        >
+                        <button class="selector" onclick="mode='both'; UpdateWD()">
                             Both Tasks
                         </button>
                     </div>
@@ -86,11 +73,7 @@
                 <div class="selbox mainbox hidden" id="main">
                     <div class="mainbox-inner divider1">
                         <div>
-                            <textarea
-                                title="Input"
-                                name=""
-                                id="tbWrite"
-                            ></textarea>
+                            <textarea title="Input" name="" id="tbWrite"></textarea>
                         </div>
 
                         <div class="qcontain">
@@ -100,32 +83,28 @@
                             <h3>Time Remaining</h3>
                             <h1 id="timer">60:00</h1>
                         </div>
-                        <div>
-                            <br /><button class="selector" onclick="submit()">
-                                Submit
-                            </button>
-                        </div>
+                        <div><br /><button class="selector" onclick="submit()">Submit</button></div>
                     </div>
                 </div>
                 <div class="selbox mainbox hidden" id="results-outer">
                     <div class="mainbox-inner" id="results">
                         <h1>
-                            Waiting for AI's response. Duration may differ based
-                            on your Internet speed.
+                            Waiting for AI's response. Duration may differ based on your Internet
+                            speed.
                         </h1>
                         <div id="results-inner"></div>
                     </div>
                 </div>
             </div>
 
-      <footer>
-        <button class="selector" onclick="goBack()" id="back">
-          <span class="material-symbols-outlined"> </span>
-        </button>
-      </footer>
-    </div>
-    <div></div>
-  </body>
-  <script src="script.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+            <footer>
+                <button class="selector" onclick="goBack()" id="back">
+                    <span class="material-symbols-outlined"> </span>
+                </button>
+            </footer>
+        </div>
+        <div></div>
+    </body>
+    <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </html>
