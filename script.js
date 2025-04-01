@@ -91,15 +91,17 @@ function getBase64FromImageUrl(url, callback) {
 let curr = "";
 function MakeTOEICQuestion(task, result) {
   let question = TOEICS[Math.floor(TOEICS.length * (Math.random() * 0.99))];
-  curr = question.split(/(?=[A-Z])/);
+  curr = question.split(/(?=[A-Z])/).join("/");
   getBase64FromImageUrl(
     `Questions/TOEIC/Part 1 (Questions 1-5)/${question}.png`,
     (r) => {
       document.getElementById(
         result
       ).innerHTML = /*html*/ `Writing Task ${task}:<br>Describe the following image using the given words<br><img src="${r}"><br><h1>${curr}</h1>`;
+      Task=[`Writing Task ${task}:\nDescribe the following image using the following words: ${curr}.`,r.split(',')[1]]
     }
   );
+  
 }
 goBack();
 const fr = new FileReader();
