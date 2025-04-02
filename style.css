@@ -8,8 +8,8 @@
     transition: 100ms ease-in-out;
     /*animation: rotation 30s linear infinite;*/
 }
-.serif{
-	font-family: var(--second-font);
+.serif {
+    font-family: var(--second-font);
 }
 html {
     font-family: var(--first-font);
@@ -185,19 +185,19 @@ td {
     padding: 8px; /* Space inside cells */
     text-align: left;
 }
-header{
-	height:20vh;
-	font-size: x-large;
+header {
+    height: 20vh;
+    font-size: x-large;
 }
-.mid{
-	text-align: center;
+.mid {
+    text-align: center;
 }
-.right{
-	text-align: right;
+.right {
+    text-align: right;
 }
-img{
-	height:20vh;
-	width:auto;
+img {
+    height: 20vh;
+    width: auto;
 }
 /* Table header styling */
 th {
@@ -220,41 +220,39 @@ tr:nth-child(even) {
     box-sizing: border-box;
     animation: rotation 450ms linear infinite;
 }
-.grid3{
-	height:inherit;
-	display: grid;
-	grid-template-columns: 1fr 1fr 1fr;
+.grid3 {
+    height: inherit;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
 }
 
-#toggle{
-	opacity: 0;
-	cursor: pointer;
-	z-index: 999999999;
-	
+#toggle {
+    opacity: 0;
+    cursor: pointer;
+    z-index: 999999999;
 }
-.toggle{
-	
-	display: flex;
-	width:100px;
-	height:50px;
-	background-color:#0090ff;
-	border-radius: 50px;
+.toggle {
+    display: flex;
+    width: 100px;
+    height: 50px;
+    background-color: #0090ff;
+    border-radius: 50px;
 }
-#toggle-slider{
-	display:block;
-	width:40px;
-	height:40px;
-	border-radius: 40px;
+#toggle-slider {
+    display: block;
+    width: 40px;
+    height: 40px;
+    border-radius: 40px;
 }
-input#toggle{
-	height:50px;
-	width:100px;
+input#toggle {
+    height: 50px;
+    width: 100px;
 }
-#toggle-slider{
-	position: absolute;
-	background-color: white;
-	transition: 100ms;
-	transform:translateX(5px) translateY(5px);
+#toggle-slider {
+    position: absolute;
+    background-color: white;
+    transition: 100ms;
+    transform: translateX(5px) translateY(5px);
 }
 input:checked + #toggle-slider {
 	transform:translateY(5px) translateX(50px);
