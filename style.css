@@ -259,11 +259,11 @@ input#toggle{
 input:checked + #toggle-slider {
 	transform:translateY(5px) translateX(50px);
   }
-/* @keyframes rotation {
+ @keyframes rotation {
   0% {
     transform: rotate(0deg);
   }
   100% {
     transform: rotate(360deg);
   }
-} */
+} 

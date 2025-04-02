@@ -1,16 +1,4 @@
 let type = "";
-function cbd() {
-  console.log(`     _______  ________    ________    __________
-    /CCCCCCC  BBBBBBBB\\   DDDDDDDD\\   ΣΣΣΣΣΣΣΣΣΣ
-   /CC/       BB|    \\B\\  DD|   \\DD\\  \\Σ\\       
-  /CC/        BBL____/B/  DD|    \\D|   \\Σ\\     
- (CC(         BBBBBBBB(   DD|    |D|    )Σ)      
-  \\CC\\        BB|    \\B\\  DD|    /D|   /Σ/     
-   \\CC\\_____  BBL____/B/  DDL___/DD/  /ΣL_______
-    \\CCCCCCC  BBBBBBBB/   DDDDDDDD/   ΣΣΣΣΣΣΣΣΣΣ
-This was built using the free version of the CBDSIGMA library
-To remove this message, send 0VND to cbdsigmadevsinvn@cbdsigma.example.did.you.realize.this.isnt.real.com.vn.org.gov.edu.sigma.what`);
-}
 let TOEICS = `AtBreathtaking
 BookshelfLibrary
 BreakfastToast
@@ -57,7 +45,7 @@ const HideAll = () => {
   main.className = "selbox mainbox hidden";
   backButton.className = "selector hidden";
   document.getElementById("results-outer").className = "selbox mainbox hidden";
-  cbd();
+  //cbd();
 };
 const selectIelts = () => {
   type = "IELTS";
@@ -65,6 +53,7 @@ const selectIelts = () => {
   format.className = "selbox";
   title.innerHTML = "IELTS Practice";
   backButton.className = "selector";
+  selWD();
 };
 const selectToeic = () => {
   type = "TOEIC";
@@ -72,6 +61,7 @@ const selectToeic = () => {
   format.className = "selbox";
   title.innerHTML = "TOEIC Practice";
   backButton.className = "selector";
+  selWD();
 };
 const goBack = () => {
   HideAll();
@@ -91,17 +81,19 @@ function getBase64FromImageUrl(url, callback) {
 let curr = "";
 function MakeTOEICQuestion(task, result) {
   let question = TOEICS[Math.floor(TOEICS.length * (Math.random() * 0.99))];
-  curr = question.split(/(?=[A-Z])/).join("/");
+  curr = question.split(/(?=[A-Z])/).join(" , ");
   getBase64FromImageUrl(
     `Questions/TOEIC/Part 1 (Questions 1-5)/${question}.png`,
     (r) => {
       document.getElementById(
         result
       ).innerHTML = /*html*/ `Writing Task ${task}:<br>Describe the following image using the given words<br><img src="${r}"><br><h1>${curr}</h1>`;
-      Task=[`Writing Task ${task}:\nDescribe the following image using the following words: ${curr}.`,r.split(',')[1]]
+      Task = [
+        `Writing Task ${task}:\nDescribe the following image using the following words: ${curr}.`,
+        r.split(",")[1],
+      ];
     }
   );
-  
 }
 goBack();
 const fr = new FileReader();
@@ -258,18 +250,54 @@ const timerProgression = () => {
     }
     if (stage == 5) {
       //skipped
-      stage++;
-      Question("Question 6: Written Request", 120);
+      //stage++;
+      if (!progressing) {
+        generationProgressing = true;
+        Question(`Please wait...<br><span class='loader'>`);
+        MakeWT(
+          "TOEIC",
+          "Writing Task 6 (Reply to a written request)",
+          "question",
+          "Writing Task 6:\n",
+          40 * 60
+        );
+        BeginTimer(40 * 60);
+      }
     }
     if (stage == 6) {
       //skipped
-      stage++;
-      Question("Question 7: Written Request", 120);
+      //stage++;
+      //Question(`Please wait...<br><span class='loader'>`);
+      if (!progressing) {
+        generationProgressing = true;
+        Question(`Please wait...<br><span class='loader'>`);
+        MakeWT(
+          "TOEIC",
+          "Writing Task 7 (Reply to a written request)",
+          "question",
+          "Writing Task 7:\n",
+          40 * 60,
+          "Try to match real tests as closely as possible."
+        );
+        BeginTimer(40 * 60);
+      }
     }
     if (stage == 7) {
       //skipped
-      stage++;
-      Question("Question 8: Opinion Essay", 300);
+      //stage++;
+      if (!progressing) {
+        generationProgressing = true;
+        Question(`Please wait...<br><span class='loader'>`);
+        MakeWT(
+          "TOEIC",
+          "Writing Task 8 (Express your opinions in the form of an essay)",
+          "question",
+          "Writing Task 8:\n",
+          40 * 60,
+          "Try to match real tests as closely as possible."
+        );
+        BeginTimer(40 * 60);
+      }
     }
     if (stage == 8) {
       if (!progressing) {
@@ -407,12 +435,13 @@ const MakeWT = (
   wanted = "foo",
   id = "",
   prefix = "",
-  time = 9999
+  time = 9999,
+  suffix = "Notes: Please don't use photo diagrams - I heard AI's like you have a hard time drawing them. Tables are OK though."
 ) => {
   cdate = 0;
   timer.innerHTML = "Loading...";
   getAIResponse(
-    `I'm practicing for ${contest}, can you generate a ${wanted} question for me? I don't want any tips, as I'd like this to be a sort of mock test.\nNotes: Please don't use photo diagrams - I heard AI's like you have a hard time drawing them. Tables are OK though.`
+    `I'm practicing for ${contest}, can you generate a ${wanted} question for me? I don't want any tips/directions, as I'd like this to be a sort of mock test.\n ${suffix}`
   ).then((r) => {
     generationProgressing = false;
     Task = cleanGeneratedText(r);
