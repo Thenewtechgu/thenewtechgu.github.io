@@ -57,7 +57,6 @@ const HideAll = () => {
     main.className = 'selbox mainbox hidden';
     backButton.className = 'selector hidden';
     document.getElementById('results-outer').className = 'selbox mainbox hidden';
-    cbd();
 };
 const selectIelts = () => {
     type = 'IELTS';
