@@ -29,6 +29,7 @@ const question = document.getElementById('question');
 const ielts = document.getElementById('ielts');
 const fileInput = document.getElementById('file');
 const results = document.getElementById('results-inner');
+const header = document.getElementById('header');
 //const checkbox = document.getElementById("toggle");
 let progressing = false;
 //let enableAI=true;
@@ -81,53 +82,23 @@ function getBase64FromImageUrl(url, callback) {
 let curr = '';
 
 function MakeTOEICQuestion(task, result) {
-    // 1. Check if all questions have already been used.
-    if (TOEICS_USED.length >= TOEICS.length) {
-        console.error('All TOEIC questions have been used in this session.');
-        // Display a message to the user instead of generating a question
-        document.getElementById(
-            result,
-        ).innerHTML = /*html*/ `Question ${task}:<br>No more unique picture questions available for this session.`;
-        // Set Task to something safe or handle this state appropriately in timerProgression
-        Task = [`No more unique questions available.`, null];
-        // Potentially set progressing = false here if needed immediately
-        // progressing = false;
-        return; // Exit the function
+    let question = TOEICS[Math.floor(TOEICS.length * (Math.random() * 0.99))];
+    while (TOEICS_USED.includes(question)) {
+        question = TOEICS[Math.floor(TOEICS.length * (Math.random() * 0.99))];
     }
-
-    // 2. Filter the main TOEICS list to get only the unused questions.
-    const availableQuestions = TOEICS.filter((q) => !TOEICS_USED.includes(q));
-
-    // 3. Select a random question from the *available* list.
-    //    The old while loop is no longer needed.
-    //    Math.random() is exclusive of 1, so floor(length * random) is safe.
-    let question = availableQuestions[Math.floor(availableQuestions.length * Math.random())];
-
-    // 4. Add the chosen question to the used list.
-    //    Using push is slightly more conventional for adding a single item.
-    TOEICS_USED.push(question);
-
-    // 5. Continue with the rest of the original logic to display the question.
+    TOEICS_USED = TOEICS_USED.concat([question]);
     curr = question
         .split(/(?=[A-Z])/)
-        .join(', ')
+        .join(',')
         .toLowerCase();
-
     getBase64FromImageUrl(`Questions/TOEIC/Part 1 (Questions 1-5)/${question}.png`, (r) => {
-        const base64ImageData = r.split(',')[1]; // Extract only the Base64 data part
         document.getElementById(
             result,
-        ).innerHTML = /*html*/ `Question ${task}:<br>Describe the following image using the given words<br><img src="${r}"><br><h1>${curr}</h1>`;
-
-        // Store the prompt text and the base64 image data
+        ).innerHTML = /*html*/ `Writing Task ${task}:<br>Describe the following image using the given words<br><img src="${r}"><br><h1>${curr}</h1>`;
         Task = [
-            `Question ${task}:\nDescribe the following image in one sentence using the following words: ${curr}.`,
-            base64ImageData, // Store the image data for potential AI review
+            `Writing Task ${task}:\nDescribe the following image in one sentence using the following words: ${curr}.`,
+            r.split(',')[1],
         ];
-        // Ensure any state related to loading/progressing is correctly updated after the async fetch completes
-        // Example: If 'progressing' was set true before calling MakeTOEICQuestion,
-        // and needs to be false *after* the question is displayed, do it here.
-        // progressing = false; // Depending on your overall flow.
     });
 }
 goBack();
@@ -153,6 +124,7 @@ const selWD = () => {
     } else {
         main.className = 'selbox mainbox';
         stage = 0;
+        header.className = 'hidden';
         TestForMarked();
         setInterval(timerProgression, 100);
     }
@@ -162,6 +134,7 @@ const UpdateWD = () => {
     main.className = 'selbox mainbox';
     stage = 0;
     progressing = false;
+    header.className = 'hidden';
     TestForMarked();
     setInterval(timerProgression, 100);
 };
@@ -354,9 +327,9 @@ const timerProgression = () => {
         }
     }
 };
-alert(
-    'Due to testing purposes, the AI will be temporarily disabled. It is expected to be turned back on by Friday.',
-);
+//alert(
+//    'Due to testing purposes, the AI will be temporarily disabled. It is expected to be turned back on by Friday.',
+//);
 let id;
 const BeginTimer = (time = 9999) => {
     progressing = true;
@@ -420,7 +393,7 @@ let lastCall = 0; // Stores the last time the function was called
 const RATE_LIMIT = 100; // 60 seconds in milliseconds
 
 async function getAIResponse(prompt = '') {
-    return Promise.resolve('im sorry but ai has been disabled. you asked ' + prompt);
+    //return Promise.resolve('im sorry but ai has been disabled. you asked ' + prompt);
     const apiKey = 'AIzaSyACUiew2xvOhoLEQXiUtcqld7xl0BG4YwY'; // Replace with your actual API key
     const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
@@ -445,7 +418,7 @@ async function getAIResponse(prompt = '') {
     return data.candidates[0].content.parts[0].text;
 }
 async function getAIResponseWithImage(prompt = '', picture = '') {
-    return Promise.resolve('im sorry but ai has been disabled. you asked ' + prompt);
+    //return Promise.resolve('im sorry but ai has been disabled. you asked ' + prompt);
     const apiKey = 'AIzaSyACUiew2xvOhoLEQXiUtcqld7xl0BG4YwY'; // Replace with your actual API key
     const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 

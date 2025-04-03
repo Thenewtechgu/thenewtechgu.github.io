@@ -4,9 +4,9 @@
     --third-font: 'Space Grotesk', monospace;
     font-variant-ligatures: common-ligatures discretionary-ligatures contextual;
     font-variant-numeric: tabular-nums;
-
+    /**/
     transition: 100ms ease-in-out;
-    /*animation: rotation 30s linear infinite;*/
+    /*animation: rotation 50000s linear infinite;*/ 
 }
 .serif {
     font-family: var(--second-font);
@@ -41,6 +41,7 @@ body {
     background-color: #f7f7f7; /* Light base color */
     min-height: 100vh;
     background-attachment: fixed;
+    overflow:hidden;
 }
 #results {
     height: inherit;
@@ -151,11 +152,11 @@ textarea {
         grid-template-rows: 1fr 1fr;
         grid-template-columns: 1fr;
     }
-    header > * > .mid,
-    header > * > .right {
+    #header > * > .mid,
+    #header > * > .right {
         display: none;
     }
-    header > * > .left {
+    #header > * > .left {
         display: flex;
     }
     .phone-only {
@@ -250,10 +251,10 @@ tr:nth-child(even) {
     box-sizing: border-box;
     animation: rotation 450ms linear infinite;
 }
-header > * > .left {
-    transform: scale(2) translateX(120px) translateY(10px);
+#header > * > .left {
+    transform: scale(2) translateX(100px) translateY(10px) ;
 }
-header > * > .right {
+#header > * > .right {
     transform: scale(0.75);
 }
 .tabs {
