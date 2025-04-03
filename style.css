@@ -6,7 +6,7 @@
     font-variant-numeric: tabular-nums;
     /**/
     transition: 100ms ease-in-out;
-    /*animation: rotation 50000s linear infinite;*/ 
+    /*animation: rotation 50000s linear infinite;*/
 }
 .serif {
     font-family: var(--second-font);
@@ -41,7 +41,7 @@ body {
     background-color: #f7f7f7; /* Light base color */
     min-height: 100vh;
     background-attachment: fixed;
-    overflow:hidden;
+    overflow: hidden;
 }
 #results {
     height: inherit;
@@ -252,7 +252,7 @@ tr:nth-child(even) {
     animation: rotation 450ms linear infinite;
 }
 #header > * > .left {
-    transform: scale(2) translateX(100px) translateY(10px) ;
+    transform: scale(2) translateX(100px) translateY(10px);
 }
 #header > * > .right {
     transform: scale(0.75);
