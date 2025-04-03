@@ -175,7 +175,7 @@ textarea {
 .phone-only {
   display: none;
 }
-#results {
+#results,#toeic1,#toeic2,#toeic3,#toeic4,#toeic5,#toeic6,#toeic7,#toeic8 {
   text-align: justify;
   text-justify: auto;
 }
