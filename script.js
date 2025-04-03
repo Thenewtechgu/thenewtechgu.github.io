@@ -83,8 +83,7 @@ let curr = '';
 function MakeTOEICQuestion(task, result) {
   
   let question = TOEICS[Math.floor(TOEICS.length * (Math.random() * 0.99))];
-  const TemporaryFunctionToMakeSureDuplicateFindingWorks=r=>{r==question};
-  while(TOEICS_USED.find(TemporaryFunctionToMakeSureDuplicateFindingWorks)!=undefined){
+  while(TOEICS_USED.includes(question)){
     question = TOEICS[Math.floor(TOEICS.length * (Math.random() * 0.99))];
   }
   TOEICS_USED=TOEICS_USED.concat([question]);
