@@ -5,7 +5,7 @@
     font-variant-ligatures: common-ligatures discretionary-ligatures contextual;
     font-variant-numeric: tabular-nums;
     transition: 100ms ease-in-out;
-    animation: rotation 50000s linear infinite;
+    /*animation: rotation 50000s linear infinite;*/
 }
 .serif {
     font-family: var(--second-font);

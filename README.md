@@ -3,8 +3,7 @@
 Our current aim is to develop an app that could support learners in Writing, a very important skill in English exams. We focus in two examinations - IELTS and TOEIC, with options for choosing between tasks/questions. Suggestions made will include paraphrasing and structure improvements such as vocabulary and grammar. And importantly, we strive to create a user-friendly product that makes Writing more accessible and intelligent.
 <!--TODO LIST-->
 <!--
-    add AI answer checking
-    pickaballing
+    remove askewer
 
 
 -->
