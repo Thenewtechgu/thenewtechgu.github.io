@@ -1,5 +1,5 @@
-let type = "";
-let TOEICS_USED=[];
+let type = '';
+let TOEICS_USED = [];
 let TOEICS = `AtBreathtaking
 BookshelfLibrary
 BreakfastToast
@@ -81,28 +81,24 @@ function getBase64FromImageUrl(url, callback) {
 let curr = '';
 
 function MakeTOEICQuestion(task, result) {
-  
-  let question = TOEICS[Math.floor(TOEICS.length * (Math.random() * 0.99))];
-  while(TOEICS_USED.includes(question)){
-    question = TOEICS[Math.floor(TOEICS.length * (Math.random() * 0.99))];
-  }
-  TOEICS_USED=TOEICS_USED.concat([question]);
-  curr = question
-    .split(/(?=[A-Z])/)
-    .join(",")
-    .toLowerCase();
-  getBase64FromImageUrl(
-    `Questions/TOEIC/Part 1 (Questions 1-5)/${question}.png`,
-    (r) => {
-      document.getElementById(
-        result
-      ).innerHTML = /*html*/ `Writing Task ${task}:<br>Describe the following image using the given words<br><img src="${r}"><br><h1>${curr}</h1>`;
-      Task = [
-        `Writing Task ${task}:\nDescribe the following image in one sentence using the following words: ${curr}.`,
-        r.split(",")[1],
-      ];
+    let question = TOEICS[Math.floor(TOEICS.length * (Math.random() * 0.99))];
+    while (TOEICS_USED.includes(question)) {
+        question = TOEICS[Math.floor(TOEICS.length * (Math.random() * 0.99))];
     }
-  );
+    TOEICS_USED = TOEICS_USED.concat([question]);
+    curr = question
+        .split(/(?=[A-Z])/)
+        .join(',')
+        .toLowerCase();
+    getBase64FromImageUrl(`Questions/TOEIC/Part 1 (Questions 1-5)/${question}.png`, (r) => {
+        document.getElementById(
+            result,
+        ).innerHTML = /*html*/ `Writing Task ${task}:<br>Describe the following image using the given words<br><img src="${r}"><br><h1>${curr}</h1>`;
+        Task = [
+            `Writing Task ${task}:\nDescribe the following image in one sentence using the following words: ${curr}.`,
+            r.split(',')[1],
+        ];
+    });
 }
 goBack();
 const fr = new FileReader();
