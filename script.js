@@ -80,7 +80,7 @@ function getBase64FromImageUrl(url, callback) {
 let curr = '';
 function MakeTOEICQuestion(task, result) {
   let question = TOEICS[Math.floor(TOEICS.length * (Math.random() * 0.99))];
-  curr = question.split(/(?=[A-Z])/).join(" , ");
+  curr = question.split(/(?=[A-Z])/).join(",").toLowerCase();
   getBase64FromImageUrl(
     `Questions/TOEIC/Part 1 (Questions 1-5)/${question}.png`,
     (r) => {

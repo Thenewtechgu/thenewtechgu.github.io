@@ -286,6 +286,9 @@ header > * > .right {
   cursor: pointer;
   z-index: 999999999;
 }
+header{
+    z-index: -999999999;
+}
 .toggle {
   display: flex;
   width: 100px;
