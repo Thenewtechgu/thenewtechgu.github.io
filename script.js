@@ -311,7 +311,7 @@ const timerProgression = () => {
                 for (let i = 0; i < answers.length; i++) {
                     if (typeof questions[i] === typeof [1, 2]) {
                         getAIResponseWithImage(
-                            `I'm practicing for TOEIC, can you review my answers?\nQuestion:${questions[i][0]}\nMy answer:${answers[i]}\nOne thing that is required is the overall Level from 1-9 along with a Scale Score from 0-200. Only when you have provided that, you could explain your scoring.`,
+                            `I'm practicing for TOEIC, can you review my answers?\nQuestion:${questions[i][0]}\nMy answer:${answers[i]}\nNote: one thing that is required is the overall Level from 1-9 along with a Scale Score from 0-200. Only when you have provided that, you could explain your scoring.`,
                             questions[i][1],
                         ).then((r) => {
                             document.getElementById('toeic' + (i + 1)).innerHTML = parseAIOutput(r);
