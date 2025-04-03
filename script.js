@@ -29,6 +29,7 @@ const question = document.getElementById('question');
 const ielts = document.getElementById('ielts');
 const fileInput = document.getElementById('file');
 const results = document.getElementById('results-inner');
+const header = document.getElementById('header');
 //const checkbox = document.getElementById("toggle");
 let progressing = false;
 //let enableAI=true;
@@ -123,6 +124,7 @@ const selWD = () => {
     } else {
         main.className = 'selbox mainbox';
         stage = 0;
+        header.className="hidden"
         TestForMarked();
         setInterval(timerProgression, 100);
     }
@@ -132,6 +134,7 @@ const UpdateWD = () => {
     main.className = 'selbox mainbox';
     stage = 0;
     progressing = false;
+    header.className="hidden"
     TestForMarked();
     setInterval(timerProgression, 100);
 };
