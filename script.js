@@ -199,7 +199,8 @@ const timerProgression = () => {
                         `I'm currently practicing for IELTS, can you review my answer? Please provide detailed feedback, and potential places for improvement.
             Question: ${questions[i]}
             My answer:
-            ${answers[i]}`,
+            ${answers[i]}
+            A requirement that I need to have is a table with 4 criteria of an IELTS Writing Task: TA, CC, LR, Grammar, each with a band from 1-9, and the overall band. Only when it has already been provided, explain your bands.`,
                     ).then((r) => {
                         results.innerHTML += parseAIOutput(r + '\n\n\n');
                     });
@@ -251,9 +252,9 @@ const timerProgression = () => {
                 Question(`Please wait...<br><span class='loader'>`);
                 MakeWT(
                     'TOEIC',
-                    'Writing Task 6 (Reply to a written request)',
+                    'Question 6 (Reply to a written request)',
                     'question',
-                    'Writing Task 6:\n',
+                    'Question 6:\n',
                     40 * 60,
                     'Try to match real tests as closely as possible.',
                 );
@@ -269,9 +270,9 @@ const timerProgression = () => {
                 Question(`Please wait...<br><span class='loader'>`);
                 MakeWT(
                     'TOEIC',
-                    'Writing Task 7 (Reply to a written request)',
+                    'Question 7 (Reply to a written request)',
                     'question',
-                    'Writing Task 7:\n',
+                    'Question 7:\n',
                     40 * 60,
                     'Try to match real tests as closely as possible.',
                 );
@@ -287,9 +288,9 @@ const timerProgression = () => {
                 Question(`Please wait...<br><span class='loader'>`);
                 MakeWT(
                     'TOEIC',
-                    'Writing Task 8 (Express your opinions in the form of an essay)',
+                    'Question 8 (Express your opinions in the form of an essay)',
                     'question',
-                    'Writing Task 8:\n',
+                    'Question 8:\n',
                     40 * 60,
                     'Try to match real tests as closely as possible.',
                 );
@@ -310,14 +311,14 @@ const timerProgression = () => {
                 for (let i = 0; i < answers.length; i++) {
                     if (typeof questions[i] === typeof [1, 2]) {
                         getAIResponseWithImage(
-                            `I'm practicing for TOEIC, can you review my answers?\nQuestion:${questions[i][0]}\nMy answer:${answers[i]}`,
+                            `I'm practicing for TOEIC, can you review my answers?\nQuestion:${questions[i][0]}\nMy answer:${answers[i]}\nOne thing that is required is the overall Level from 1-9 along with a Scale Score from 0-200. Only when you have provided that, you could explain your scoring.`,
                             questions[i][1],
                         ).then((r) => {
                             document.getElementById('toeic' + (i + 1)).innerHTML = parseAIOutput(r);
                         });
                     } else {
                         getAIResponse(
-                            `I'm practicing for TOEIC, can you review my answers?\nQuestion:${questions[i]}\nMy answer:${answers[i]}`,
+                            `I'm practicing for TOEIC, can you review my answers?\nQuestion:${questions[i]}\nMy answer:${answers[i]}\nOne thing that is required is the overall Level from 1-9 along with a Scale Score from 0-200. Only when you have provided that, you could explain your scoring.`,
                         ).then((r) => {
                             document.getElementById('toeic' + (i + 1)).innerHTML = parseAIOutput(r);
                         });
