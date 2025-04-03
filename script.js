@@ -236,7 +236,7 @@ const timerProgression = () => {
     if (stage == 5) {
       //skipped
       //stage++;
-      progressing=true;//for testing purposes
+      //progressing=true;//for testing purposes
       if (!progressing) {
         generationProgressing = true;
         Question(`Please wait...<br><span class='loader'>`);
@@ -252,7 +252,7 @@ const timerProgression = () => {
     }
     if (stage == 6) {
       //skipped
-      progressing=true;//for testing purposes
+      //progressing=true;//for testing purposes
       //Question(`Please wait...<br><span class='loader'>`);
       if (!progressing) {
         generationProgressing = true;
@@ -271,7 +271,7 @@ const timerProgression = () => {
     if (stage == 7) {
       //skipped
       //stage++;
-      progressing=true;//for testing purposes
+      //progressing=true;//for testing purposes
       if (!progressing) {
         generationProgressing = true;
         Question(`Please wait...<br><span class='loader'>`);
@@ -300,6 +300,8 @@ const timerProgression = () => {
         for (let i = 0; i< answers.length; i++) {
           if(typeof(questions[i])===typeof([1,2])){
             getAIResponseWithImage(`I'm practicing for TOEIC, can you review my answers?\nQuestion:${questions[i][0]}\nMy answer:${answers[i]}`,questions[i][1]).then(r=>{results.innerHTML+=parseAIOutput(r)})
+          }else{
+            getAIResponse(`I'm practicing for TOEIC, can you review my answers?\nQuestion:${questions[i]}\nMy answer:${answers[i]}`).then(r=>{results.innerHTML+=parseAIOutput(r)})
           }
         }
         
