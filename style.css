@@ -125,6 +125,8 @@ textarea {
   background-color: #ffffff;
   margin: 0;
   padding: 0;
+  cursor:text;
+  user-select: none;
 }
 #tcontain {
   display: flex;
@@ -254,6 +256,24 @@ header > * > .left {
 }
 header > * > .right {
   transform: scale(0.75);
+}
+.tabs{
+    display:flex;
+}
+.tab{
+    background-color:white;
+    color:#0090ff;
+    border:1px solid #0090ff;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10px;
+    cursor:pointer;
+}
+
+.tab.selected{
+    background-color:#0090ff;
+    border:none;
+    color:white;
 }
 .grid3 {
   height: inherit;

@@ -236,7 +236,7 @@ const timerProgression = () => {
     if (stage == 5) {
       //skipped
       //stage++;
-      progressing=true;//for testing purposes
+      //progressing=true;//for testing purposes
       if (!progressing) {
         generationProgressing = true;
         Question(`Please wait...<br><span class='loader'>`);
@@ -252,7 +252,7 @@ const timerProgression = () => {
     }
     if (stage == 6) {
       //skipped
-      progressing=true;//for testing purposes
+      //progressing=true;//for testing purposes
       //Question(`Please wait...<br><span class='loader'>`);
       if (!progressing) {
         generationProgressing = true;
@@ -271,7 +271,7 @@ const timerProgression = () => {
     if (stage == 7) {
       //skipped
       //stage++;
-      progressing=true;//for testing purposes
+      //progressing=true;//for testing purposes
       if (!progressing) {
         generationProgressing = true;
         Question(`Please wait...<br><span class='loader'>`);
@@ -295,7 +295,7 @@ const timerProgression = () => {
         questions.shift();
         answers.shift();
         HideAll();
-        document.getElementById("results-outer").className = "selbox mainbox";
+        document.getElementById("results-outer-toeic").className = "selbox mainbox";
         //handle AI stuff
         for (let i = 0; i< answers.length; i++) {
           if(typeof(questions[i])===typeof([1,2])){
@@ -309,13 +309,31 @@ const timerProgression = () => {
     }
   }
 };
+alert("I have temporarity disarmed the AI for testing purposes. Someone notify me before Friday. -kien")
 let id;
 const BeginTimer = (time = 9999) => {
     progressing = true;
     cdate = Date.now() + time * 1000;
     id = setInterval(UpdateTimer, 100);
 };
-
+function HideTabs(){
+  document.getElementById("tab1").className="tab";
+  document.getElementById("tab2").className="tab";
+  document.getElementById("tab3").className="tab";
+  document.getElementById("tab4").className="tab";
+  document.getElementById("tab5").className="tab";
+  document.getElementById("tab6").className="tab";
+  document.getElementById("tab7").className="tab";
+  document.getElementById("tab8").className="tab";
+  document.getElementById("toeic1").className="toeic hidden";
+  document.getElementById("toeic2").className="toeic hidden";
+  document.getElementById("toeic3").className="toeic hidden";
+  document.getElementById("toeic4").className="toeic hidden";
+  document.getElementById("toeic5").className="toeic hidden";
+  document.getElementById("toeic6").className="toeic hidden";
+  document.getElementById("toeic7").className="toeic hidden";
+  document.getElementById("toeic8").className="toeic hidden";
+}
 const UpdateTimer = () => {
     time = Math.floor((cdate - Date.now()) / 1000);
     if (time <= 0) {
@@ -355,6 +373,7 @@ let lastCall = 0; // Stores the last time the function was called
 const RATE_LIMIT = 100; // 60 seconds in milliseconds
 
 async function getAIResponse(prompt = '') {
+    return;
     const apiKey = 'AIzaSyACUiew2xvOhoLEQXiUtcqld7xl0BG4YwY'; // Replace with your actual API key
     const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
@@ -379,6 +398,7 @@ async function getAIResponse(prompt = '') {
     return data.candidates[0].content.parts[0].text;
 }
 async function getAIResponseWithImage(prompt = '',picture='') {
+  return;
     const apiKey = 'AIzaSyACUiew2xvOhoLEQXiUtcqld7xl0BG4YwY'; // Replace with your actual API key
     const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
