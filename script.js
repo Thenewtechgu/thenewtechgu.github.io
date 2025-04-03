@@ -329,7 +329,7 @@ const timerProgression = () => {
     }
 };
 alert(
-    'Due to testing purposes, the AI will be temporarily disabled. It is expected to be fixed by Friday.',
+    'Due to testing purposes, the AI will be temporarily disabled. It is expected to be turned back on by Friday.',
 );
 let id;
 const BeginTimer = (time = 9999) => {
