@@ -81,23 +81,53 @@ function getBase64FromImageUrl(url, callback) {
 let curr = '';
 
 function MakeTOEICQuestion(task, result) {
-    let question = TOEICS[Math.floor(TOEICS.length * (Math.random() * 0.99))];
-    while (TOEICS_USED.includes(question)) {
-        question = TOEICS[Math.floor(TOEICS.length * (Math.random() * 0.99))];
-    }
-    TOEICS_USED = TOEICS_USED.concat([question]);
-    curr = question
-        .split(/(?=[A-Z])/)
-        .join(',')
-        .toLowerCase();
-    getBase64FromImageUrl(`Questions/TOEIC/Part 1 (Questions 1-5)/${question}.png`, (r) => {
+    // 1. Check if all questions have already been used.
+    if (TOEICS_USED.length >= TOEICS.length) {
+        console.error('All TOEIC questions have been used in this session.');
+        // Display a message to the user instead of generating a question
         document.getElementById(
             result,
-        ).innerHTML = /*html*/ `Writing Task ${task}:<br>Describe the following image using the given words<br><img src="${r}"><br><h1>${curr}</h1>`;
+        ).innerHTML = /*html*/ `Question ${task}:<br>No more unique picture questions available for this session.`;
+        // Set Task to something safe or handle this state appropriately in timerProgression
+        Task = [`No more unique questions available.`, null];
+        // Potentially set progressing = false here if needed immediately
+        // progressing = false;
+        return; // Exit the function
+    }
+
+    // 2. Filter the main TOEICS list to get only the unused questions.
+    const availableQuestions = TOEICS.filter((q) => !TOEICS_USED.includes(q));
+
+    // 3. Select a random question from the *available* list.
+    //    The old while loop is no longer needed.
+    //    Math.random() is exclusive of 1, so floor(length * random) is safe.
+    let question = availableQuestions[Math.floor(availableQuestions.length * Math.random())];
+
+    // 4. Add the chosen question to the used list.
+    //    Using push is slightly more conventional for adding a single item.
+    TOEICS_USED.push(question);
+
+    // 5. Continue with the rest of the original logic to display the question.
+    curr = question
+        .split(/(?=[A-Z])/)
+        .join(', ')
+        .toLowerCase();
+
+    getBase64FromImageUrl(`Questions/TOEIC/Part 1 (Questions 1-5)/${question}.png`, (r) => {
+        const base64ImageData = r.split(',')[1]; // Extract only the Base64 data part
+        document.getElementById(
+            result,
+        ).innerHTML = /*html*/ `Question ${task}:<br>Describe the following image using the given words<br><img src="${r}"><br><h1>${curr}</h1>`;
+
+        // Store the prompt text and the base64 image data
         Task = [
-            `Writing Task ${task}:\nDescribe the following image in one sentence using the following words: ${curr}.`,
-            r.split(',')[1],
+            `Question ${task}:\nDescribe the following image in one sentence using the following words: ${curr}.`,
+            base64ImageData, // Store the image data for potential AI review
         ];
+        // Ensure any state related to loading/progressing is correctly updated after the async fetch completes
+        // Example: If 'progressing' was set true before calling MakeTOEICQuestion,
+        // and needs to be false *after* the question is displayed, do it here.
+        // progressing = false; // Depending on your overall flow.
     });
 }
 goBack();
