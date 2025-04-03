@@ -236,7 +236,7 @@ const timerProgression = () => {
     if (stage == 5) {
       //skipped
       //stage++;
-      //progressing=true;//for testing purposes
+      progressing=true;//for testing purposes
       if (!progressing) {
         generationProgressing = true;
         Question(`Please wait...<br><span class='loader'>`);
@@ -252,7 +252,7 @@ const timerProgression = () => {
     }
     if (stage == 6) {
       //skipped
-      //progressing=true;//for testing purposes
+      progressing=true;//for testing purposes
       //Question(`Please wait...<br><span class='loader'>`);
       if (!progressing) {
         generationProgressing = true;
@@ -271,7 +271,7 @@ const timerProgression = () => {
     if (stage == 7) {
       //skipped
       //stage++;
-      //progressing=true;//for testing purposes
+      progressing=true;//for testing purposes
       if (!progressing) {
         generationProgressing = true;
         Question(`Please wait...<br><span class='loader'>`);
