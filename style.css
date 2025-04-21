@@ -58,16 +58,16 @@ body {
 #results {
   height: inherit;
   width: 100%;
-  overflow-x:hide;
+  overflow-x: hide;
   overflow-y: auto;
 }
 #results-inner {
-  overflow-x:hide;
+  overflow-x: hide;
   overflow-y: auto;
   width: 98%;
 }
 .tabs {
-  overflow-y:hide;
+  overflow-y: hide;
   overflow-x: auto;
 }
 code {
@@ -304,7 +304,7 @@ tr:nth-child(even) {
   transform: scale(0.75);
 }
 #header > * > .mid {
-  transform:scale(5) translateY(7.5px);
+  transform: scale(5) translateY(7.5px);
 }
 .tabs {
   display: flex;
@@ -319,7 +319,7 @@ tr:nth-child(even) {
   border-top-right-radius: 10px;
   cursor: pointer;
 }
-.tab:hover{
+.tab:hover {
   background-color: #80c8ff;
   border: none;
   color: white;
