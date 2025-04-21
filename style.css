@@ -45,10 +45,17 @@ body {
 }
 #results {
     height: inherit;
+    width:100%;
+    overflow-y:scroll;
+    
 }
 #results-inner {
-    height: 80%;
     overflow-y: scroll;
+    width:98%;
+    
+}
+code{
+    white-space: wrap;
 }
 body,
 html,
@@ -57,10 +64,14 @@ html,
 }
 .selbox {
     display: flex;
+    
     align-items: center;
     justify-content: center;
-    width: 100%;
+    width: inherit;
     height: 100%;
+}
+.userface{
+    padding:20px;
 }
 .selbox-inner,
 .mainbox-inner {
@@ -79,10 +90,17 @@ html,
 }
 .main {
     display: grid;
+    width:100vw;
     grid-template-rows: 10% 80% 10%;
+    
 }
+.main>*,.userface>*,.selbox>*,.mainbox>* {
+    max-width: 100vw;
+    box-sizing: border-box; /* Ensures padding doesn't break the width */
+    overflow-wrap: break-word; /* Wraps long content */
+  }
 .mainbox-inner {
-    width: 100%;
+    width: 80%;
     height: 100%;
     text-align: center;
     border: none;
@@ -104,7 +122,7 @@ textarea {
     display: grid;
     grid-template-rows: 80% 20%;
     grid-template-columns: 50% 50%;
-    gap: 20px;
+    gap: 5px;
     height: inherit;
     width: inherit;
 }
@@ -145,7 +163,7 @@ textarea {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr;
-    gap: 10px;
+    gap: 5px;
 }
 @media screen and (max-width: 600px) {
     .grid {
@@ -178,6 +196,17 @@ textarea {
     text-align: justify;
     -ms-text-justify: auto;
     text-justify: auto;
+    
+}
+.toeic>p{
+    margin:0px;
+    padding:0px;
+}
+#results-inner{
+    border:1px solid black;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding:10px;
 }
 .selector {
     background-color: #0090ff;
@@ -265,8 +294,9 @@ tr:nth-child(even) {
     color: #0090ff;
     border: 1px solid #0090ff;
     padding: 10px;
-    margin: 10px;
-    border-radius: 10px;
+    
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
     cursor: pointer;
 }
 
