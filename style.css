@@ -58,14 +58,17 @@ body {
 #results {
   height: inherit;
   width: 100%;
-  overflow-y: scroll;
+  overflow-x:hide;
+  overflow-y: auto;
 }
 #results-inner {
-  overflow-y: scroll;
+  overflow-x:hide;
+  overflow-y: auto;
   width: 98%;
 }
 .tabs {
-  overflow-x: scroll;
+  overflow-y:hide;
+  overflow-x: auto;
 }
 code {
   white-space: wrap;
