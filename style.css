@@ -303,6 +303,9 @@ tr:nth-child(even) {
 #header > * > .right {
   transform: scale(0.75);
 }
+#header > * > .mid {
+  transform:scale(5) translateY(7.5px);
+}
 .tabs {
   display: flex;
 }
@@ -315,6 +318,11 @@ tr:nth-child(even) {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   cursor: pointer;
+}
+.tab:hover{
+  background-color: #80c8ff;
+  border: none;
+  color: white;
 }
 
 .tab.selected {
