@@ -183,24 +183,13 @@ textarea {
   grid-template-rows: 1fr;
   gap: 5px;
 }
-@media screen and (max-width: 600px) {
-  .grid {
-    grid-template-rows: 1fr 1fr;
-    grid-template-columns: 1fr;
-  }
-  #header > * > .mid,
-  #header > * > .right {
-    display: none;
-  }
-  #header > * > .left {
-    display: flex;
-  }
-  .phone-only {
-    display: block !important;
+@media screen and (max-width: 1000px) {
+  .wide-only {
+    display: none !important;
   }
 }
-.phone-only {
-  display: none;
+.wide-only {
+  display: block;
 }
 #results,
 #toeic1,
@@ -281,7 +270,9 @@ th {
   background-color: #f4f4f4; /* Light gray header background */
   font-weight: bold;
 }
-
+#contest,#format,#ielts,.selector,img{
+  user-select: none;
+}
 /* Add alternating row colors for better readability */
 tr:nth-child(even) {
   background-color: #f9f9f9;
