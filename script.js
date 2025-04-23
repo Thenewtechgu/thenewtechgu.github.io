@@ -414,9 +414,9 @@ let lastCall = 0; // Stores the last time the function was called
 const RATE_LIMIT = 100; // 60 seconds in milliseconds
 
 async function getAIResponse(prompt = "") {
-  return Promise.resolve(
+  /*return Promise.resolve(
     "im sorry but ai has been disabled. you asked " + prompt
-  );
+  );*/ 
   const apiKey = "AIzaSyACUiew2xvOhoLEQXiUtcqld7xl0BG4YwY"; // Replace with your actual API key
   const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
@@ -441,9 +441,9 @@ async function getAIResponse(prompt = "") {
   return data.candidates[0].content.parts[0].text;
 }
 async function getAIResponseWithImage(prompt = "", picture = "") {
-  return Promise.resolve(
+  /*return Promise.resolve(
     "im sorry but ai has been disabled. you asked " + prompt
-  );
+  );*/
   const apiKey = "AIzaSyACUiew2xvOhoLEQXiUtcqld7xl0BG4YwY"; // Replace with your actual API key
   const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
