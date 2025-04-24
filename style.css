@@ -184,7 +184,7 @@ textarea {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr;
-  gap: 5px;
+  gap: 10px;
 }
 @media screen and (max-width: 1000px) {
   .wide-only {
@@ -200,6 +200,12 @@ textarea {
     grid-template-rows: 1fr 1fr 1fr;
     gap: 10px;
   }
+  .header {
+    grid-template: "a . c" 100%/15% 30% 55% !important;
+  }
+}
+@media screen and (max-aspect-ratio: 1) {
+  
   .divider1 {
     grid-template:
       "b b" 40%
@@ -207,6 +213,7 @@ textarea {
       "c d" 20%
       /50% 50% !important;
   }
+  
 }
 .wide-only {
   display: block;
@@ -355,7 +362,8 @@ tr:nth-child(even) {
 .grid3 {
   height: inherit;
   display: grid;
-  grid-template-columns: 33% 34% 33%;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
 }
 
 #toggle {

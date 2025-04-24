@@ -398,7 +398,7 @@ const UpdateTimer = () => {
   }
   second = time % 60;
   minute = (time - second) / 60;
-  timer.innerHTML = `${minute}:${second.toString().padStart(2, "0")}`;
+  timer.innerHTML = `${minute.toString().padStart(2, "0")}:${second.toString().padStart(2, "0")}`;
 };
 const submit = () => {
   cdate = 0;
