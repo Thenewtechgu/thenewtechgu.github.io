@@ -285,8 +285,8 @@ header {
   text-align: right;
 }
 img {
-  height: 15vh;
-  width: auto;
+  height: auto;
+  width: 100%;
 }
 /* Table header styling */
 th {
@@ -299,6 +299,19 @@ th {
 .selector,
 img {
   user-select: none;
+}
+.header{
+  display: grid;
+  grid-template: "a . b . c" 100%/10% 20% 40% 20% 10%;
+}
+.header>.left{
+  grid-area:a;
+}
+.header>.mid{
+  grid-area:b;
+}
+.header>.right{
+  grid-area:c;
 }
 /* Add alternating row colors for better readability */
 tr:nth-child(even) {
@@ -342,7 +355,7 @@ tr:nth-child(even) {
 .grid3 {
   height: inherit;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 33% 34% 33%;
 }
 
 #toggle {
