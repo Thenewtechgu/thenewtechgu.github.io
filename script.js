@@ -138,18 +138,20 @@ const UpdateWD = () => {
   stage = 0;
   progressing = false;
   header.className = "hidden";
-  TestForMarked();
+
   setInterval(timerProgression, 100);
 };
 function TestForMarked() {
   try {
     marked.parse("test :)");
-  } catch {
+  } catch (e) {
     alert(
       "The markdown parser cannot load. Your experience might not be good as intended."
     );
+    console.error(`For those who asked, the error is ${e}.`);
   }
 }
+TestForMarked();
 let generationProgressing = false;
 let Task = "";
 let questions = [];
@@ -509,3 +511,4 @@ const MakeWT = (
     BeginTimer(time);
   });
 };
+console.log(":)");

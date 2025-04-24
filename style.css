@@ -300,18 +300,18 @@ th {
 img {
   user-select: none;
 }
-.header{
+.header {
   display: grid;
-  grid-template: "a . b . c" 100%/10% 20% 40% 20% 10%;
+  grid-template: "a . b . c" 100%/5% 25% 40% 20% 10%;
 }
-.header>.left{
-  grid-area:a;
+.header > .left {
+  grid-area: a;
 }
-.header>.mid{
-  grid-area:b;
+.header > .mid {
+  grid-area: b;
 }
-.header>.right{
-  grid-area:c;
+.header > .right {
+  grid-area: c;
 }
 /* Add alternating row colors for better readability */
 tr:nth-child(even) {
