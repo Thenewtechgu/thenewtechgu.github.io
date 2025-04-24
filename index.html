@@ -76,32 +76,33 @@
         <div class="selbox hidden" id="ielts">
           <div class="selbox-inner">
             <h3>Choose one task.</h3>
-            <p></p>
-            <button class="selector" onclick="mode='1'; UpdateWD()">
-              Writing Task 1
-            </button>
-            <button class="selector" onclick="mode='2'; UpdateWD()">
-              Writing Task 2
-            </button>
-            <button class="selector" onclick="mode='both'; UpdateWD()">
-              Both Tasks
-            </button>
+            <div class="grid3">
+              <button class="selector" onclick="mode='1'; UpdateWD()">
+                Writing Task 1
+              </button>
+              <button class="selector" onclick="mode='2'; UpdateWD()">
+                Writing Task 2
+              </button>
+              <button class="selector" onclick="mode='both'; UpdateWD()">
+                Both Tasks
+              </button>
+            </div>
           </div>
         </div>
         <div class="selbox mainbox hidden" id="main">
           <div class="mainbox-inner divider1">
-            <div>
+            <div class="grid-cell-a">
               <textarea title="Input" name="" id="tbWrite"></textarea>
             </div>
 
-            <div class="qcontain">
+            <div class="qcontain grid-cell-b">
               <h3 id="question">Question: [foo]</h3>
             </div>
-            <div id="tcontain">
-              <h3>Time Remaining</h3>
-              <h1 id="timer">60:00</h1>
+            <div id="tcontain" class="grid-cell-c">
+              <h3 class="wide-only">Time Remaining</h3>
+              <h1 id="timer">Loading...</h1>
             </div>
-            <div>
+            <div class="grid-cell-d">
               <br /><button class="selector" onclick="submit()">Submit</button>
             </div>
           </div>

@@ -5,6 +5,7 @@
   font-variant-ligatures: common-ligatures discretionary-ligatures contextual;
   font-variant-numeric: tabular-nums;
   /**/
+
   transition: 100ms ease-in-out;
   /*animation: rotation 50000s linear infinite;*/
 }
@@ -138,8 +139,10 @@ textarea {
 }
 .divider1 {
   display: grid;
-  grid-template-rows: 80% 20%;
-  grid-template-columns: 50% 50%;
+  grid-template:
+    "a b" 80%
+    "c d" 20%
+    /50% 50%;
   gap: 5px;
   height: inherit;
   width: inherit;
@@ -187,9 +190,29 @@ textarea {
   .wide-only {
     display: none !important;
   }
+  .grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 10px;
+  }
+  .grid3 {
+    grid-template-columns: 1fr !important;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: 10px;
+  }
+  .divider1 {
+    grid-template:
+      "b b" 40%
+      "a a" 40%
+      "c d" 20%
+      /50% 50% !important;
+  }
 }
 .wide-only {
   display: block;
+}
+html {
+  width: 100vw;
 }
 #results,
 #toeic1,
@@ -270,7 +293,11 @@ th {
   background-color: #f4f4f4; /* Light gray header background */
   font-weight: bold;
 }
-#contest,#format,#ielts,.selector,img{
+#contest,
+#format,
+#ielts,
+.selector,
+img {
   user-select: none;
 }
 /* Add alternating row colors for better readability */
@@ -287,15 +314,6 @@ tr:nth-child(even) {
   display: inline-block;
   box-sizing: border-box;
   animation: rotation 450ms linear infinite;
-}
-#header > * > .left {
-  transform: scale(2) translateX(100px) translateY(10px);
-}
-#header > * > .right {
-  transform: scale(0.75);
-}
-#header > * > .mid {
-  transform: scale(5) translateY(7.5px);
 }
 .tabs {
   display: flex;
@@ -368,4 +386,22 @@ input:checked + #toggle-slider {
   100% {
     transform: rotate(360deg);
   }
+}
+.grid-cell-a {
+  grid-area: a;
+}
+.grid-cell-b {
+  grid-area: b;
+}
+.grid-cell-c {
+  grid-area: c;
+}
+.grid-cell-d {
+  grid-area: d;
+}
+.grid-cell-c,
+.grid-cell-d {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
