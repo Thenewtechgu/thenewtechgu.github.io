@@ -135,7 +135,6 @@ textarea {
   resize: none;
 
   font-family: sans-serif;
-  padding: 6px;
 }
 .divider1 {
   display: grid;
@@ -186,7 +185,8 @@ textarea {
   grid-template-rows: 1fr;
   gap: 10px;
 }
-@media screen and (max-width: 1000px) {
+
+@media screen and (max-aspect-ratio: 1) {
   .wide-only {
     display: none !important;
   }
@@ -203,9 +203,6 @@ textarea {
   .header {
     grid-template: "a . c" 100%/15% 30% 55% !important;
   }
-}
-@media screen and (max-aspect-ratio: 1) {
-  
   .divider1 {
     grid-template:
       "b b" 40%
@@ -366,40 +363,11 @@ tr:nth-child(even) {
   gap: 10px;
 }
 
-#toggle {
-  opacity: 0;
-  cursor: pointer;
-  z-index: 999999999;
-}
+
 header {
   z-index: -999999999;
 }
-.toggle {
-  display: flex;
-  width: 100px;
-  height: 50px;
-  background-color: #0090ff;
-  border-radius: 50px;
-}
-#toggle-slider {
-  display: block;
-  width: 40px;
-  height: 40px;
-  border-radius: 40px;
-}
-input#toggle {
-  height: 50px;
-  width: 100px;
-}
-#toggle-slider {
-  position: absolute;
-  background-color: white;
-  transition: 100ms;
-  transform: translateX(5px) translateY(5px);
-}
-input:checked + #toggle-slider {
-  transform: translateY(5px) translateX(50px);
-}
+
 @keyframes rotation {
   0% {
     transform: rotate(0deg);
@@ -409,6 +377,7 @@ input:checked + #toggle-slider {
   }
 }
 .grid-cell-a {
+  padding:20px;
   grid-area: a;
 }
 .grid-cell-b {
