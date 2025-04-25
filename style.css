@@ -210,7 +210,13 @@ textarea {
       "c d" 20%
       /50% 50% !important;
   }
+  .grid-cell-a {
+    padding:0px !important;
+  }
   
+}
+h1#timer{
+  font-size: 3.5em;
 }
 .wide-only {
   display: block;
@@ -377,21 +383,27 @@ header {
   }
 }
 .grid-cell-a {
-  padding:20px;
+  padding:5px;
   grid-area: a;
 }
 .grid-cell-b {
   grid-area: b;
+  border:1px solid black;
+  padding:5px;
+  margin:5px;
+  border-radius: 10px;
 }
 .grid-cell-c {
   grid-area: c;
 }
 .grid-cell-d {
   grid-area: d;
+  font-size:2em;
 }
 .grid-cell-c,
 .grid-cell-d {
   display: flex;
   justify-content: center;
   align-items: center;
+  
 }

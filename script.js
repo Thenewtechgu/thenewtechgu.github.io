@@ -233,35 +233,35 @@ const timerProgression = () => {
       if (!progressing) {
         Question("Question 1: Picture");
         MakeTOEICQuestion("1", "question");
-        BeginTimer(60);
+        BeginTimer(60*60);
       }
     }
     if (stage == 1) {
       if (!progressing) {
         Question("Question 2: Picture");
         MakeTOEICQuestion("2", "question");
-        BeginTimer(60);
+        //BeginTimer(60);
       }
     }
     if (stage == 2) {
       if (!progressing) {
         Question("Question 3: Picture");
         MakeTOEICQuestion("3", "question");
-        BeginTimer(60);
+        //BeginTimer(60);
       }
     }
     if (stage == 3) {
       if (!progressing) {
         Question("Question 4: Picture");
         MakeTOEICQuestion("4", "question");
-        BeginTimer(60);
+        //BeginTimer(60);
       }
     }
     if (stage == 4) {
       if (!progressing) {
         Question("Question 5: Picture");
         MakeTOEICQuestion("5", "question");
-        BeginTimer(60);
+        //BeginTimer(60);
       }
     }
     if (stage == 5) {
@@ -273,13 +273,13 @@ const timerProgression = () => {
         Question(`Please wait...<br><span class='loader'>`);
         MakeWT(
           "TOEIC",
-          "Question 6 (Reply to a written request)",
+          "Question 6 (Write a reply to a written request)",
           "question",
           "Question 6:\n",
           40 * 60,
           "Try to match real tests as closely as possible."
         );
-        BeginTimer(40 * 60);
+        //BeginTimer(40 * 60);
       }
     }
     if (stage == 6) {
@@ -291,13 +291,13 @@ const timerProgression = () => {
         Question(`Please wait...<br><span class='loader'>`);
         MakeWT(
           "TOEIC",
-          "Question 7 (Reply to a written request)",
+          "Question 7 (Write a reply to a written request)",
           "question",
           "Question 7:\n",
           40 * 60,
           "Try to match real tests as closely as possible."
         );
-        BeginTimer(40 * 60);
+        //BeginTimer(40 * 60);
       }
     }
     if (stage == 7) {
@@ -315,7 +315,7 @@ const timerProgression = () => {
           40 * 60,
           "Try to match real tests as closely as possible."
         );
-        BeginTimer(40 * 60);
+        //BeginTimer(40 * 60);
       }
     }
     if (stage == 8) {
@@ -401,8 +401,13 @@ const UpdateTimer = () => {
   timer.innerHTML = `${minute.toString().padStart(2, "0")}:${second.toString().padStart(2, "0")}`;
 };
 const submit = () => {
-  cdate = 0;
-  progressing = false;
+  if(type!="TOEIC"){
+    cdate = 0;
+    progressing = false;
+  }else{
+    progressing=false;
+  }
+  
 };
 
 const parseAIOutput = (s) => {
@@ -501,7 +506,7 @@ const MakeWT = (
   suffix = "Notes: Please don't use photo diagrams - I heard AI's like you have a hard time drawing them. Tables are OK though."
 ) => {
   cdate = 0;
-  timer.innerHTML = "Loading...";
+  timer.innerHTML = /*html*/`<span class='loader'></span>`;
   getAIResponse(
     `I'm practicing for ${contest}, can you generate a ${wanted} question for me? I don't want any tips/directions, as I'd like this to be a sort of mock test.\n ${suffix}`
   ).then((r) => {
