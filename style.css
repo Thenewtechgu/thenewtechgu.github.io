@@ -340,7 +340,7 @@ tr:nth-child(even) {
   height: 96px;
   border: 15px solid #000;
   border-bottom-color: transparent;
-  border-top-color: transparent;
+  /*border-top-color: transparent;*/
   border-radius: 50%;
   display: inline-block;
   box-sizing: border-box;
@@ -359,12 +359,19 @@ tr:nth-child(even) {
   border-top-right-radius: 10px;
   cursor: pointer;
 }
+#exam > * {
+  font-family: var(--second-font);
+  text-align: justify;
+}
+
 .tab:hover {
   background-color: #80c8ff;
   border: none;
   color: white;
 }
-
+img{
+  transform:scale(0.9);
+}
 .tab.selected {
   background-color: #0090ff;
   border: none;
