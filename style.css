@@ -220,12 +220,9 @@ textarea.big {
       "c d" 20%
       /50% 50% !important;
   }
-  .grid-cell-a {
-    padding: 0px !important;
-  }
 }
 h1#timer {
-  font-size: 3.5em;
+  font-size: 2em;
 }
 .wide-only {
   display: block;
@@ -360,6 +357,8 @@ tr:nth-child(even) {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   cursor: pointer;
+  z-index: index -999;
+  transform:translateY(10px);
 }
 #exam > * {
   font-family: var(--second-font);
@@ -373,15 +372,18 @@ tr:nth-child(even) {
   background-color: #80c8ff;
   border: none;
   color: white;
+  transform:translateY(5px);
 }
 img {
   transform: scale(0.9);
+
 }
 .tab.selected {
   background-color: #0090ff;
   border: none;
   color: white;
   font-weight: bolder;
+  transform:none;
 }
 .grid3 {
   height: inherit;
