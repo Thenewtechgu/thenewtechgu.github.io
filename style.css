@@ -139,7 +139,8 @@ textarea {
   height: 2em;
   box-sizing: border-box;
   resize: none;
-
+  border: 1px solid black;
+  border-radius: 10px;
   font-family: sans-serif;
 }
 textarea.big {
@@ -263,6 +264,7 @@ html {
   border: none;
   /*font-size: larger;*/
   font-weight: bolder;
+  cursor: pointer;
 }
 .selector:hover {
   background-color: #006dc1;
@@ -363,14 +365,17 @@ tr:nth-child(even) {
   font-family: var(--second-font);
   text-align: justify;
 }
-
+#exam {
+  border: 1px solid black;
+  border-radius: 10px;
+}
 .tab:hover {
   background-color: #80c8ff;
   border: none;
   color: white;
 }
-img{
-  transform:scale(0.9);
+img {
+  transform: scale(0.9);
 }
 .tab.selected {
   background-color: #0090ff;
