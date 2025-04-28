@@ -94,9 +94,9 @@ function MakeTOEICQuestion(task, result) {
     (r) => {
       document.getElementById(
         result
-      ).innerHTML = /*html*/ `Question ${task}:<br>Describe the following image using the given words<br><img src="${r}"><br><h3>${curr}</h3>`;
+      ).innerHTML = /*html*/ `<span style="font-weight:bolder">Question ${task}:</span>Describe the following image using the given words<br><img src="${r}"><br><h3>${curr}</h3>`;
       Task = [
-        `Question ${task}:\nDescribe the following image in one sentence using the following words: ${curr}.`,
+        `Question ${task}:Describe the following image in one sentence using the following words: ${curr}.`,
         r.split(",")[1],
         task,
       ];

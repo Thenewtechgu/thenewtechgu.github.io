@@ -59,11 +59,11 @@ body {
 #results {
   height: inherit;
   width: 100%;
-  overflow-x: hide;
+  overflow-x: hidden;
   overflow-y: auto;
 }
 .results-inner {
-  overflow-x: hide;
+  overflow-x: hidden;
   overflow-y: auto;
   width: 95%;
 }
@@ -73,7 +73,7 @@ body {
   border: none;
 }
 .tabs {
-  overflow-y: hide;
+  overflow-y: hidden;
   overflow-x: auto;
 }
 code {
