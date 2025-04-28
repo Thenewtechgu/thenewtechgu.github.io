@@ -433,7 +433,6 @@ const timerProgression = () => {
 */
 let id;
 const BeginTimer = (time = 9999) => {
-  time = 1;
   cdate = Date.now() + time * 1000;
   id = setInterval(UpdateTimer, 100);
 };
