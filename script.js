@@ -30,7 +30,6 @@ const ielts = document.getElementById("ielts");
 const fileInput = document.getElementById("file"); //no longer used, kept to not break code
 const header = document.getElementById("header");
 //const checkbox = document.getElementById("toggle");
-let progressing = false;
 //let enableAI=true;
 /*
 function CheckForBox(){
@@ -199,7 +198,6 @@ const UpdateWD = () => {
   HideAll();
   main.className = "selbox mainbox";
   stage = 0;
-  progressing = false;
   header.className = "hidden";
   // make IELTS questions
   exam.innerHTML = "";
@@ -435,7 +433,7 @@ const timerProgression = () => {
 */
 let id;
 const BeginTimer = (time = 9999) => {
-  progressing = true;
+  time = 1;
   cdate = Date.now() + time * 1000;
   id = setInterval(UpdateTimer, 100);
 };
@@ -462,7 +460,7 @@ const UpdateTimer = () => {
   if (time <= 0) {
     timer.innerHTML = "0:00";
     clearInterval(id);
-    progressing = false;
+    submit(true);
     return;
   }
   second = time % 60;
@@ -471,7 +469,13 @@ const UpdateTimer = () => {
     .toString()
     .padStart(2, "0")}`;
 };
-const submit = () => {
+const submit = (force = false) => {
+  if (!force) {
+    if (!confirm("Do you really want to submit?")) {
+      return;
+    }
+  }
+
   if (type == "TOEIC") {
     questions.forEach((element) => {
       if (element.length == 3) {
@@ -620,7 +624,6 @@ const MakeWT = (
   getAIResponse(
     `I'm practicing for ${contest}, can you generate a ${wanted} question for me? I don't want any tips/directions, as I'd like this to be a sort of mock test.\n ${suffix}`
   ).then((r) => {
-    generationProgressing = false;
     Task = [cleanGeneratedText(r), windex];
     questions = questions.concat([Task]);
     document.getElementById(id).innerHTML = parseAIOutput(
