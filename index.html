@@ -91,13 +91,7 @@
         </div>
         <div class="selbox mainbox hidden" id="main">
           <div class="mainbox-inner divider1">
-            <div class="grid-cell-a">
-              <textarea title="Input" name="" id="tbWrite"></textarea>
-            </div>
-
-            <div class="qcontain grid-cell-b">
-              <h3 id="question">Question: [foo]</h3>
-            </div>
+            <div class="grid-cell-a" id="exam"></div>
             <div id="tcontain" class="grid-cell-c">
               <h3 class="wide-only">Time Remaining</h3>
               <h1 id="timer">Loading...</h1>
@@ -109,74 +103,75 @@
         </div>
         <div class="selbox mainbox hidden" id="results-outer">
           <div class="mainbox-inner" id="results">
-            <h3>
-              Waiting for AI's response. Duration may differ based on your
-              Internet speed.
-            </h3>
-            <div id="results-inner"></div>
+            <div class="results-inner">
+              <h3>Here's what the AI thinks about your work.</h3>
+              <div id="ielts1"></div>
+              <div id="ielts2"></div>
+            </div>
           </div>
         </div>
         <div class="selbox mainbox hidden" id="results-outer-toeic">
           <div class="mainbox-inner" id="results-toeic">
+            <h3>Here's what the AI thinks about your work.</h3>
             <div class="tabs">
               <div
                 class="tab"
                 id="tab1"
                 onclick='HideTabs();document.getElementById("tab1").className="tab selected";document.getElementById("toeic1").className="toeic";'
               >
-                Task 1
+                Q1
               </div>
               <div
                 class="tab"
                 id="tab2"
                 onclick='HideTabs();document.getElementById("tab2").className="tab selected";document.getElementById("toeic2").className="toeic";'
               >
-                Task 2
+                Q2
               </div>
               <div
                 class="tab"
                 id="tab3"
                 onclick='HideTabs();document.getElementById("tab3").className="tab selected";document.getElementById("toeic3").className="toeic";'
               >
-                Task 3
+                Q3
               </div>
               <div
                 class="tab"
                 id="tab4"
                 onclick='HideTabs();document.getElementById("tab4").className="tab selected";document.getElementById("toeic4").className="toeic";'
               >
-                Task 4
+                Q4
               </div>
               <div
                 class="tab"
                 id="tab5"
                 onclick='HideTabs();document.getElementById("tab5").className="tab selected";document.getElementById("toeic5").className="toeic";'
               >
-                Task 5
+                Q5
               </div>
               <div
                 class="tab"
                 id="tab6"
                 onclick='HideTabs();document.getElementById("tab6").className="tab selected";document.getElementById("toeic6").className="toeic";'
               >
-                Task 6
+                Q6
               </div>
               <div
                 class="tab"
                 id="tab7"
                 onclick='HideTabs();document.getElementById("tab7").className="tab selected";document.getElementById("toeic7").className="toeic";'
               >
-                Task 7
+                Q7
               </div>
               <div
                 class="tab"
                 id="tab8"
                 onclick='HideTabs();document.getElementById("tab8").className="tab selected";document.getElementById("toeic8").className="toeic";'
               >
-                Task 8
+                Q8
               </div>
             </div>
-            <div id="results-inner">
+            <div class="results-inner">
               <div id="toeic1" class="toeic hidden">
                 <h1>
                   Waiting for AI's response. Duration may differ based on your

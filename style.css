@@ -62,10 +62,15 @@ body {
   overflow-x: hide;
   overflow-y: auto;
 }
-#results-inner {
+.results-inner {
   overflow-x: hide;
   overflow-y: auto;
-  width: 98%;
+  width: 95%;
+}
+#results-outer > * > .results-inner {
+  border-radius: 10px !important;
+  height: 95%;
+  border: none;
 }
 .tabs {
   overflow-y: hide;
@@ -129,19 +134,23 @@ html,
   margin: 20px;
 }
 textarea {
-  width: 100%;
-  height: 100%;
+  width: 95%;
+  /*height: 100%;*/
+  height: 2em;
   box-sizing: border-box;
   resize: none;
 
   font-family: sans-serif;
 }
+textarea.big {
+  height: 10em;
+}
 .divider1 {
   display: grid;
   grid-template:
-    "a b" 80%
-    "c d" 20%
-    /50% 50%;
+    "a c" 50%
+    "a d" 50%
+    /80% 20%;
   gap: 5px;
   height: inherit;
   width: inherit;
@@ -205,17 +214,16 @@ textarea {
   }
   .divider1 {
     grid-template:
-      "b b" 40%
+      "a a" 40%
       "a a" 40%
       "c d" 20%
       /50% 50% !important;
   }
   .grid-cell-a {
-    padding:0px !important;
+    padding: 0px !important;
   }
-  
 }
-h1#timer{
+h1#timer {
   font-size: 3.5em;
 }
 .wide-only {
@@ -241,7 +249,7 @@ html {
   margin: 0px;
   padding: 0px;
 }
-#results-inner {
+.results-inner {
   border: 1px solid black;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
@@ -346,7 +354,7 @@ tr:nth-child(even) {
   color: #0090ff;
   border: 1px solid #0090ff;
   padding: 10px;
-
+  font-size: larger;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   cursor: pointer;
@@ -361,6 +369,7 @@ tr:nth-child(even) {
   background-color: #0090ff;
   border: none;
   color: white;
+  font-weight: bolder;
 }
 .grid3 {
   height: inherit;
@@ -368,7 +377,6 @@ tr:nth-child(even) {
   grid-template-columns: 1fr 1fr 1fr;
   gap: 10px;
 }
-
 
 header {
   z-index: -999999999;
@@ -383,9 +391,11 @@ header {
   }
 }
 .grid-cell-a {
-  padding:5px;
+  padding: 5px;
   grid-area: a;
+  overflow-y: scroll;
 }
+/*
 .grid-cell-b {
   grid-area: b;
   border:1px solid black;
@@ -393,17 +403,17 @@ header {
   margin:5px;
   border-radius: 10px;
 }
+  */
 .grid-cell-c {
   grid-area: c;
 }
 .grid-cell-d {
   grid-area: d;
-  font-size:2em;
+  font-size: 2em;
 }
 .grid-cell-c,
 .grid-cell-d {
   display: flex;
   justify-content: center;
   align-items: center;
-  
 }
