@@ -345,7 +345,7 @@ const parseAIOutput = (s) => {
     return s;
   }
 };
-let ENABLE_AI = false;
+let ENABLE_AI = true;
 async function getAIResponse(prompt = "") {
   if (!ENABLE_AI) {
     return Promise.resolve("AI has been disabled. you asked " + prompt);

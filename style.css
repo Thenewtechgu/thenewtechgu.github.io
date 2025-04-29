@@ -295,6 +295,9 @@ header {
   height: 15vh;
   font-size: large;
 }
+.mainbox{
+  min-width: 80vw;
+}
 .mid {
   text-align: center;
 }
