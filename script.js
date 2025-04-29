@@ -201,7 +201,16 @@ const UpdateWD = () => {
   header.className = "hidden";
   // make IELTS questions
   exam.innerHTML = "";
-  BeginTimer(60 * 60);
+  if(mode=="1"){
+    BeginTimer(20 * 60);
+  }
+  if(mode=="2"){
+    BeginTimer(40 * 60);
+  }
+  if(mode=="both"){
+    BeginTimer(60 * 60);
+  }
+
   if (mode != "2") {
     exam.innerHTML += /*html*/ `
     <div id="question1"><span class="loader"><br></div>

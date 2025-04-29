@@ -370,7 +370,7 @@ tr:nth-child(even) {
 }
 .tab:hover {
   background-color: #80c8ff;
-  border: none;
+  border: 1px solid rgba(0,0,0,0); /*to avoid jittering issues on other tabs*/
   color: white;
   transform:translateY(5px);
 }
@@ -380,7 +380,7 @@ img {
 }
 .tab.selected {
   background-color: #0090ff;
-  border: none;
+  border: 1px solid rgba(0,0,0,0); /*to avoid jittering issues on other tabs*/
   color: white;
   font-weight: bolder;
   transform:none;
