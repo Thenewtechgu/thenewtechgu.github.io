@@ -201,13 +201,13 @@ const UpdateWD = () => {
   header.className = "hidden";
   // make IELTS questions
   exam.innerHTML = "";
-  if(mode=="1"){
+  if (mode == "1") {
     BeginTimer(20 * 60);
   }
-  if(mode=="2"){
+  if (mode == "2") {
     BeginTimer(40 * 60);
   }
-  if(mode=="both"){
+  if (mode == "both") {
     BeginTimer(60 * 60);
   }
 
@@ -345,9 +345,11 @@ const parseAIOutput = (s) => {
     return s;
   }
 };
-
+let ENABLE_AI = false;
 async function getAIResponse(prompt = "") {
-  return Promise.resolve("AI has been disabled. you asked " + prompt);
+  if (!ENABLE_AI) {
+    return Promise.resolve("AI has been disabled. you asked " + prompt);
+  }
   const apiKey = "AIzaSyACUiew2xvOhoLEQXiUtcqld7xl0BG4YwY"; // Replace with your actual API key
   const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
@@ -372,13 +374,16 @@ async function getAIResponse(prompt = "") {
   return data.candidates[0].content.parts[0].text;
 }
 async function getAIResponseWithImage(prompt = "", picture = "") {
-  return Promise.resolve(
-    "AI has been disabled. you asked " +
-      prompt +
-      "including a " +
-      picture.length +
-      "B image"
-  );
+  if (!ENABLE_AI) {
+    return Promise.resolve(
+      "AI has been disabled. you asked " +
+        prompt +
+        "including a " +
+        picture.length +
+        "B image"
+    );
+  }
+
   const apiKey = "AIzaSyACUiew2xvOhoLEQXiUtcqld7xl0BG4YwY"; // Replace with your actual API key
   const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 

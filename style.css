@@ -335,6 +335,7 @@ tr:nth-child(even) {
   background-color: #f9f9f9;
 }
 .loader {
+  margin: 30px;
   width: 96px;
   height: 96px;
   border: 15px solid #000;
@@ -358,7 +359,7 @@ tr:nth-child(even) {
   border-top-right-radius: 10px;
   cursor: pointer;
   z-index: index -999;
-  transform:translateY(10px);
+  transform: translateY(10px);
 }
 #exam > * {
   font-family: var(--second-font);
@@ -370,20 +371,19 @@ tr:nth-child(even) {
 }
 .tab:hover {
   background-color: #80c8ff;
-  border: 1px solid rgba(0,0,0,0); /*to avoid jittering issues on other tabs*/
+  border: 1px solid rgba(0, 0, 0, 0); /*to avoid jittering issues on other tabs*/
   color: white;
-  transform:translateY(5px);
+  transform: translateY(5px);
 }
 img {
   transform: scale(0.9);
-
 }
 .tab.selected {
   background-color: #0090ff;
-  border: 1px solid rgba(0,0,0,0); /*to avoid jittering issues on other tabs*/
+  border: 1px solid rgba(0, 0, 0, 0); /*to avoid jittering issues on other tabs*/
   color: white;
   font-weight: bolder;
-  transform:none;
+  transform: none;
 }
 .grid3 {
   height: inherit;
