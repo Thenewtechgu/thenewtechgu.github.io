@@ -308,8 +308,13 @@ function uploadf(i) {
         try {
           target.disabled = true;
           target.value = "Processing file...";
-          let prompt = "Extract all text from this image.";
+          let prompt =
+            "Extract all text as plaintext from this image. If there are none, return the string 'ocrfail'";
           let text = await getAIResponseWithImage(prompt, rawBase64, imgType);
+          if (text == "ocrfail") {
+            console.error("AI gave up");
+            target.value = "Failed to extract text from the image.";
+          }
           target.value = text;
         } catch (err) {
           console.error("AI processing failed:", err);

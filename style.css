@@ -377,6 +377,7 @@ tr:nth-child(even) {
 #exam {
   border: 1px solid black;
   border-radius: 10px;
+  overflow-x:hidden;
 }
 .tab:hover {
   background-color: #80c8ff;
