@@ -295,9 +295,7 @@ header {
   height: 15vh;
   font-size: large;
 }
-.mainbox {
-  min-width: 80vw;
-}
+
 .mid {
   text-align: center;
 }
@@ -340,8 +338,16 @@ tr:nth-child(even) {
 .fullwidth {
   display: flex;
   justify-content: end;
-  width: 95%;
-  padding: 10px;
+  width: 100%;
+  transform: translateY(50px) translateX(-2.5%);
+}
+.fullwidth > .selector {
+  color: black;
+  background-color: rgba(0, 0, 0, 0);
+}
+.fullwidth > .selector:hover {
+  color: black;
+  background-color: rgba(0, 0, 0, 0.2);
 }
 .loader {
   margin: 30px;
@@ -373,11 +379,12 @@ tr:nth-child(even) {
 #exam > * {
   font-family: var(--second-font);
   text-align: justify;
+  min-width: 60vw;
 }
 #exam {
   border: 1px solid black;
   border-radius: 10px;
-  overflow-x:hidden;
+  overflow-x: hidden;
 }
 .tab:hover {
   background-color: #80c8ff;

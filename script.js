@@ -111,8 +111,10 @@ let cdate = 0,
   second,
   stage = 0;
 const exam = document.getElementById("exam");
-const UploadBar = (i) =>
-  /*html*/ `<div class="fullwidth"><button class="selector" onclick="uploadf('${i}')">Upload File...</button></div>`;
+const UploadBar = (
+  i
+) => /*html*/ `<div class="fullwidth"><button class="selector" onclick="uploadf('${i}')"><span class="material-symbols-outlined">upload_file
+</span></button></div>`;
 
 const selWD = () => {
   HideAll();
