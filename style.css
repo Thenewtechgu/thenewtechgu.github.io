@@ -295,7 +295,7 @@ header {
   height: 15vh;
   font-size: large;
 }
-.mainbox{
+.mainbox {
   min-width: 80vw;
 }
 .mid {
@@ -336,6 +336,12 @@ img {
 /* Add alternating row colors for better readability */
 tr:nth-child(even) {
   background-color: #f9f9f9;
+}
+.fullwidth {
+  display: flex;
+  justify-content: end;
+  width: 95%;
+  padding: 10px;
 }
 .loader {
   margin: 30px;

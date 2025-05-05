@@ -27,7 +27,6 @@ const tbWrite = document.getElementById("tbWrite");
 const backButton = document.getElementById("back");
 const question = document.getElementById("question");
 const ielts = document.getElementById("ielts");
-const fileInput = document.getElementById("file"); //no longer used, kept to not break code
 const header = document.getElementById("header");
 //const checkbox = document.getElementById("toggle");
 //let enableAI=true;
@@ -105,14 +104,6 @@ function MakeTOEICQuestion(task, result) {
   );
 }
 goBack();
-const fr = new FileReader();
-fr.onload = (e) => {
-  const text = e.target.result; // File contents as text
-  console.log(text); // Log to console
-};
-fileInput.addEventListener("change", (e) => {
-  console.log(fr.readAsText(e.target.files[0]));
-});
 
 let cdate = 0,
   time,
@@ -120,6 +111,9 @@ let cdate = 0,
   second,
   stage = 0;
 const exam = document.getElementById("exam");
+const UploadBar = (i) =>
+  /*html*/ `<div class="fullwidth"><button class="selector" onclick="uploadf('${i}')">Upload File...</button></div>`;
+
 const selWD = () => {
   HideAll();
   if (type === "IELTS") {
@@ -133,21 +127,30 @@ const selWD = () => {
     //make toeic questions
     BeginTimer(60 * 60); //1 hour
     exam.innerHTML = /*html*/ `
+    
     <div id="question1"><span class="loader"><br></div>
+    
     <textarea id="answer1"></textarea><br>
     <div id="question2"><span class="loader"><br></div>
+    
     <textarea id="answer2"></textarea><br>
     <div id="question3"><span class="loader"><br></div>
+    
     <textarea id="answer3"></textarea><br>
     <div id="question4"><span class="loader"><br></div>
+    
     <textarea id="answer4"></textarea><br>
     <div id="question5"><span class="loader"><br></div>
+    
     <textarea id="answer5"></textarea><br>
     <div id="question6"><span class="loader"><br></div>
+    ${UploadBar("answer6")}
     <textarea id="answer6" class="big"></textarea><br>
     <div id="question7"><span class="loader"><br></div>
+    ${UploadBar("answer7")}
     <textarea id="answer7" class="big"></textarea><br>
     <div id="question8"><span class="loader"><br></div>
+    ${UploadBar("answer8")}
     <textarea id="answer8" class="big"></textarea><br>
     `;
     MakeTOEICQuestion("1", "question1");
@@ -214,12 +217,14 @@ const UpdateWD = () => {
   if (mode != "2") {
     exam.innerHTML += /*html*/ `
     <div id="question1"><span class="loader"><br></div>
+    ${UploadBar("answer1")}
     <textarea id="answer1" class="big"></textarea><br>`;
     MakeWT("IELTS", "Writing Task 1", "question1", "Writing Task 1:\n", 1);
   }
   if (mode != "1") {
     exam.innerHTML += /*html*/ `
       <div id="question2"><span class="loader"><br></div>
+      ${UploadBar("answer2")}
       <textarea id="answer2" class="big"></textarea><br>`;
     MakeWT("IELTS", "Writing Task 2", "question2", "Writing Task 2:\n", 2);
   }
@@ -263,6 +268,64 @@ function HideTabs() {
   document.getElementById("toeic7").className = "toeic hidden";
   document.getElementById("toeic8").className = "toeic hidden";
 }
+function uploadf(i) {
+  let target = document.getElementById(i);
+
+  // Create and configure file input
+  let fileInput = document.createElement("input");
+  fileInput.type = "file";
+  fileInput.accept = "*/*";
+
+  fileInput.onchange = async function () {
+    let file = fileInput.files[0];
+    if (!file) return;
+
+    if (file.type === "text/plain") {
+      // Handle plain text files directly
+      let reader = new FileReader();
+      reader.onload = function (e) {
+        target.value = e.target.result;
+      };
+      reader.readAsText(file);
+    } else {
+      // Handle other file types (e.g., images)
+      let reader = new FileReader();
+      reader.onload = async function (e) {
+        let dataURL = e.target.result;
+
+        // Extract base64 data and image format
+        let matches = dataURL.match(/^data:image\/(\w+);base64,(.*)$/);
+        if (!matches) {
+          console.error("File format invalid.");
+          target.value =
+            "File does not match specified file format. Please try again.";
+          return;
+        }
+
+        let imgType = matches[1]; // e.g., "png", "jpeg"
+        let rawBase64 = matches[2]; // base64 string without prefix
+
+        try {
+          target.disabled = true;
+          target.value = "Processing file...";
+          let prompt = "Extract all text from this image.";
+          let text = await getAIResponseWithImage(prompt, rawBase64, imgType);
+          target.value = text;
+        } catch (err) {
+          console.error("AI processing failed:", err);
+          target.value = "Failed to extract text from the image.";
+        } finally {
+          target.disabled = false;
+        }
+      };
+
+      reader.readAsDataURL(file);
+    }
+  };
+
+  fileInput.click();
+}
+
 const UpdateTimer = () => {
   time = Math.floor((cdate - Date.now()) / 1000);
   if (time <= 0) {
@@ -373,14 +436,14 @@ async function getAIResponse(prompt = "") {
   const data = await response.json();
   return data.candidates[0].content.parts[0].text;
 }
-async function getAIResponseWithImage(prompt = "", picture = "") {
+async function getAIResponseWithImage(prompt = "", picture = "", type = "png") {
   if (!ENABLE_AI) {
     return Promise.resolve(
       "AI has been disabled. you asked " +
         prompt +
         "including a " +
-        picture.length +
-        "B image"
+        Math.round(picture.length / 1024) +
+        "KB image"
     );
   }
 
@@ -394,7 +457,7 @@ async function getAIResponseWithImage(prompt = "", picture = "") {
         parts: [
           {
             inlineData: {
-              mimeType: "image/png",
+              mimeType: `image/${type}`,
               data: picture,
             },
           },
