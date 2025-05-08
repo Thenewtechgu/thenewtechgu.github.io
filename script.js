@@ -277,8 +277,12 @@ function uploadf(i) {
 
   // Create and configure file input
   let fileInput = document.createElement("input");
+  // Optional DOM attachment for iOS compatibility, source: Intenet :)
+  document.body.appendChild(fileInput);
+  fileInput.style.display = "none";
+
   fileInput.type = "file";
-  fileInput.accept = "*/*";
+  fileInput.accept = ".txt,image/*";
 
   fileInput.onchange = async function () {
     let file = fileInput.files[0];
@@ -335,6 +339,7 @@ function uploadf(i) {
 
       reader.readAsDataURL(file);
     }
+    fileInput.remove(); //incinerates the element
   };
 
   fileInput.click();
@@ -350,9 +355,7 @@ const UpdateTimer = () => {
   }
   second = time % 60;
   minute = (time - second) / 60;
-  timer.innerHTML = `${minute.toString().padStart(2, "0")}:${second
-    .toString()
-    .padStart(2, "0")}`;
+  timer.innerHTML = `${minute}:${second.toString().padStart(2, "0")}`;
 };
 const submit = (force = false) => {
   if (!force) {
