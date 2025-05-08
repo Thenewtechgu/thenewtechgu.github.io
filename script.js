@@ -389,6 +389,9 @@ const submit = (force = false) => {
       }
     });
     HideAll();
+    HideTabs();
+    document.getElementById("tab1").className = "tab selected";
+    document.getElementById("toeic1").className = "toeic";
     document.getElementById("results-outer-toeic").className = "selbox mainbox";
   } else {
     questions.forEach((element) => {
