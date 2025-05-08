@@ -339,15 +339,24 @@ tr:nth-child(even) {
   display: flex;
   justify-content: end;
   width: 100%;
-  transform: translateY(50px) translateX(-2.5%);
+
+  transform: translateX(-2.5%) translateY(45px); /*make bar overlap textarea*/
 }
 .fullwidth > .selector {
   color: black;
+  border-bottom-right-radius: 0px; /*touches edge*/
+  border-top-left-radius: 0px; /*touches edge*/
   background-color: rgba(0, 0, 0, 0);
 }
 .fullwidth > .selector:hover {
   color: black;
+  transform: none; /*to avoid padding issues*/
   background-color: rgba(0, 0, 0, 0.2);
+}
+#submit-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px; /* spacing between text and icon */
 }
 .loader {
   margin: 30px;
@@ -447,4 +456,12 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.grid-cell-d {
+  padding: 10px;
+}
+#submit-btn {
+  display: flex;
+  align-items: center;
+  
 }

@@ -123,6 +123,7 @@ const selWD = () => {
     backButton.className = "selector";
   } else {
     main.className = "selbox mainbox";
+    setTimeout(resizeButtonText, 100);
     stage = 0;
     header.className = "hidden";
     TestForMarked();
@@ -202,6 +203,7 @@ const selWD = () => {
 const UpdateWD = () => {
   HideAll();
   main.className = "selbox mainbox";
+  setTimeout(resizeButtonText, 100);
   stage = 0;
   header.className = "hidden";
   // make IELTS questions
@@ -310,14 +312,19 @@ function uploadf(i) {
         try {
           target.disabled = true;
           target.value = "Processing file...";
+
+          // Adjusted prompt to explicitly ask for a check on whether text is present
           let prompt =
-            "Extract all text as plaintext from this image. If there are none, return the string 'ocrfail'";
+            "Extract all text as plaintext from this image. If no text is found, respond with 'No text found in image.'";
+
           let text = await getAIResponseWithImage(prompt, rawBase64, imgType);
-          if (text == "ocrfail") {
-            console.error("AI gave up");
-            target.value = "Failed to extract text from the image.";
+
+          // Check if the response contains an error message indicating no text
+          if (text.trim().toLowerCase() === "no text found in image") {
+            target.value = "Error: No text found in the image.";
+          } else {
+            target.value = text;
           }
-          target.value = text;
         } catch (err) {
           console.error("AI processing failed:", err);
           target.value = "Failed to extract text from the image.";
@@ -415,7 +422,7 @@ const parseAIOutput = (s) => {
     return s;
   }
 };
-let ENABLE_AI = true;
+let ENABLE_AI = false;
 async function getAIResponse(prompt = "") {
   if (!ENABLE_AI) {
     return Promise.resolve("AI has been disabled. you asked " + prompt);
@@ -522,3 +529,23 @@ const MakeWT = (
   });
 };
 console.log(":)");
+let SCALING_FACTOR = 0.15; // adjust for preferred scale
+
+function resizeButtonText() {
+  const btn = document.getElementById("submit-btn");
+  const text = btn.querySelector("small");
+  if (!btn) return;
+  const icon = btn.querySelector(".material-symbols-outlined");
+
+  // Use the parent container's width, subtract padding (10px on both sides = 20px)
+  const parentWidth = btn.parentElement.offsetWidth - 20;
+
+  // Calculate font size based on stable container width
+  const fontSize = Math.max(10, parentWidth * SCALING_FACTOR);
+
+  text.style.fontSize = `${fontSize}px`;
+  icon.style.fontSize = `${fontSize}px`;
+}
+// Resize on load and on window resize
+
+window.addEventListener("resize", resizeButtonText);
