@@ -113,7 +113,7 @@ let cdate = 0,
 const exam = document.getElementById("exam");
 const UploadBar = (
   i
-) => /*html*/ `<div class="fullwidth"><button class="selector" onclick="uploadf('${i}')"><span class="material-symbols-outlined">upload_file
+) => /*html*/ `<div class="fullwidth"><button class="selector" onclick="uploadf('${i}')"><p>Upload&nbsp;</p><span class="material-symbols-outlined">upload_file
 </span></button></div>`;
 
 const selWD = () => {

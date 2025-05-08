@@ -338,14 +338,22 @@ tr:nth-child(even) {
 .fullwidth {
   display: flex;
   justify-content: end;
+  align-items: center;
   width: 100%;
-
-  transform: translateX(-2.5%) translateY(45px); /*make bar overlap textarea*/
+  
+  transform: translateX(-2.5%);
+}
+.fullwidth p{
+  padding:0;
+  margin:0;
 }
 .fullwidth > .selector {
+  padding:3px;
+  margin:0;
+  display: flex;
+  justify-content: end;
+  align-items: center;
   color: black;
-  border-bottom-right-radius: 0px; /*touches edge*/
-  border-top-left-radius: 0px; /*touches edge*/
   background-color: rgba(0, 0, 0, 0);
 }
 .fullwidth > .selector:hover {
