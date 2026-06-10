@@ -1,0 +1,96 @@
+{% layout 'en' %}
+<section id="article">
+	<div class="wrapper">
+		<div class="inner">
+			<div class="grid clearfix">
+				<div class="grid__item mg-bt30
+										{%if settings.en_article_silde_show%}
+										right  large--nine-twelfths 
+										{%else%}
+										large--one-whole 
+										{%endif%}
+										medium--one-whole small--one-whole"{%comment%} itemscope itemtype="http://schema.org/Article"{%endcomment%}>
+					<div class="article-content">
+						<div class="article-head">
+
+							<div class="grid mg-left-15">
+								<div class="grid__item large--one-whole medium--one-whole small--one-whole pd-left15">
+									<div class="acticle_title">
+										<h1 class="hide">{{article.title}}</h1>	
+									</div>
+									<div class="article-date-comment">
+										<div class="article_info">
+											<div class="date"><i class="fas fa-calendar-alt"></i> {{ article.published_at | date: '%d/%m/%y' }}</div>
+											<div class="comment"><i class="fas fa-tag"></i><span class="fb-comments-count" data-href="{{shop.url}}{{article.url}}"></span><span class="sp2">Comment</span></div>
+											<div class="author"><i class="fas fa-user"></i>{{article.author}}	</div>
+											<div class="fb-like" data-href="{{shop.url}}{{article.url}}" data-layout="button_count" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
+										</div>								
+									</div>
+								</div>
+
+							</div>
+						</div>
+						{%if settings.use_article_tldr%}
+						<div class="article-tldr clearfix">
+							{{ article.excerpt }}
+						</div>
+						{%endif%}
+						<div class="article-body">
+							{{ article.content }}
+						</div>
+					</div>
+					<div class="article_nav clearfix">
+						{% if blog.previous_article %}
+						<a class="left button_all" href="{{ blog.previous_article }}"><i class="fas fa-angle-double-left"></i> Tin trước</a>
+						{% endif %}
+
+						{% if blog.next_article %}
+						<a class='right button_all' href="{{ blog.next_article }}">Tin tiếp theo <i class="fas fa-angle-double-right"></i></a>
+						{% endif %}
+					</div>
+
+
+
+					<div class="social-network-actions-outside text-right">
+						<div class="fb-send" data-href="{{shop.url}}{{article.url}}"></div>
+						<div class="fb-like" data-href="{{shop.url}}{{article.url}}" data-layout="button" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
+					</div>
+
+					<div id="section-fbcomment" class="fb-comments-wrapper">
+						<div class="fb-comments" data-href="{{shop.url}}{{article.url}}" data-width="100%" data-numposts="5"></div>
+					</div>
+
+					{%comment%}
+
+					{%if blogs[blog.handle].articles_count > 1%}
+					<div class="related-articles">
+						<div class="related-articles-head">
+							<h3>
+								{{settings.related_articles_title}}
+							</h3>
+						</div>
+						<div class="related-articles-body">
+							<ul class="no-bullets">
+								{% for _article in blogs[blog.handle].articles limit:settings.blog_sidebar_recent_number %}
+								{%if article.url != _article.url%}
+								<li>
+									<a href="{{ _article.url }}">{{ _article.title }}</a>
+								</li>
+								{%endif%}
+								{% endfor %}
+							</ul>
+						</div>
+					</div>
+					{%endif%}
+					{%endcomment%}
+
+				</div>
+				{%if settings.en_article_silde_show%}
+				<div class="grid__item left large--three-twelfths medium--one-whole small--one-whole">
+					{%include 'en-blog-sidebar'%}
+				</div>
+				{%endif%}
+			</div>
+		</div>
+	</div>
+</section>	

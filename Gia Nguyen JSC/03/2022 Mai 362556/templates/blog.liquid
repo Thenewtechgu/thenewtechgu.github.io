@@ -1,0 +1,48 @@
+
+<section id="blogs">
+	<div class="wrapper">
+		<div class="inner">
+			<div class="grid clearfix">
+				<div class="grid__item 
+										{%if settings.blog_sidebar_show%}
+										right large--three-quarters
+										{%else%}
+										large--one-whole
+										{%endif%}
+
+										medium--one-whole small--one-whole">
+					{%paginate blog.articles by settings.blog_limit %}
+					<div class="blog_content">
+						<div class="blog-content-wrapper">
+							<div class="blog_body">
+								<div class="grid-uniform">
+									{%if blog.articles_count > 0%}
+									{%for article_layout in blog.articles%}
+									<div class="grid__item mg-bt30 large--one-half medium--one-half small--one-whole">
+										{%include 'article-item'%}
+									</div>
+									{%endfor%}
+									{%else%}
+									<div class="grid__item large--one-whole">
+										<p>
+											Danh mục này chưa có bài viết nào cả !
+										</p>
+									</div>
+									{%endif%}
+								</div>
+								{%include 'pagination'%}
+							</div>
+						</div>
+					</div>
+					{%endpaginate%}
+				</div>
+				{%if settings.blog_sidebar_show%}
+				<div class="grid__item  left large--one-quarter medium--one-whole small--one-whole">
+					{%include 'blog-sidebar'%}
+				</div>
+				{%endif%}
+			</div>
+		</div>
+	</div>
+</section>
+

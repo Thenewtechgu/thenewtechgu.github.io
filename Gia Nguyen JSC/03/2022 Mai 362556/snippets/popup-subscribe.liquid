@@ -1,0 +1,129 @@
+{%if settings.use_popup%}
+<!-- Trigger/Open The Modal -->
+<button id="popup-btn">a</button>
+
+<!-- The Modal -->
+<div id="popup-subscribe" class="popup">
+	<!-- Modal content -->
+	<div id="popup-modal" class="popup-content  animate down">
+		<span class="close-popup"><i class="fa fa-times" aria-hidden="true"></i></span>
+		<div  class="grid">
+			<div class="grid__item push--large--one-half large--six-twelfths medium--one-whole small--one-whole">
+				<div class="popup-wrapper">
+					<div class="popup-title">
+						{{settings.popup_title}}
+					</div>
+					<div class="popup-desc">
+						{{settings.popup_desc}}
+					</div>
+					<div class="popup-list">
+						<ul class="no-bullets">
+							{%for i in (1..4)%}
+							{% capture use_popup_li %}use_popup_li_{{i}}{% endcapture %}
+							{% capture popup_li %}popup_li_{{i}}{% endcapture %}
+							{%if settings[use_popup_li]%}
+							<li>
+								{{settings[popup_li]}}
+							</li>
+							{%endif%}
+							{%endfor%}
+						</ul>
+					</div>
+					<div class="popup-form">
+						<div class="form-desc">
+							Đăng ký:
+						</div>
+
+						{% if settings.newsletter_form_action != blank %}
+						<form action="{{ settings.newsletter_form_action }}" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" target="_blank" class="input-group">
+							<input type="email" value="{% if customer %}{{ customer.email }}{% endif %}" placeholder="Nhập email của bạn..." name="EMAIL" id="mail" class="input-group-field" aria-label="{{ 'general.newsletter_form.newsletter_email' | t }}">
+							<button type="submit" name="subscribe" id="subscribe" value="{{ 'general.newsletter_form.submit' | t }}"><i class="fab fa-telegram-plane"></i></button>	
+							<div class="popup_icon">
+								{%if settings.use_social_facebook%}
+								<a href="{{settings.social_facebook_link}}" class="fb-icon" target="_blank"><i class="fab fa-facebook-f"></i></a>
+								{%endif%}
+								{%if settings.use_social_googleplus%}
+								<a href="{{settings.social_google_link}}" class="gg-icon" target="_blank"><i class="fab fa-google-plus-g"></i></a>
+								{%endif%}
+								{%if settings.use_social_instagram%}
+								<a href="{{settings.social_instagram_link}}" class="ins-icon" target="_blank"><i class="fab fa-instagram"></i></a>
+								{%endif%}
+								{%if settings.use_social_twitter%}
+								<a href="{{settings.social_twitter_link}}" class="tw-icon" target="_blank"><i class="fab fa-twitter"></i></a>
+								{%endif%}
+								{%if settings.use_social_youtube%}
+								<a href="{{settings.social_youtube_link}}" class="yt-icon" target="_blank"><i class="fab fa-youtube"></i></a>
+								{%endif%}
+								{%if settings.use_social_linkedin%}
+								<a href="{{settings.social_linkedin_link}}" class="linkedin-icon" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+								{%endif%}
+							</div>
+						</form>
+						{% else %}
+						{% form 'customer' %}
+						{{ form.errors | default_errors }}
+						{% if form.posted_successfully? %}
+						<p class="note form-success">{{ 'general.newsletter_form.confirmation' | t }}</p>
+						{% else %}
+						<div class="input-group">
+							<input type="email" value="{% if customer %}{{ customer.email }}{% endif %}" placeholder="Nhập email của bạn..." name="contact[email]" id="Email" class="input-group-field" aria-label="{{ 'general.newsletter_form.newsletter_email' | t }}">
+							<input type="hidden" name="contact[tags]" value="newsletter">
+							<button type="submit" name="subscribe" id="subscribe" value="{{ 'general.newsletter_form.submit' | t }}"><i class="fab fa-telegram-plane"></i></button>
+							<div class="popup_icon">
+								{%if settings.use_social_facebook%}
+								<a href="{{settings.social_facebook_link}}" class="fb-icon" target="_blank"><i class="fab fa-facebook-f"></i></a>
+								{%endif%}
+								{%if settings.use_social_googleplus%}
+								<a href="{{settings.social_google_link}}" class="gg-icon" target="_blank"><i class="fab fa-google-plus-g"></i></a>
+								{%endif%}
+								{%if settings.use_social_instagram%}
+								<a href="{{settings.social_instagram_link}}" class="ins-icon" target="_blank"><i class="fab fa-instagram"></i></a>
+								{%endif%}
+								{%if settings.use_social_twitter%}
+								<a href="{{settings.social_twitter_link}}" class="tw-icon" target="_blank"><i class="fab fa-twitter"></i></a>
+								{%endif%}
+								{%if settings.use_social_youtube%}
+								<a href="{{settings.social_youtube_link}}" class="yt-icon" target="_blank"><i class="fab fa-youtube"></i></a>
+								{%endif%}
+								{%if settings.use_social_linkedin%}
+								<a href="{{settings.social_linkedin_link}}" class="linkedin-icon" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+								{%endif%}
+							</div>
+						</div>
+						{% endif %}
+						{% endform %}
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+var modal = document.getElementById('popup-subscribe');
+var span = document.getElementsByClassName("close-popup")[0];
+
+var btn = document.getElementById("popup-btn");
+btn.onclick = function() {
+	modal.style.display = "block";
+	setTimeout(function(){
+		$('#popup-modal').addClass('show');
+	}, 500)
+}
+span.onclick = function() {
+	hidePopupSub(modal)
+}
+
+window.onclick = function(event) {
+	if (event.target == modal) {
+		hidePopupSub(modal)
+	} 
+}
+function hidePopupSub(modal){
+	$('#popup-modal').removeClass('show');
+	setTimeout(function(){
+		modal.style.display = "none";
+	}, 500)
+}
+</script>
+{%endif%}

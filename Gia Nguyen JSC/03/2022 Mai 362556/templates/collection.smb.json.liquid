@@ -1,0 +1,80 @@
+{% layout none %} 
+
+{% capture output %}
+	{% paginate collection.products by 12 %}
+		{% for p in collection.products limit:12 %}
+			{% capture number_of_images %}{{ p.images | size }}{% endcapture %}
+			{% assign number_images = number_of_images | plus:0 %}
+			{
+				"id": "{{p.id}}",
+				"first_variant": {{p.variants.first.id}},
+				"title": {{ p.title | json }},
+				"featured_image": {% if number_images > 1 %}"https:{{ p.images[0].src | img_url:'large' }}"{% else %}"https:{{ p.featured_image.src | img_url:'large'}}"{% endif %},
+				"handle": "{{p.handle}}",
+				"url": "{{shop.url}}{{p.url}}?view=smb.json",
+				{% if p.variants.first.compare_at_price != '' %}
+				"compare_at_price": {{p.variants.first.compare_at_price}},
+				"compare_at_price_format": "{{p.variants.first.compare_at_price | money}}",
+				{% endif %}
+				"price": {{p.price}},
+				"price_format": "{{p.price | money}}",
+				"available": {{ p.available }},
+				"sale": "-{{p.variants.first.compare_at_price | minus: p.variants.first.price | divided_by: p.variants.first.compare_at_price | times : 100 | round : 0}}%"
+			}
+			{% unless forloop.last %},{% endunless %}
+		{% endfor %}
+	{% endpaginate %}
+{% endcapture %}
+
+
+{% capture outputfilter %}
+	{
+		"vendors": {
+			"enable": {%if settings.show_vendor%}{{settings.show_vendor}}{%else%}false{%endif%},
+			"title": "{{settings.sort_vendor_title}}",
+			"items": [
+				{%for vendor in collection.all_vendors%}
+				{
+					"title": "{{vendor}}",
+					"value": "{{vendor}}"
+				}{%unless forloop.last == true%},{%endunless%}
+				{%endfor%}
+			]
+		},
+		"types": {
+			"enable": {%if settings.show_type%}{{settings.show_type}}{%else%}false{%endif%},
+			"title": "{{settings.sort_type_title}}",
+			"items": [
+				{%for type in collection.all_types%}
+				{
+				"title": "{{type}}",
+				"value": "{{type}}"
+				}{%unless forloop.last == true%},{%endunless%}
+				{%endfor%}
+			]
+		}
+	}
+{% endcapture %}
+
+
+{% capture outputpaginate %}
+	{% paginate collection.products by 12 %}
+		{
+			"pages": {{paginate.pages}},
+			"items": {{paginate.items}},
+			"current_page": {{paginate.current_page}},
+			"hasNext": {% if paginate.next %}true{% else %}false{% endif %}
+		}
+	{% endpaginate %}
+{% endcapture %}
+
+
+
+{
+	"id": "{{collection.id}}",
+	"title": {{collection.title | json}},
+	"image": "{{collection.image.src}}",
+	"products": [{{output}}],
+	"filter": {{outputfilter}},
+	"paginate": {{outputpaginate}}
+}

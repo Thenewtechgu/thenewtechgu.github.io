@@ -1,0 +1,38 @@
+<section id="home-register">
+	<div class="wrapper">
+		<div class="inner">
+			<div class="register_title  title">
+				<h2>{{ settings.register_title }}</h2>
+				<p>{{ settings.register_txt }}</p>
+			</div>
+			<div class="grid">
+				<div class="grid__item large--one-whole medium--one-whole small--one-whole">
+					<div class="ft-subscribe">
+						<div class="ft-sub-wrapper">
+							{% if settings.newsletter_form_action != blank %}
+							<form action="{{ settings.newsletter_form_action }}" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" target="_blank">
+								<input type="email" value="{% if customer %}{{ customer.email }}{% endif %}" placeholder="{{settings.register_plac}}" name="EMAIL" id="mail" aria-label="{{ 'general.newsletter_form.newsletter_email' | t }}">
+								<button type="submit" name="subscribe" id="subscribe" value="{{ 'general.newsletter_form.submit' | t }}">{{ settings.register_send }}</button>								
+							</form>
+							<div class="ft-subscribe-desc">
+								{{settings.register_txt}}
+							</div>
+							{% else %}
+							{% form 'customer' %}
+							{{ form.errors | default_errors }}
+							{% if form.posted_successfully? %}
+							<p class="note form-success">{{ 'general.newsletter_form.confirmation' | t }}</p>
+							{% else %}
+							<input type="email" value="{% if customer %}{{ customer.email }}{% endif %}" placeholder="{{settings.register_plac}}" name="contact[email]" id="Email" aria-label="{{ 'general.newsletter_form.newsletter_email' | t }}">
+							<input type="hidden" name="contact[tags]" value="newsletter">											
+							<button type="submit" name="subscribe" id="subscribe" value="{{ 'general.newsletter_form.submit' | t }}">{{ settings.register_send }}</button>					
+							{% endif %}
+							{% endform %}
+							{% endif %}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

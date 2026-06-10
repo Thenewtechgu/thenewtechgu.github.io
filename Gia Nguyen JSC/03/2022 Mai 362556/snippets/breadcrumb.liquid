@@ -1,0 +1,153 @@
+
+{% unless template == 'index' %}
+{%if template contains 'search'%}
+<section id="breadcrumb-wrapper" class="_breadcrumb">
+	<div class="bread-img">
+		<picture>
+			<source media="(max-width:480px)" srcset="{{'page-title-mb.jpg' | img_url: 'large' | asset_url  }}">
+			<source media="(min-width:481px) and (max-width:768px)" srcset="{{'page-title-mb.jpg' | img_url: '1024x1024' | asset_url  }}">
+			<img src="{{'page-title.jpg' | asset_url  }}" />
+		</picture>
+	</div>
+	<div class="breadcrumb-content">
+		<div class="wrapper">
+			<div class="inner">
+				<div class="breadcrumb_all">
+					<div class="breadcrumb_title">
+						<h1>Tìm kiếm</h1>
+					</div>
+					<div class="breadcrumb-small">
+						<a href="/" title="{{ 'general.breadcrumbs.home_link_title' | t }}">{{ 'general.breadcrumbs.home' | t }}</a>
+						<span aria-hidden="true">/</span>
+						<span>Tìm kiếm</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+{%else%}
+<section id="breadcrumb-wrapper" class="_breadcrumb">
+	<div class="bread-img">
+		<picture>
+			<source media="(max-width:480px)" srcset="{{'page-title-mb.jpg' | img_url: 'large' | asset_url  }}">
+			<source media="(min-width:481px) and (max-width:768px)" srcset="{{'page-title-mb.jpg' | img_url: '1024x1024' | asset_url  }}">
+			<img src="{{'page-title.jpg' | asset_url  }}" />
+		</picture>
+	</div>
+	<div class="breadcrumb-content">
+		<div class="wrapper">
+			<div class="inner">
+				<div class="breadcrumb_all">
+					<div class="breadcrumb_title">
+						<h1>
+							{% if template contains 'product' %}
+
+							{{product.title}}
+
+							{% elsif template contains 'collection'%}
+							{% if collection.handle == 'all' %}
+							<span>Tất Cả Sản Phẩm</span>
+							{%else%}
+							{{ collection.title }}
+							{%endif%}
+
+							{% elsif template == 'blog' %}
+
+							{{ blog.title }}
+
+							{% elsif template == 'article' %}
+
+							{{ article.title }}
+
+							{% elsif template contains 'page' %}
+
+							{{ page.title }}
+
+							{% elsif template contains 'cart' %}
+
+							Gỏi hàng
+
+							{% elsif template contains 'login' %}
+
+							Đăng nhập
+
+							{% elsif template contains 'register' %}
+
+							Tạo tài khoản
+
+							{%endif%}
+
+						</h1>
+
+					</div>
+					<div class="breadcrumb-small">
+						<a href="/" title="{{ 'general.breadcrumbs.home_link_title' | t }}">{{ 'general.breadcrumbs.home' | t }}</a>
+
+						{% if template contains 'product' %}
+
+
+						{% if collection %}
+						<span aria-hidden="true">/</span>
+						{% if collection.handle %}
+						{% capture url %}/collections/{{ collection.handle }}{% endcapture %}
+						{{ collection.title | link_to: url }}
+						{% endif %}
+						{% endif %}
+						<span aria-hidden="true">/</span>
+						<span class="aqc">{{ product.title }}</span>
+
+						{% elsif template contains 'collection' and collection.handle %}
+
+						<span aria-hidden="true">/</span>
+						{% if current_tags %}
+						{% capture url %}/collections/{{ collection.handle }}{% endcapture %}
+						{{ collection.title | link_to: url }}
+						<span aria-hidden="true">/</span>
+						<span>{{ current_tags | join: " + " }}</span>
+						{% else %}
+						{%if collection.handle == "all"%}
+						<span>Tất cả sản phẩm</span>
+						{%else%}
+						<span>{{ collection.title }}</span>
+						{%endif%}
+						{% endif %}
+
+						{% elsif template == 'blog' %}
+
+						<span aria-hidden="true">/</span>
+						{% if current_tags %}
+						{{ blog.title | link_to: blog.url }}
+						<span aria-hidden="true">/</span>
+						<span>{{ current_tags | join: " + " }}</span>
+						{% else %}
+						<span>{{ blog.title }}</span>
+						{% endif %}
+
+						{% elsif template == 'article' %}
+
+						<span aria-hidden="true">/</span>
+						{{ blog.title | link_to: blog.url }}
+						<span aria-hidden="true">/</span>
+						<span>{{ article.title }}</span>
+
+						{% elsif template contains 'page' %}
+
+						<span aria-hidden="true">/</span>
+						<span>{{ page.title }}</span>
+
+						{% else %}
+
+						<span aria-hidden="true">/</span>
+						<span>{{ page_title }}</span>
+
+						{% endif %}
+						<div class="breadcrumb_empty"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+{%endif%}
+{% endunless %}

@@ -1,0 +1,4 @@
+{%layout none %}
+[{%for product in search.results limit:10%}
+{"title":"{{product.title }}","url":"{{product.url}}","price":"{{product.price}}","compare_at_price":"{{product.compare_at_price}}","featured_image":"{{product.featured_image}}","available":"{{product.available}}"}{%unless forloop.last%},{%endunless%}
+{%endfor%}]

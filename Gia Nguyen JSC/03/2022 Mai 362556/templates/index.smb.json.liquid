@@ -1,0 +1,64 @@
+{%comment%} Đây là file của suplo app, nếu bạn muốn sử dụng thì không nên xóa.{%endcomment%} 
+{% layout none %}
+
+{% capture menu %}
+
+{%for hd_link in linklists.menu-mobile-app.links%}
+	{
+		"link": "{{hd_link.url}}",
+		"title": "{{hd_link.title}}",
+		"level": 1,
+		"sub_links":[
+			{%if linklists[hd_link.handle]links%}
+				{%for hd_link2 in linklists[hd_link.handle]links%}
+					{
+						"link": "{{hd_link2.url}}",
+						"title": "{{hd_link2.title}}",
+						"level": 2,
+						"sub_links":[
+						{%if linklists[hd_link2.handle]links%}
+							{%for hd_link3 in linklists[hd_link2.handle]links%}
+								{
+								"link": "{{hd_link3.url}}",
+								"title": "{{hd_link3.title}}",
+								"level": 3,
+								"sub_links":[
+									{%if linklists[hd_link3.handle]links%}
+										{%for hd_link4 in linklists[hd_link3.handle]links%}
+											{
+											"link": "{{hd_link4.url}}",
+											"title": "{{hd_link4.title}}",
+											"level": 4,
+											"sub_links":[
+												{%if linklists[hd_link4.handle]links%}
+													{%for hd_link5 in linklists[hd_link4.handle]links%}
+														{
+														"link": "{{hd_link5.url}}",
+														"title": "{{hd_link5.title}}",
+														"level": 5
+														}{% unless forloop.last %},{% endunless %}
+													{%endfor%}
+												{%endif%}
+												]
+											}{% unless forloop.last %},{% endunless %}
+										{%endfor%}
+									{%endif%}
+									]
+								}{% unless forloop.last %},{% endunless %}
+							{%endfor%}
+						{%endif%}
+						]
+					}{% unless forloop.last %},{% endunless %}
+				{%endfor%}
+			{%endif%}
+		]
+	}{% unless forloop.last %},{% endunless %}
+{%endfor%}
+
+{% endcapture %}
+
+{
+
+"menu": [{{menu}}]
+
+}

@@ -1,0 +1,32 @@
+<div class="article_item">
+	<div class="article_img">
+		<a href="{{article_layout.url}}">
+			<img src="{{article_layout.image.src}}" alt="{{article_layout.title}}" />
+		</a>
+	</div>
+	<div class="article-info-wrapper">
+		<div class="article_content">
+
+			<div class="article-title">
+				<h4><a href="{{article_layout.url}}">{{article_layout.title | truncate: 50}}</a></h4>
+			</div>
+{% comment %}
+			<div class="article_content_1">
+				<p>{{ article_layout.content | strip_html | truncate: 200 }}</p>
+			</div>
+{% endcomment %}
+			<div class="article_comment">
+				<div class="article_info">
+					<div class="date"><i class="fas fa-calendar-alt"></i> {{ article_layout.published_at | date: '%d/%m/%y' }}</div>
+					<div class="comment">
+						<i class="far fa-comment"></i>
+						<span class="fb-comments-count" data-href="{{shop.url}}{{article.url}}"></span>
+					</div>
+				</div>
+			</div>
+			<div class="article_riew">
+				<a class="read_more" href="{{ article_layout.url }}">View more <i class="fas fa-angle-double-right"></i></a>
+			</div>
+		</div>
+	</div>
+</div>

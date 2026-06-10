@@ -1,0 +1,112 @@
+<section id="main_slide">
+	<div class="wrapper_full">
+		<div class="inner">
+			<div id="main_slide_owl" class="owl-carousel owl-theme">
+				{%for i in (1..5)%}
+				{%capture _img_banner%}img_banner{{i}}.jpg{%endcapture%}
+				{%capture _title_banner%}title_banner{{i}}{%endcapture%}
+				{%capture _text_banner%}text_banner{{i}}{%endcapture%}
+				{%capture _show_banner%}show_banner{{i}}{%endcapture%}
+				{%capture _banner_bt_txt_1%}banner_bt_txt_1_{{i}}{%endcapture%}
+				{%capture _banner_bt_url_1%}banner_bt_url_1_{{i}}{%endcapture%}
+				{%capture _banner_bt_txt_2%}banner_bt_txt_2_{{i}}{%endcapture%}
+				{%capture _banner_bt_url_2%}banner_bt_url_2_{{i}}{%endcapture%}
+				{%capture _banner_text_left%}banner_text_left_{{i}}{%endcapture%}
+				{%capture _banner_text_center%}banner_text_center_{{i}}{%endcapture%}
+				{%capture _banner_text_right%}banner_text_right_{{i}}{%endcapture%}
+
+
+
+				{%if settings[_show_banner]%}
+				<div class="item">
+					<img src="{{ _img_banner | asset_url }}" />
+					<div class="main_slide_all">
+						<div class="wrapper">
+							<div class="grid">
+								<div class="grid__item large--one-whole medium--one-whole small--one-whole">
+									<div class="main_item
+															{%if settings[_banner_text_left]%}
+															text_left
+															{%endif%}
+															{%if settings[_banner_text_center]%}
+															text_center
+															{%endif%}
+															{%if settings[_banner_text_right]%}
+															text_right
+															{%endif%}
+															">
+										<div class="main_item_cont">
+											<div class="main_item_title">
+												<h2>{{settings[_title_banner] }}</h2>
+											</div>
+											<div class="main_item_text">
+												<p>{{ settings[_text_banner]}}</p>
+											</div>
+						
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				{%endif%}
+				{%endfor%}
+			</div>
+		</div>
+	</div>
+	{%if settings.service_section_show%}
+	<div class="wrapper_service">
+		<div class="wrapper">
+			<div class="grid">
+				{%for j in (1..3)%}
+				{%capture _service_section_show%}service_section_show{{j}}{%endcapture%}
+				{%capture _service_section_img%}service_section_img{{j}}.png{%endcapture%}
+				{%capture _service_section_title%}service_section_title{{j}}{%endcapture%}
+				{%capture _service_section_txt%}service_section_txt{{j}}{%endcapture%}
+				{%if settings[_service_section_show]%}
+				<div class="grid__item large--one-third medium--one-whole small--one-whole">
+					<div class="service_all">
+						<div class="service_title">
+							<img src="{{ _service_section_img | asset_url }}" alt="service icon">
+							<h4>{{ settings[_service_section_title] }}</h4>
+						</div>
+						<div class="service_txt">
+							<p>{{ settings[_service_section_txt] }}</p>
+						</div>
+					</div>
+				</div>
+				{%endif%}
+				{%endfor%}
+			</div>
+		</div>
+	</div>
+	{%endif%}
+</section>
+
+<script>
+
+$(document).ready(function(){
+	$('#main_slide_owl').owlCarousel({
+		loop:true,
+		margin:0,
+		nav:true,
+		dots: false,
+		navText:[ '<div class="bt bt_prev"><i class="fas fa-chevron-left"></i></div>','<div class="bt bt_next"><i class="fas fa-chevron-right"></i></div>'],
+		responsive:{
+			0:{
+				items:1
+			},
+			600:{
+				items:1
+			},
+			1000:{
+				items:1
+			}
+		}
+	});
+
+});
+
+</script>
+

@@ -1,0 +1,43 @@
+<section id="home-services">
+	<div class="wrapper">
+		<div class="inner">
+			<div class="section-title wow fadeInDown text-center">
+				<h2>
+					{{settings.hservices_title}}
+				</h2>
+				<span class="section-title-border"></span>
+			</div>
+			<div class="grid-uniform md-mg-left-10">
+				{%for i in (1..6)%}
+				{%capture hservice_enable%}hservice_enable{{i}}{%endcapture%}
+				{%capture hservice_icon%}hservice_icon{{i}}.png{%endcapture%}
+				{%capture hservice_title%}hservice_title{{i}}{%endcapture%}
+				{%capture hservice_desc%}hservice_desc{{i}}{%endcapture%}
+				{%capture hservice_btn_text%}hservice_btn_text{{i}}{%endcapture%}
+				{%capture hservice_btn_url%}hservice_btn_url{{i}}{%endcapture%}
+				{%if settings[hservice_enable]%}
+				<div class="grid__item wow fadeInUp md-pd-left10 large--one-third medium--one-half small--one-whole"
+						 data-wow-delay="{{i | times: 0.2}}s"
+						 data-wow-duration="0.75s"
+						 >
+					<div class="hservice-item text-center">
+						<div class="hservice-img">
+							<img src="{{hservice_icon | asset_url}}" alt="{{settings[hservice_title]}}" />
+						</div>
+						<div class="hservice-title">
+							<a href="{{settings[hservice_btn_url]}}">{{settings[hservice_title]}}</a>
+						</div>
+						<div class="hservice-desc">
+							{{settings[hservice_desc]}}
+						</div>
+						<div class="hservice-viewmore btn-viewmore">
+							<a href="{{settings[hservice_btn_url]}}">{{settings[hservice_btn_text]}}</a>
+						</div>
+					</div>
+				</div>
+				{%endif%}				
+				{%endfor%}
+			</div>
+		</div>
+	</div>
+</section>

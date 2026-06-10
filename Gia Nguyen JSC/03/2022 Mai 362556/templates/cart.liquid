@@ -1,0 +1,214 @@
+<div id="page_cart">
+	<div class="wrapper">
+		<div class="inner">
+			{% if cart.item_count > 0 %}
+			<form action="/cart" method="post" novalidate class="cart table-wrap medium--hide small--hide">
+				<table class="cart-table full table--responsive">
+					<thead class="cart__row cart__header-labels">
+						<th colspan="2" class="text-center"><h4>{{ 'cart.label.product' | t }}</h4></th>
+						<th class="cart_colum_title text-center"><h4>{{ 'cart.label.price' | t }}</h4></th>
+						<th class="cart_colum_title text-center"><h4>{{ 'cart.label.quantity' | t }}</h4></th>
+						<th class="cart_colum_title text-center"><h4>{{ 'cart.label.total' | t }}</h4></th>
+					</thead>
+					<tbody>
+						{% for item in cart.items %}
+						<tr class="cart__row table__section">
+							<td class="cart_img" data-label="{{ 'customer.order.product' | t }}">
+								<a href="{{ item.url | within: collections.all }}" class="cart__image">
+									{% comment %}
+									More image size options at:
+									- http://docs.haravan.com/themes/filters/product-img-url
+									{% endcomment %}
+									{%if item.variant.image%}
+									<img src="{{item.variant.image |img_url: 'medium'}}" alt="{{item.title}}">
+									{%else%}
+									<img src="{{item|img_url: 'medium'}}" alt="{{item.title}}">
+									{%endif%}
+								</a>
+							</td>
+							<td class="cart-product-title">
+								<a href="{{ item.url }}">
+									{{ item.product.title }}
+								</a>
+								{% unless item.variant.title contains 'Default' %}
+								{%assign ad = item.variant.title | split: '/' %}
+								<div class="variant">Màu: <span class="sp2" style="background-color:{{ ad[0] }}"></span> / Size:<span class="sp1"> {{ ad[1] }}</span></div>
+								{% endunless %}
+
+								<p class="cart_vendor">Thương hiệu:<span> {{ item.vendor }}</span></p>
+
+								{% assign property_size = item.properties | size %}
+								{% if property_size > 0 %}
+								{% for p in item.properties %}
+								{% unless p.last == blank %}
+								{{ p.first }}:
+
+								{% if p.last contains '/uploads/' %}
+								<a href="{{ p.last }}">{{ p.last | split: '/' | last }}</a>
+								{% else %}
+								{{ p.last }}
+								{% endif %}
+
+								<br>
+								{% endunless %}
+								{% endfor %}
+								{% endif %}
+
+								<a href="/cart/change?line={{ forloop.index }}&amp;quantity=0" class="cart__remove">
+									<small>{{ 'cart.general.remove' | t }}</small>
+								</a>
+							</td>
+							<td class="cart-product-price" data-label="{{ 'cart.label.price' | t }}">
+								<span>
+									{{ item.price | money }}
+								</span>
+							</td>
+							<td data-label="{{ 'cart.label.quantity' | t }}">
+								<input type="number" name="updates[]" id="updates_{{ item.key }}" data-id="{{ item.key }}" value="{{ item.quantity }}" min="0">
+							</td>
+							<td data-label="{{ 'cart.label.total' | t }}" class="cart-product-price text-center">
+								{% if item.original_line_price > item.line_price %}
+								<span class="cart-item__original-price"><s>{{ item.original_line_price | money }}</s></span>
+								{% endif %}
+								<span>
+									{{ item.line_price | money }}
+								</span>
+								{% for discount in item.discounts %}
+								<span class="cart-item__discount">{{ discount.title }}</span>
+								{% endfor %}
+							</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+				<div class="grid cart__row">
+					{% if settings.cart_notes_enable %}
+					<div class="grid__item large--one-half small--one-whole">
+						<label for="CartSpecialInstructions">{{ 'cart.general.note' | t }}</label>
+						<textarea name="note" class="input-full" id="CartSpecialInstructions">{{ cart.note }}</textarea>
+					</div>
+					{% endif %}
+					<div class="cart_pay_row  grid__item text-right{% if settings.cart_notes_enable %} large--one-half small--one-whole{% endif %}">
+						<p>
+							<span class="cart__subtotal-title">{{ 'cart.general.subtotal' | t }}</span>
+							<span class="h3 cart__subtotal">{{ cart.total_price | money }}</span>
+						</p>
+						{% if cart.total_discounts > 0 %}
+						{% assign savings = cart.total_discounts | money %}
+						<p>
+							<span class="cart-subtotal__savings"><em>{{ 'cart.general.savings_html' | t: price: savings }}</em></span>
+						</p>
+						{% endif %}
+						{%comment%}<p><em>{{ 'cart.general.shipping_at_checkout' | t }}</em></p>{%endcomment%}
+						<button type="submit" name="update" class="button_at  btnCart cart_update update-cart">{{ 'cart.general.update' | t }}</button>
+						<button type="submit" name="checkout" class="button_at btnCart cart_pay">{{ 'cart.general.checkout' | t }}</button>
+					</div>
+				</div>
+			</form>
+			<form action="/cart" method="post" novalidate class="cart cart_mobile table-wrap large--hide">
+				<table class="cart-table full">
+					{% for item in cart.items %}
+					<div class="grid cart-item mg-left-0">
+						<div data-label="{{ 'customer.order.product' | t }}" class="grid__item medium--one-third small--one-third pd-left0">
+							<a href="{{ item.url | within: collections.all }}" class="cart__image">
+								{% comment %}
+								More image size options at:
+								- http://docs.haravan.com/themes/filters/product-img-url
+								{% endcomment %}
+								{%if item.variant.image%}
+								<img src="{{item.variant.image |img_url: 'medium'}}" alt="{{item.title}}">
+								{%else%}
+								<img src="{{item|img_url: 'medium'}}" alt="{{item.title}}">
+								{%endif%}
+							</a>
+						</div>
+						<div class="grid__item  medium--two-thirds small--two-thirds pd-left15 cart-product-title">
+							<a href="{{ item.url }}" class="h4">
+								{{ item.product.title }}
+							</a>
+							{% unless item.variant.title contains 'Default' %}
+							{%assign ad = item.variant.title | split: '/' %}
+							<div class="variant">Màu: <span class="sp2" style="background-color:{{ ad[0] }}"></span> / Size:<span class="sp1"> {{ ad[1] }}</span></div>
+							{% endunless %}
+
+							<p>Thương hiệu: {{ item.vendor }}</p>
+
+							{% comment %}
+							Optional, loop through custom product line items if available
+
+							For more info on line item properties, visit:
+							- http://docs.haravan.com/support/your-store/products/how-do-I-collect-additional-information-on-the-product-page-Like-for-a-monogram-engraving-or-customization
+							{% endcomment %}
+							{% assign property_size = item.properties | size %}
+							{% if property_size > 0 %}
+							{% for p in item.properties %}
+							{% unless p.last == blank %}
+							{{ p.first }}:
+
+							{% comment %}
+							Check if there was an uploaded file associated
+							{% endcomment %}
+							{% if p.last contains '/uploads/' %}
+							<a href="{{ p.last }}">{{ p.last | split: '/' | last }}</a>
+							{% else %}
+							{{ p.last }}
+							{% endif %}
+
+							<br>
+							{% endunless %}
+							{% endfor %}
+							{% endif %}
+
+							<div data-label="{{ 'cart.label.quantity' | t }}">
+								<input type="number" name="updates[]" id="updates_{{ item.key }}" data-id="{{ item.key }}" value="{{ item.quantity }}" min="0">
+							</div>
+							<div data-label="{{ 'cart.label.price' | t }}" class="price">
+								<span class="h3">
+									{{ item.price | money }}
+								</span>
+							</div>
+							<a href="/cart/change?line={{ forloop.index }}&amp;quantity=0" class="cart__remove">
+								<small>{{ 'cart.general.remove' | t }}</small>
+							</a>
+						</div>
+					</div>
+					{% endfor %}
+				</table>
+				<div class="grid cart__row">
+					{% if settings.cart_notes_enable %}
+					<div class="grid__item two-thirds small--one-whole">
+						<label for="CartSpecialInstructions">{{ 'cart.general.note' | t }}</label>
+						<textarea name="note" class="input-full" id="CartSpecialInstructions">{{ cart.note }}</textarea>
+					</div>
+					{% endif %}
+					<div class="grid__item text-right{% if settings.cart_notes_enable %} one-third small--one-whole{% endif %}">
+						<p>
+							<span class="cart__subtotal-title">{{ 'cart.general.subtotal' | t }}</span>
+							<span class="h3 cart__subtotal">{{ cart.total_price | money }}</span>
+						</p>
+						{% if cart.total_discounts > 0 %}
+						{% assign savings = cart.total_discounts | money %}
+						<p>
+							<span class="cart-subtotal__savings"><em>{{ 'cart.general.savings_html' | t: price: savings }}</em></span>
+						</p>
+						{% endif %}
+						{%comment%}<p><em>{{ 'cart.general.shipping_at_checkout' | t }}</em></p>{%endcomment%}
+						<div class="button_cart">
+							<button type="submit" name="update" class="button_at btnCart update-cart">{{ 'cart.general.update' | t }}</button>
+							<button type="submit" name="checkout" class="button_at btnCart">{{ 'cart.general.checkout' | t }}</button>
+						</div>
+					</div>
+				</div>
+			</form>
+			{% else %}
+			{% comment %}
+			The cart is empty
+			{% endcomment %}
+			<h2>{{ 'cart.general.title' | t }}</h2>
+			<p>{{ 'cart.general.empty' | t }}</p>
+			<p>{{ 'cart.general.continue_browsing_html' | t }}</p>
+			{% endif %}
+
+		</div>
+	</div>
+</div>

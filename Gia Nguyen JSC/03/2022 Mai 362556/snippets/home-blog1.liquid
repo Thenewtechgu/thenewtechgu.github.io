@@ -1,0 +1,32 @@
+<section id="home-blog1">
+	<div class="wrapper">
+		<div class="inner">
+			<div class="blog1_title title">
+				<div class="title_img">
+					<img src="{{ 'blog1_img_logo_title1.png' | asset_url}}" alt="icon">
+				</div>
+				<h2>{{ settings.blog1_title }}</h2>
+			</div>
+			<div class="blog_cont">
+				<div id="blog1_owl" class="owl-carousel owl-theme">
+					{%for blog_item in blogs[settings.blog1__]articles%}
+					<div class="item">
+						<div class="blog1_all">
+							<div class="blog1_img">
+								<img src="{{ blog_item.image.src | img_url  }}" alt="{{ blog_item.title }}">
+							</div>
+							<p class="p1"><img src="{{ 'blog1_img_logo1.png' | asset_url}}" alt="icon">{{ blog_item.content | strip_html | truncate: 200 }}</p>
+							<div class="blog1_info">
+								<div class="qsc">
+									<span class="sp1">{{ blog_item.title }}</span>
+									<span class="sp2">{{ blog_item.excerpt }}</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					{%endfor%}
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

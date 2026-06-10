@@ -1,0 +1,304 @@
+{%if settings.col_sidebar_show%}
+
+<div class="collection-sidebar-wrapper">
+	<div class="grid-uniform mg-left-10">
+
+		{%if collection.handle =="all"%}
+		{%if settings.col_sidebar_show_menu%}
+		<div class="grid__item large--one-whole medium--one-half small--one-whole pd-left10">
+			<div class="collection-categories">
+				<button class="accordion cs-title col-sb-trigger">
+					<span>{{settings.col_sidebar_menu_title}}</span>
+					<i class="right fas fa-chevron-down"></i>
+				</button>
+				<div class="panel">
+					<ul class="no-bullets category_product">
+						{%for menu_mb_ngang in linklists[settings.menu_sidebar]links%}
+						<li>
+							<a href="{{ menu_mb_ngang.url }}"><span>{{ menu_mb_ngang.title }}</span><i class="fas fa-angle-double-right"></i></a>
+						</li>
+						{%endfor%}
+					</ul>
+				</div>
+			</div>
+		</div>
+		{%endif%}
+		{%else%}
+		{%assign check_enable_col = false%}
+		{%for i in (1..20)%}
+		{%capture _col%}sidebar_col_par_{{i}}{%endcapture%}
+		{%capture _menu%}sidebar_menu_par_{{i}}{%endcapture%}
+		{%capture enable%}sidebar_enable_par_{{i}}{%endcapture%}
+		{%assign menu = settings[_menu]%}
+		{%assign col = settings[_col]%}
+		{%assign col_url = collections[col].handle%}
+		{%if collection.handle == col_url%}
+		{%if settings[enable]%}
+		<div class="grid__item large--one-whole medium--one-half small--one-whole pd-left10">
+			<div class="collection-categories">
+				<button class="accordion cs-title col-sb-trigger">
+					<span>{{settings.col_sidebar_menu_title}}</span>
+					<i class="right fas fa-chevron-down"></i>
+				</button>
+				<div class="panel">
+					<ul class="no-bullets">
+						{%for link1 in linklists[menu].links%}
+						<li>
+							<a href="{{link1.url}}">{{link1.title}}</a>
+							{%if linklists[link1.handle]links%}
+							<ul class="no-bullets">
+								{%for link2 in linklists[link1.handle]links%}
+								<li>
+									<a href="{{link2.url}}">- {{link2.title}}</a>
+								</li>
+								{%endfor%}
+							</ul>
+							{%endif%}
+						</li>
+						{%endfor%}
+					</ul>
+				</div>
+			</div>
+		</div>
+		{%else%}
+		{%assign check_enable_col = true%}
+		{%endif%}
+		{%endif%}
+		{%endfor%}
+		{%endif%}
+
+		{%if settings.col_sidebar_show_price%}
+		<div class="grid__item large--one-whole medium--one-half small--one-whole pd-left10">
+			<div class="collection-filter-price">
+				<button class="accordion cs-title col-sb-trigger">
+					<span>{{settings.col_sidebar_price_title}}</span>
+					<i class="right fas fa-chevron-down"></i>
+				</button>
+				<div class="panel sidebar-sort">
+					<ul class="no-bullets filter_ul filter-price clearfix">
+						<li>
+							<label>
+								<input type="radio" name="price-filter" data-price="0:max" value="((price:product>=0))">
+								<span>Tất cả</span>
+							</label>
+						</li>
+						<li>
+							<label>
+								<input type="radio" name="price-filter" data-price="0:{{settings.col_sidebar_price_1}}" value="((price:product<{{settings.col_sidebar_price_1}}))">
+								<span>Nhỏ hơn {{settings.col_sidebar_price_1|money}}</span>
+							</label>
+						</li>
+						<li>
+							<label>
+								<input type="radio" name="price-filter" data-price="{{settings.col_sidebar_price_1}}:{{settings.col_sidebar_price_2}}" value="((price:product>={{settings.col_sidebar_price_1}})&&(price:product<{{settings.col_sidebar_price_2}}))">
+								<span>Từ {{settings.col_sidebar_price_1|money}} - {{settings.col_sidebar_price_2|money}}</span>
+							</label>
+						</li>
+						<li>
+							<label>
+								<input type="radio" name="price-filter" data-price="{{settings.col_sidebar_price_2}}:{{settings.col_sidebar_price_3}}" value="((price:product>={{settings.col_sidebar_price_2}})&&(price:product<{{settings.col_sidebar_price_3}}))">
+								<span>Từ {{settings.col_sidebar_price_2|money}} - {{settings.col_sidebar_price_3|money}}</span>
+							</label>
+						</li>
+						<li>
+							<label>
+								<input type="radio" name="price-filter" data-price="{{settings.col_sidebar_price_3}}:{{settings.col_sidebar_price_4}}" value="((price:product>={{settings.col_sidebar_price_3}})&&(price:product<{{settings.col_sidebar_price_4}}))">
+								<span>Từ {{settings.col_sidebar_price_3|money}} - {{settings.col_sidebar_price_4|money}}</span>
+							</label>
+						</li>
+						<li>
+							<label>
+								<input type="radio" name="price-filter" data-price="{{settings.col_sidebar_price_4}}:{{settings.col_sidebar_price_5}}" value="((price:product>={{settings.col_sidebar_price_4}})&&(price:product<{{settings.col_sidebar_price_5}}))">
+								<span>Từ {{settings.col_sidebar_price_4|money}} - {{settings.col_sidebar_price_5|money}}</span>
+							</label>
+						</li>
+						<li>
+							<label>
+								<input type="radio" name="price-filter" data-price="{{settings.col_sidebar_price_5}}:max" value="((price:product>={{settings.col_sidebar_price_5}}))">
+								<span>Lớn hơn {{settings.col_sidebar_price_5|money}}</span>
+							</label>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		{%endif%}
+
+		{%if settings.show_vendor%}
+		<div class="grid__item large--one-whole medium--one-half small--one-whole pd-left10">
+			<div class="collection-filter-vendor">
+				<button class="accordion cs-title col-sb-trigger">
+					<span>{{settings.col_sidebar_vendor_title}}</span>
+					<i class="right fas fa-chevron-down"></i>
+				</button>
+				<div class="panel sidebar-sort">
+					<ul class="no-bullets filter_ul filter-vendor clearfix">
+						{% for product_vendor in collection.all_vendors %}
+						<li>
+							<label data-filter="{{product_vendor}}" class="filter-vendor__item {{product_vendor|handleize}}">
+								<input type="checkbox" value="(vendor:product**{{product_vendor}})">
+								<span>{{product_vendor}}</span> 
+							</label>
+						</li>	
+						{% endfor %}
+					</ul>
+				</div>
+			</div>
+		</div>
+		{%endif%}
+
+		{%if settings.col_sidebar_show_type%}
+		<div class="grid__item large--one-whole medium--one-half small--one-whole pd-left10">
+			<div class="collection-filter-type">
+				<button class="accordion cs-title col-sb-trigger">
+					<span>{{settings.col_sidebar_type_title}}</span>
+					<i class="right fas fa-chevron-down"></i>
+				</button>
+				<div class="panel sidebar-sort">
+					<ul class="no-bullets filter_ul filter-type clearfix">
+						{% for product_type in collection.all_types %}
+						<li>
+							<label data-filter="{{product_type}}" class="filter-vendor__item {{product_type|handleize}}">
+								<input type="checkbox" value="(product_type:product**{{product_type}})">
+								<span>{{product_type}}</span> 
+							</label>
+						</li>	
+						{% endfor %}
+					</ul>
+				</div>
+			</div>
+		</div>
+		{%endif%}
+
+		{%comment%}
+		{%if settings.col_sidebar_show_material%}
+		<div class="grid__item large--one-whole medium--one-half small--one-whole pd-left10">
+			<div class="collection-filter-material">
+				<button class="accordion cs-title col-sb-trigger">
+					<span>{{settings.col_sidebar_title_material}}</span>
+					<i class="right fas fa-chevron-down"></i>
+				</button>
+				<div class="panel sidebar-sort">
+					<ul class="no-bullets filter_ul filter-variant filter-size1 clearfix ">
+
+						{% assign _material = settings.material_value%}
+						{% assign material = _material | split: ","%}
+
+						{% for product_vendor in material %}
+						<li>
+							<label data-filter="{{product_vendor}}" class="filter-vendor__item {{product_vendor|handleize}}">
+								<input type="checkbox" value="(variant:product={{product_vendor}})">
+								<span>{{product_vendor}}</span>
+							</label>
+						</li>	
+						{% endfor %}
+					</ul>
+				</div>
+			</div>
+		</div>
+		{%endif%}
+		{%endcomment%}
+		{%if settings.col_sidebar_show_size%}
+		<div class="grid__item large--one-whole medium--one-half small--one-whole pd-left10">
+			<div class="collection-filter-size">
+				<button class="accordion cs-title col-sb-trigger">
+					<span>{{settings.col_sidebar_title_size}}</span>
+					<i class="right fas fa-chevron-down"></i>
+				</button>
+				<div class="panel sidebar-sort">
+					<ul class="filter_size no-bullets filter-variant filter-size2 clearfix ">
+
+						{% assign _size = settings.col_sidebar_size_value%}
+						{% assign size = _size | split: ","%}
+
+						{% for product_vendor in size %}
+						<li>
+							<label data-filter="{{product_vendor}}" class="filter-vendor__item {{product_vendor|handleize}}">
+								<input type="checkbox" value="(variant:product={{product_vendor}})">
+								<span>{{product_vendor}}</span>
+							</label>
+						</li>	
+						{% endfor %}
+					</ul>
+				</div>
+			</div>
+		</div>
+		{%endif%}
+
+		{%if settings.col_sidebar_one_show%}
+		<div class="grid__item large--one-whole medium--one-half small--one-whole pd-left10">
+			<div class="collection-filter-style">
+				<button class="accordion cs-title col-sb-trigger">
+					<span>{{settings.col_sidebar_one_title}}</span>
+					<i class="right fas fa-chevron-down"></i>
+				</button>
+				<div class="panel sidebar-sort">
+					<ul class="no-bullets filter_ul  filter-variant filter-size3 clearfix ">
+
+						{% assign _style = settings.col_sidebar_one_txt%}
+						{% assign style = _style | split: ","%}
+
+						{% for product_style in style %}
+						<li>
+							<label data-filter="{{product_style}}" class="filter-vendor__item {{product_style|handleize}}">
+								<input type="checkbox" value="(variant:product={{product_style}})">
+								<span>{{product_style}}</span>
+							</label>
+						</li>	
+						{% endfor %}
+					</ul>
+				</div>
+			</div>
+		</div>
+		{%endif%}
+
+		{%if settings.col_sidebar_show_color%}
+		<div class="grid__item large--one-whole medium--one-half small--one-whole pd-left10">
+			<div class="collection-filter-color">
+				<button class="accordion cs-title col-sb-trigger">
+					<span>{{settings.col_sidebar_title_color}}</span>
+					<i class="right fas fa-chevron-down"></i>
+				</button>
+				<div class="panel sidebar-sort">
+					<ul class="grid filter_ul  mg-left-0 no-bullets filter-variant filter-color clearfix ">
+						{%for i in (1..20)%}
+						{%capture title%}color_value_title_{{i}}{%endcapture%}
+						{%capture color%}color_value_{{i}}{%endcapture%}
+						{%assign _title = settings[title]%}
+						{%unless _title == "" or _title == blank%}
+						<li class="grid__item large--six-twelfths pd-left0">
+							<label data-filter="{{settings[color]}}" class="filter-vendor__item {{_title|handleize}}">
+								<input type="checkbox" value="(variant:product={{settings[color]}})" style="background-color: {{settings[color]}}">
+								<span>{{_title}}</span>
+							</label>
+						</li>	
+						{%endunless%}
+						{%endfor%}
+					</ul>
+				</div>
+			</div>
+		</div>
+		{%endif%}
+
+		{%if settings.col_sidebar_show_product%}
+		<div class="grid__item large--one-whole medium--one-half small--one-whole pd-left10">
+			<div class="collection-filter-color">
+				<button class="accordion cs-title col-sb-trigger">
+					<span>{{settings.col_sidebar_product_title}}</span>
+					<i class="right fas fa-chevron-down"></i>
+				</button>
+				<div class="panel sidebar-sort">
+					<div id="col_sidebar_product" class="owl-carousel owl-theme round_button">
+						{%for product_item in collections[settings.col_sidebar_product_collec]products%}
+						<div class="item">
+							{%include 'product-item'%}
+						</div>
+						{%endfor%}
+					</div>
+				</div>
+			</div>
+		</div>
+		{%endif%}
+	</div>
+</div>
+{%endif%}

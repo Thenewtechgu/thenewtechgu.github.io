@@ -1,0 +1,21 @@
+<section id="home-blog2">
+	<div class="wrapper">
+		<div class="inner">
+			<div class="blog2_title title">
+				<div class="title_img">
+					<img src="{{ 'en_blog_new_img.png' | asset_url }}" alt="icon blog">
+				</div>
+				<h2>{{ settings.en_blog_new_title }}</h2>
+			</div>
+			<div class="blog_cont">
+				<div id="blog2_owl" class="owl-carousel owl-theme my_nav">
+					{%for article_layout in blogs[settings.en_blog_new_collec]articles limit: settings.en_blog_new_limit%}
+					<div class="item">
+						{%include 'en-article-item'%}
+					</div>
+					{%endfor%}
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

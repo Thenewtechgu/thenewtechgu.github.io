@@ -1,0 +1,23 @@
+
+
+<section id="home-slide-logo">
+	<div class="wrapper">
+		<div class="inner">
+			<div id="slide_logo_owl" class="owl-carousel owl-theme color_button">
+				{%for i in (1..10)%}
+				{%capture _slide_logo_img%}en_slide_logo_img{{i}}.jpg{%endcapture%}
+				{%capture _slide_logo_link%}en_slide_logo_link{{i}}{%endcapture%}
+				{%capture _slide_logo_alt%}en_slide_logo_alt{{i}}{%endcapture%}
+				{%capture _show_slide_logo_%}en_show_slide_logo_{{i}}{%endcapture%}
+				{%if settings[_show_slide_logo_]%}
+				<div class="item">
+					<a href="{{ settings[_slide_logo_link] }}">
+						<img src="{{ _slide_logo_img | asset_url }}" alt="{{ settings[_slide_logo_alt]}}">
+					</a>
+				</div>
+				{%endif%}
+				{%endfor%}
+			</div>
+		</div>
+	</div>
+</section>

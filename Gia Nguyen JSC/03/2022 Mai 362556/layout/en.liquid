@@ -1,0 +1,227 @@
+<!doctype html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="vi"> <![endif]-->
+<!--[if IE 9 ]><html class="ie9 no-js"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js" lang="vi"> <!--<![endif]-->
+<head>
+	<!-- Basic page needs ================================================== -->
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta property="og:locale" content="vi_VN">
+	<link rel="alternate" hreflang="x-default" href="{{shop.url}}">
+	<link rel="alternate" hreflang="vi" href="{{shop.url}}">
+	<meta name="revisit" content="1 days">
+	<meta name="robots" content="index,follow">
+	{% if settings.header_favicon_show %}
+	<link rel="shortcut icon" href="{{ 'logo_favicon.png' | asset_url }}" type="image/png" />
+	{% endif %}
+	<!-- Title and description ================================================== -->
+	<title>
+		{{ page_title }}{% if current_tags %}{% assign meta_tags = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags }}{% endif %}{% if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif %}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}
+	</title>
+	{% if page_description %}
+	<meta name="description" content="{{ page_description | escape }}">
+	{% endif %}
+	<meta name="google-site-verification" content="iuN_URAXIQP2oVGeoRhsoC6uKGzR3I6kSzvwSKTXgus" />
+	<!-- Helpers ================================================== -->
+	{% include 'social-meta-tags' %}
+	<link rel="canonical" href="{{ canonical_url }}">
+	<meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+	<meta name="theme-color" content="{{ settings.color_primary }}">
+	<!-- CSS ================================================== -->
+	{{ 'timber.scss.css' | asset_url | stylesheet_tag }}
+	{{ 'suplo-style.scss.css' | asset_url | stylesheet_tag }}
+
+	<link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css'>
+	<link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css'>
+
+	<!-- Header hook for plugins ================================================== -->
+	{{ content_for_header }}
+	{% include 'oldIE-js' %}
+	{{ '//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js' | script_tag }}
+	{{ 'modernizr.min.js' | asset_url | script_tag }}
+
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js'></script>
+
+
+	<script src="https://cdn.rawgit.com/tuupola/jquery_lazyload/0a5e0785a90eb41a6411d67a2f2e56d55bbecbd3/lazyload.js"></script>
+	<script>
+	window.addEventListener("load", function(event) {
+		lazyload();
+	});
+	</script>
+
+
+	{%if template contains 'product'%}
+	{{ 'lastviewproduct.js' | asset_url | script_tag }}
+	{{ 'jquery.elevatezoom.min.js' | asset_url | script_tag }}
+	{%endif%}
+
+	<!-- Font Aweseome -->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
+	<!-- font-family toàn trang -->
+	{% if settings.base_font == "Roboto Condensed" %}
+	<link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700&amp;subset=vietnamese" rel="stylesheet">
+	{%endif%}	
+	{% if settings.base_font == "Roboto" %}
+	<link href="https://fonts.googleapis.com/css?family=Roboto:400,700&amp;subset=vietnamese" rel="stylesheet">
+	{%endif%}
+	{% if settings.base_font == "Source Sans Pro" %}	
+	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700&amp;subset=vietnamese" rel="stylesheet">
+	{%endif%}
+	{% if settings.base_font == "Roboto Slab" %}	
+	<link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,700&amp;subset=vietnamese" rel="stylesheet">
+	{%endif%}	
+	{% if settings.base_font == "Tinos" %}	
+	<link href="https://fonts.googleapis.com/css?family=Tinos:400,700&amp;subset=vietnamese" rel="stylesheet">
+	{%endif%}
+	{% if settings.base_font == "Patrick Hand" %}		
+	<link href="https://fonts.googleapis.com/css?family=Patrick+Hand&amp;subset=vietnamese" rel="stylesheet">
+	{%endif%}
+	{% if settings.base_font == "Alegreya Sans" %}		
+	<link href="https://fonts.googleapis.com/css?family=Alegreya+Sans:400,700&amp;subset=vietnamese" rel="stylesheet">
+	{%endif%}
+	{% if settings.base_font == "Alegreya Sans SC" %}		
+	<link href="https://fonts.googleapis.com/css?family=Alegreya+Sans+SC:400,700&amp;subset=vietnamese" rel="stylesheet">
+	{%endif%}
+	{% if settings.base_font == "Cousine" %}		
+	<link href="https://fonts.googleapis.com/css?family=Cousine:400,700&amp;subset=vietnamese" rel="stylesheet">
+	{%endif%}
+	{% if settings.base_font == "Patrick Hand SC" %}		
+	<link href="https://fonts.googleapis.com/css?family=Patrick+Hand+SC&amp;subset=vietnamese" rel="stylesheet">
+	{%endif%}
+	{% if settings.base_font == "Nunito" %}		
+	<link href="https://fonts.googleapis.com/css?family=Nunito:400,700&amp;subset=vietnamese" rel="stylesheet">
+	{%endif%}
+	{% if settings.base_font == "Muli" %}		
+	<link href="https://fonts.googleapis.com/css?family=Muli:400,700&amp;subset=vietnamese" rel="stylesheet">	
+	{%endif%}
+	{% if settings.base_font == "Noto" %}		
+	<link href="https://fonts.googleapis.com/css?family=Noto+Sans:400,700&amp;subset=vietnamese" rel="stylesheet">
+	{%endif%}
+
+
+	<!-- font-family tiêu đề -->
+	{% if settings.title_font == "Muli" %}		
+	<link href="https://fonts.googleapis.com/css?family=Muli:400,700&amp;subset=vietnamese" rel="stylesheet">
+	{%endif%}
+
+
+	{% comment %}
+	If you store has customer accounts disabled, you can remove the following JS file
+	{% endcomment %}
+
+	{% if template contains 'customers' %}
+	{{ 'haravan_common.js' | haravan_asset_url | script_tag }}
+	{% endif %}
+
+	<script>
+	window.file_url = "{{''|file_url}}"; 
+	window.asset_url = "{{''|asset_url}}";
+	var check_variant = true;
+	var check_variant_quickview = true;
+	</script>
+</head>
+
+<body id="{{ page_title | handle }}" class="{%unless template contains 'index'%}body-other{%endunless%} {% if customer %}customer-logged-in {% endif %}template-{{ template | replace: '.', ' ' | truncatewords: 1, '' | handle }}" >
+
+
+	{%if template contains 'product'%}
+	<!-- HRV LAST VIEW PRODUCT -->
+	<script>
+	var lastViewProducts = new LastViewProducts({
+		max: {{ settings.seen_products_limit }}
+																							});
+	</script>
+	<!-- END: HRV LAST VIEW PRODUCT -->
+	{%endif%}	
+
+	{%if template contains 'index.en'%}
+	{%include 'en-popup-subscribe'%}
+	{%endif%}
+
+	{%include 'facebook-plugin'%}
+
+	{%include 'en-header'%}
+	{%include 'en-mobile-nav'%}
+
+	{%if template contains 'index'%}
+	{%include 'en-main-slider'%}
+	{%else%}
+	{%include 'en-breadcrumb'%}
+
+
+
+
+	{%endif%}
+
+	{%comment%}
+	{%include 'cart-drawer'%}
+	{%endcomment%}
+	<div id="PageContainer" class="is-moved-by-drawer">
+		<main class="main-content" role="main">
+			{{ content_for_layout }}
+		</main>
+	</div>
+
+
+
+
+	{%comment%}
+
+	{%if template contains 'product'%}
+	{%include 'product-modal-youtube'%}
+	{%endif%}
+	{%include 'cart-modal'%}
+	{%include 'modal-add-complete'%}
+
+	{%endcomment%}
+	{%include 'en-footer'%}
+	{%include 'en-mobile-bottom-navigation'%}
+	{%include 'en-send-form'%}
+	{%include 'footer-script'%}
+
+	<div class="fixed-icon">
+		{% if settings.use_hotline %}
+		<div id="hotline">
+			<a href="tel:{{settings.hotline_numb | replace:' ' | replace:'.'}}" id="myBtn" class="openSize">
+				<i class="fa fa-phone" aria-hidden="true"></i>
+			</a>
+			<div class="text-quotes">
+				<a href="tel:{{settings.hotline_numb | replace:' ' | replace:'.'}}">{{settings.hotline_numb}}</a>
+			</div>
+		</div>
+		{% endif %}
+		{% if settings.use_mess %}
+		<div class="mess-icon">
+			<a href="{{settings.mess_icon_url}}" target="_blank">
+				<img src="{{ 'icon_mess.png' | asset_url }}" width="59px" />
+			</a>
+		</div>
+		{% endif %}
+		{% if settings.use_zalo %}
+		<div class="zalo-icon">
+			<a href="{{settings.zalo_icon_url}}" target="_blank">
+				<img src="{{ 'zalo-icon.png' | asset_url }}" width="59px" />
+			</a>
+		</div>
+		{% endif %}
+	</div>
+	{% comment %}
+	<script>
+	$('.hd-lang .en a').click(function(){
+		localStorage.setItem('template','en');
+		console.log("run");
+		console.log(localStorage.getItem('template'));
+		window.location = "/?view=en";
+	});
+	$('.hd-lang .vn a').click(function(){
+		localStorage.setItem('template','theme');
+		console.log("run2");
+		console.log(localStorage.getItem('template'));
+		window.location= "/";
+	});
+	</script>
+	{% endcomment %}
+</body>
+</html>

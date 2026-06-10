@@ -1,0 +1,220 @@
+{%if settings.produc_seen_show%}
+<div id="seen-products" class="seen-products-slider">
+	<div class="home-section-head clearfix">
+		<div class="section-title">
+			<h2>
+				{{settings.produc_seen_title}}
+			</h2>
+		</div>
+	</div>
+	<div class="home-section-body">
+		<div class="show">
+			<div class="product-seen">
+				<div id="owl-spdx" class="owl-carousel new-slide round_button">
+				</div>
+				<div id="clone-item">
+					<div class="item  hide">
+						<div class="seen-item">
+							<div class="product_item">
+								<div class="product_img">
+									<div class="product_imgs">
+										<a href="">
+											<img  src="" alt="">
+										</a>
+									</div>
+									<div class="product_sale">
+										<span class=""></span>
+									</div>
+									<div class="product_cart">
+										<a class="buy_now"  href="javascript:void(0)"><i class="fas fa-shopping-bag"></i></a>
+										<a class="quick_view  quick-view" href="javascript:void(0)"><i class="fa fa-eye" aria-hidden="true"></i></a>
+									</div>
+								</div>
+								<div class="product_info">
+									<div class="product_title">
+										<a href=""></a>
+									</div>
+									<div class="product_price">
+										<span class="sp1"></span>
+										<span class="sp2"><s></s></span>
+									</div>
+									<div class="product_cart_bottom">
+										<a class="add_to_cart button_at" data-id="" href="javascript:void(0)">
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{%endif%}
+
+<script>
+
+var product_handle = '{{ product.handle }}';
+var last_view_products_current = localStorage.getItem('last_view_products');
+var max_last_view_products = 20;
+
+if( ! last_view_products_current ) {
+	last_view_products_current = [];
+} else {
+	last_view_products_current = JSON.parse(last_view_products_current);
+}
+
+if( last_view_products_current.indexOf(product_handle) == -1 ) {
+	if( last_view_products_current.length >= max_last_view_products ) {
+		last_view_products_current.shift();
+	}
+
+	last_view_products_current.push( product_handle );
+	localStorage.setItem('last_view_products', JSON.stringify(last_view_products_current));
+}else{
+	var remove_at = last_view_products_current.indexOf(product_handle); 
+	last_view_products_current.splice(remove_at, 1);
+	last_view_products_current.push(product_handle);
+	if( last_view_products_current.length >= max_last_view_products ) {
+		last_view_products_current.shift();
+	}
+}
+
+</script>
+
+<script>
+
+$(document).ready(function() {
+
+	var last_view_products = JSON.parse(localStorage.getItem('last_view_products'));
+
+	if( ! last_view_products ) {
+		$(document).ready(function() {
+			$('.product-viewed').hide();
+		});		
+		last_view_products = [];
+		return;
+	}
+	var	display = {{settings.produc_seen_limit}};
+
+									var display_items = last_view_products.length < display ? last_view_products.length : display;
+									var item_idx = 1;   
+
+									while( item_idx <= display_items ) {
+	var handle = last_view_products[last_view_products.length -  item_idx];
+
+	Haravan.getProduct( handle, function( product ) {
+		var images = product.images;
+		var item_product = $('#clone-item .item').clone().removeClass('hide').appendTo('#owl-spdx');
+		var item_product_title;
+		var product_description;
+		var cart_class = '';
+		var cart_html = '';
+		var sale;
+		var class_buy_now = '';
+		var attt = '';
+		var id;
+		var variant = product.variants.length;
+		if(product.available == false){
+			cart_class = 'not_cart';
+			cart_html = 'Hết hàng';
+			class_buy_now = 'sold_out';
+		}else{
+			cart_class = 'add-to-cart';
+			cart_html = 'Thêm vào giỏ';
+			class_buy_now = 'buy-now';
+		}
+		if(product.title.length > 45){
+			var item_product_title = product.title.substring(0, 45) + '...';
+		} else {
+			var item_product_title = product.title;
+		}
+		if(product.metadescription.length > 100){
+			var product_description = product.metadescription.substring(0, 100) + '...';
+		} else {
+			var product_description = product.metadescription;
+		}
+
+		item_product.find('.seen-item .product_imgs').attr('id','imgs_'+product.id);
+		item_product.find('.seen-item .product_imgs a').attr('href', product.url);
+		item_product.find('.seen-item .product_imgs a img').attr('src',Haravan.resizeImage(product.featured_image, 'large'));
+		item_product.find('.seen-item').attr('id','id_'+product.id);
+		item_product.find('.seen-item .product_info .product_cart_bottom .add_to_cart').addClass(cart_class).html(cart_html);
+
+
+		/*
+		for(var i = 0 ; i < 1 ; i++){
+			$('#owl-spdx').find('#imgs_'+product.id).find('a').append(
+				'<img src='+images[i]+' alt='+product.handle+'>'
+			);
+		}
+*/
+
+		item_product.find('.seen-item .product_info .product_title  a').attr('href',product.url).html(item_product_title);
+		item_product.find('.seen-item .product_info .product_price .sp2 s').html(Haravan.formatMoney(product.compare_at_price,"{{ shop.money_format }}" ));
+		item_product.find('.seen-item .product_info .product_price .sp1').html(Haravan.formatMoney(product.price,"{{ shop.money_format }}" ));
+		item_product.find('.seen-item .product_img .product_cart .quick_view').attr('data-handle',product.url);
+		for(var i = 0 ; i < variant ; i++){
+			if( product.variants[i].available){
+				id = product.variants[i].id;
+				break;
+			}
+		}
+		item_product.find('.seen-item .product_info .product_cart_bottom .add_to_cart').attr('data-id',id);
+		item_product.find('.seen-item .product_img .product_cart .buy_now').addClass(class_buy_now).attr('data-id',id);
+
+	});
+	item_idx++;  
+}
+
+setTimeout(function() {
+	var owl_1 = $("#owl-spdx").owlCarousel({
+		smartSpeed: 1000,
+		nav: true,
+		dots: false,
+		margin: 30,
+		loop: false,
+		autoplay: false,
+		autoplayHoverPause: true,
+		responsiveRefreshRate : 200,
+		navText:[ '<div class="bt"><i class="fas fa-chevron-left"></i></div>','<div class="bt"><i class="fas fa-chevron-right"></i></div>'],
+		responsive:{
+			0:{
+				items:2
+			},
+			480:{
+				items:3
+			},
+			768:{
+				items:3
+			},
+			1000:{
+				items:4
+			}
+		}		
+	});
+
+	$('.seen-item .product_info .product_price .sp2 s').each(function() {
+		var val = parseInt($(this).html());
+		if(val == 0) {
+			$(this).remove();
+		}
+	});
+	$('.seen-item .product-img .tag-saleoff').each(function() {
+		var val =  $( "span", this ).html();
+		if(val == '-Infinity') {
+			$(this).remove();
+		}
+	});
+}, 3000);
+
+
+
+});
+
+</script>
+
+
+
+

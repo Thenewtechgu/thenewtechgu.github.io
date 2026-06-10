@@ -1,0 +1,163 @@
+
+{%if settings.col_sidebar_show%}
+
+<div class="collection-sidebar-wrapper">
+	<div class="grid-uniform mg-left-10">
+		{%if settings.product_sidebar_menu_show%}
+		<div class="grid__item large--one-whole medium--one-half small--one-whole pd-left10">
+			<div class="collection-categories">
+				<button class="accordion cs-title col-sb-trigger">
+					<span>{{settings.product_sidebar_menu_title}}</span>
+					<i class="right fas fa-chevron-down"></i>
+				</button>
+				<div class="panel">
+					<ul class="no-bullets menu_mb_lv1">
+						{%for menu_mb_ngang in linklists[settings.product_sidebar_menu]links%}
+						<li class="li1">
+							<div class="lidiv">
+								<a href="{{ menu_mb_ngang.url}}">
+									{{ menu_mb_ngang.title }}
+								</a>
+								{%if linklists[menu_mb_ngang.handle]links%}
+								<span class="sp1"><i class="fas fa-chevron-right"></i></span>
+								{%endif%}
+							</div>
+							<!--menu 2-->
+							{%if linklists[menu_mb_ngang.handle]links%}
+							<ul class="no-bullets menu_mb_lv2">
+								{%for menu_mb_lv2 in linklists[menu_mb_ngang.handle]links%}
+								<li class="li2">
+									<div class="lidiv">
+										<a href="{{ menu_mb_lv2.url}}">{{ menu_mb_lv2.title }}</a>
+										{%if linklists[menu_mb_lv2.handle]links%}
+										<span class="sp1"><i class="fas fa-chevron-right"></i></span>
+										{%endif%}
+									</div>
+									<!--menu 3-->
+									{%if  linklists[menu_mb_lv2.handle]links%}
+									<ul class="no-bullets menu_mb_lv3">
+										{%for menu_mb_lv3 in linklists[menu_mb_lv2.handle]links%}
+										<li class="li3">
+											<div class="lidiv">
+												<a href="{{ menu_mb_lv3.url}}">
+													{{ menu_mb_lv3.title }}
+
+													{%if linklists[menu_mb_lv3.handle]links%}
+													<span class="sp1"><i class="fas fa-chevron-right"></i></span>
+													{%endif%}
+												</a>
+											</div>
+										</li>
+										{%endfor%}
+									</ul>
+									{%endif%}
+								</li>
+								{%endfor%}
+							</ul>
+							{%endif%}
+						</li>
+						{%endfor%}
+					</ul>
+				</div>
+			</div>
+		</div>
+		{%endif%}
+
+		{%if settings.product_sidebar_collec_show1%}
+		<div class="grid__item large--one-whole medium--one-half small--one-whole pd-left10">
+			<div class="collection-filter-color">
+				<button class="accordion cs-title col-sb-trigger">
+					<span>{{settings.product_sidebar_collec_title1}}</span>
+					<i class="right fas fa-chevron-down"></i>
+				</button>
+				<div class="panel sidebar-sort">
+					<div id="col_sidebar_product" class="owl-carousel owl-theme round_button">
+						{%for product_item in collections[settings.product_sidebar_collec1]products limit: settings.product_sidebar_collec_limit1%}
+						<div class="item">
+							{%include 'product-item'%}
+						</div>
+						{%endfor%}
+					</div>
+				</div>
+			</div>
+		</div>
+		{%endif%}
+
+		{%if settings.product_sidebar_collec_show2%}
+		<div class="grid__item large--one-whole medium--one-half small--one-whole pd-left10">
+			<div class="collection-filter-color">
+				<button class="accordion cs-title col-sb-trigger">
+					<span>{{settings.product_sidebar_collec_title2}}</span>
+					<i class="right fas fa-chevron-down"></i>
+				</button>
+				<div class="panel sidebar-sort">
+					<div id="product_sidebar-collec2" class="">
+						{%for product_item in collections[settings.product_sidebar_collec2]products limit: settings.product_sidebar_collec_limit2%}
+						<div class="product_item_sidebar">
+							<div class="product_img">
+								<a href="{{ product_item.url }}"><img src="{{ product_item.featured_image | product_img_url: 'small' }}" alt="{{ product_item.title }}"></a>
+							</div>
+							<div class="product_info">
+								<div class="product_title">
+									<span><a href="{{ product_item.url }}">{{ product_item.title }}</a></span>
+								</div>
+								<div class="product_price">
+									<span class="sp1">{{ product_item.price | money}}</span>
+									{%if product_item.compare_at_price > product_item.price%}
+									<span class="sp2"><s>{{ product_item.compare_at_price | money}}</s></span>
+									{%endif%}
+								</div>
+								<div class="product_evaluate">
+									<i class="far fa-star"></i>
+									<i class="far fa-star"></i>
+									<i class="far fa-star"></i>
+									<i class="far fa-star"></i>
+									<i class="far fa-star"></i>
+								</div>
+							</div>
+						</div>
+						{%endfor%}
+					</div>
+				</div>
+			</div>
+		</div>
+		{%endif%}
+
+
+
+		{%if settings.product_sidebar_describe_show%}
+		<div class="grid__item large--one-whole medium--one-half small--one-whole pd-left10">
+			<div class="collection-filter-color">
+				<div class="panel sidebar-sort">
+					<div class="describe_a">
+						{%for j in (1..5)%}
+						{%capture _product_sidebar_describe_show%}product_sidebar_describe_show{{j}}{%endcapture%}
+						{%capture _product_sidebar_describe_img%}product_sidebar_describe_img{{j}}.png{%endcapture%}
+						{%capture _product_sidebar_describe_link%}product_sidebar_describe_link{{j}}{%endcapture%}
+						{%capture _product_sidebar_describe_title%}product_sidebar_describe_title{{j}}{%endcapture%}
+						{%capture _product_sidebar_describe_txt%}product_sidebar_describe_txt{{j}}{%endcapture%}
+
+						{%if settings[_product_sidebar_describe_show]%}
+						<div class=" describe_item">
+							<div class="product_img">
+								<a href="{{ settings[_product_sidebar_describe_link] }}"><img src="{{ _product_sidebar_describe_img | asset_url }}" alt="{{ settings[_product_sidebar_describe_title] }}"></a>
+							</div>
+							<div class="product_info">
+								<div class="product_title">
+									<h5><span>{{ settings[_product_sidebar_describe_title] | strip_html | truncate : 30 }}</span></h5>
+								</div>
+								<div class="product_price">
+									<span class="sp1">{{  settings[_product_sidebar_describe_txt] | strip_html | truncate : 50  }}</span>
+								</div>
+							</div>
+						</div>
+						{%endif%}
+						{%endfor%}
+					</div>
+				</div>
+			</div>
+		</div>
+		{%endif%}
+	</div>
+</div>
+{%endif%}

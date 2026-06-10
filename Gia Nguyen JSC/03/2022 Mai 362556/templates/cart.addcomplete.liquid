@@ -1,0 +1,289 @@
+{%layout none%}
+
+<div class="modalAddComplete-content">
+	<span id="modalAddComplete-close" class="modalAddComplete-close"><i class="fa fa-times" aria-hidden="true"></i></span>
+	<div class="modalAddComplete-body">
+		<div class="modal-cart-status">
+			<h2>
+				Giỏ hàng của bạn (Đang có {{cart.item_count}} sản phẩm)
+			</h2>
+		</div>
+		<form action="/cart" method="post" novalidate class="cart table-wrap added-form">
+			<div class="modal-main-cart">
+				{%assign savings = 0%}
+				{% if cart.item_count > 0 %}
+				<div class="modal-tbl-cart medium--hide small--hide">
+					<table class="cart-table full table--responsive">
+						<thead>
+							<th></th>
+							<th>Sản phẩm</th>
+							<th>Đơn giá</th>
+							<th>Số lượng</th>
+							<th>Thành tiền</th>
+							<th></th>
+						</thead>
+						<tbody>
+							{% for item in cart.items %}
+							{% if item.price == 0 %}
+							{% assign line_is_promotion = true %}
+							{% else %}
+							{% assign line_is_promotion = false %}
+							{% endif %}
+							{% assign on_sale = false %}
+							{% if item.variant.compare_at_price > item.price %}
+							{% assign on_sale = true %}
+							{% endif %}
+							<tr class="">
+								<td data-label="{{ 'customer.order.product' | t }}" class="product-img {%if line_is_promotion == true%}paddingleft30{%endif%}">
+									<a href="{{ item.url | within: collections.all }}">
+										{%if item.variant.image %}
+										<img src="{{ item.variant.image | img_url: 'small' }}" alt="{{ item.title | escape }}" />
+										{%else%}
+										<img src="{{ item | img_url: 'small' }}" alt="{{ item.title | escape }}" />
+										{%endif%}
+									</a>
+								</td>
+								<td class="product-title">
+									<a href="{{ item.url }}">{{ item.product.title }}</a>
+									{% unless item.variant.title contains 'Default' %}
+									{%assign ad = item.variant.title | split: '/' %}
+									<div class="variant">Màu: <span class="sp2" style="background-color:{{ ad[0] }}"></span> / Size:<span class="sp1"> {{ ad[1] }}</span></div>
+									{% endunless %}
+
+									<p class="product-vendor">Thương hiệu:<span class="sp2"> {{ item.vendor }}</span></p>
+
+									{% assign property_size = item.properties | size %}
+									{% if property_size > 0 %}
+									{% for p in item.properties %}
+									{% unless p.last == blank %}
+									{{ p.first }}:
+
+									{% comment %}
+									Check if there was an uploaded file associated
+									{% endcomment %}
+									{% if p.last contains '/uploads/' %}
+									<a href="{{ p.last }}">{{ p.last | split: '/' | last }}</a>
+									{% else %}
+									{{ p.last }}
+									{% endif %}
+									{% endunless %}
+									{% endfor %}
+									{% endif %}
+								</td>
+								<td data-label="{{ 'cart.label.price' | t }}" class="product-price">
+									<span class="current-price">{{ item.price | money }}</span>
+									{%if on_sale%}
+									<span class="original-price"><s>{{ item.variant.compare_at_price | money }}</s></span>
+									<span class="sale-off">-{{item.variant.compare_at_price | minus: item.price | divided_by:item.variant.compare_at_price | times : 100 | round : 0}}%</span>
+									{%endif%}
+								</td>
+
+								<td class="product-actions" data-label="{{ 'cart.label.quantity' | t }}">
+									<input class="js-qty__num" type="number" item-price="{{ item.price }}" name="updates[]" id="updates_{{ item.key }}" data-id="{{ item.key }}" value="{{ item.quantity }}" min="0">
+								</td>
+								<td class="product-money" data-label="{{ 'cart.label.total' | t }}">{{ item.line_price | money }}</td>
+								<td class="product-remove"><a href="/cart/change?line={{ forloop.index }}&amp;quantity=0" class="cart__remove"><i class="fas fa-trash-alt"></i></a></td>
+							</tr>
+							{%endfor%}
+						</tbody>
+					</table>
+				</div>
+				<div class="mobile-modal-tbl-cart large--hide">
+					<ul class="no-bullets">
+						{% for item in cart.items %}
+						{% assign on_sale = false %}
+						{% if item.variant.compare_at_price > item.price %}
+						{% assign on_sale = true %}
+						{% endif %}
+						<li class="cart-item">
+							<div class="grid mg-left-10">
+								<div class="grid__item medium--four-twelfths small--one-quarter pd-left10">
+									<div class="cart-item-img">
+										<a href="{{ item.url | within: collections.all }}">
+											{%if item.variant.image%}
+											<img src="{{ item.variant.image | img_url: 'compact' }}" alt="{{item.title}}" />
+											{%else%}
+											<img src="{{ item | img_url: 'compact' }}" alt="{{item.title}}" />
+											{%endif%}
+
+											{%if on_sale%}
+											<span class="sale-off">-{{item.variant.compare_at_price | minus: item.price | divided_by:item.variant.compare_at_price | times : 100 | round : 0}}%</span>
+											{%endif%}
+										</a>
+									</div>
+								</div>
+								<div class="grid__item medium--eight-twelfths small--three-quarters pd-left10">
+									<div class="cart-item-info">
+										<div class="cart-item-title">
+											<a href="{{ item.url | within: collections.all }}">
+												{{item.title}}
+											</a>
+											{% unless item.variant.title contains 'Default' %}
+											{%assign ad = item.variant.title | split: '/' %}
+											<div class="variant">Màu: <span class="sp2" style="background-color:{{ ad[0] }}"></span> / Size:<span class="sp1"> {{ ad[1] }}</span></div>
+											{% endunless %}
+											<p class="product-vendor">Thương hiệu: {{ item.vendor }}</p>
+										</div>
+										<div class="cart-item-price clearfix">
+											<span class="current-price">{{ item.price | money }}</span>
+											{%if on_sale%}
+											<span class="original-price"><s>{{ item.variant.compare_at_price | money }}</s></span>
+											{%assign saving_temp = item.variant.compare_at_price | minus: item.price | times: item.quantity %}									
+											{%assign savings = savings | plus: saving_temp%}
+											{%endif%}
+										</div>
+										<div class="cart-item-actions">
+											Số lượng: {{ item.quantity }} <a href="/cart/change?line={{ forloop.index }}&amp;quantity=0" class="cart__remove">Xóa</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</li>
+						{%endfor%}
+					</ul>
+				</div>
+				<div class="modal-checkout-actions">
+					<div class="grid">
+						<div class="grid__item large--one-half">
+							{%if settings.use_vacation_note%}						
+							<div style="font-size: 12px; margin-bottom: 5px; color: #ee5c74; font-weight: bold;">
+								{{settings.vacation_note}}
+							</div>
+							{%endif%}
+							{% if settings.cart_notes_enable %}
+							<div class="cart-note-wrapper">
+								<div class="cart-note">
+									<textarea name="note" placeholder="Ghi chú" class="input-full" id="CartSpecialInstructions">{{ cart.note }}</textarea>
+								</div>
+							</div>
+							{%endif%}
+							<div class="text-left">
+								<a href="javascript:void(0)" class="modalAddComplete-close"><i class="fa fa-reply" aria-hidden="true"></i> Tiếp tục mua hàng</a>
+							</div>
+						</div>
+						<div class="grid__item large--one-half">
+							<div class="modal-cart-checkout text-right">
+								<div class="modal-cart-sum">
+									<h3>Tổng: <span>{{ cart.total_price | money }}</span></h3>
+									{% if savings > 0 %}
+									<p class="you-save">
+										Tiết kiệm: <span>{{ savings  | money }}</span>
+									</p>
+									{%endif%}
+								</div>
+								<div class="modal-cart-actions clearfix">
+									<button type="button" onclick="UpdateCartFromCart();" name="update" class="button_at btnRefreshModal update-cart medium--hide small--hide">Cập nhật giỏ hàng</button>
+									<a href="/checkout" class="button_at btnProceedCheckout">Tiến hành thanh toán</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				{% else %}
+				<div class="grid__item">
+					<p>{{ 'cart.general.empty' | t }}</p>
+					<p>{{ 'cart.general.continue_browsing_html' | t }}</p>
+				</div>
+				{% endif %}
+			</div>
+		</form>
+	</div>
+</div>
+
+<script>
+// Get the <span> element that closes the modal
+var modalAddCompleteClose = document.getElementsByClassName("modalAddComplete-close")[0];
+var modalAddCompleteClose1 = document.getElementsByClassName("modalAddComplete-close")[1];
+
+// When the user clicks on <span> (x), close the modal
+modalAddCompleteClose.onclick = function() {
+	modalAddComplete.classList.add('out');
+}
+modalAddCompleteClose1.onclick = function() {
+	modalAddComplete.style.display = "none";
+}
+
+$('.added-form .cart__remove').click(function(e){
+	e.preventDefault() ;
+	var params = {
+		type: 'POST',
+		url: '/cart/change.js',
+		data: $(this).attr('href').split('?')[1],
+		async : false,
+		success: function() {
+			updateAllCart();
+		},
+		error: function(XMLHttpRequest, textStatus) {
+			Haravan.onError(XMLHttpRequest, textStatus);
+		}
+	};
+	jQuery.ajax(params);	
+})
+
+function updateAllCart(){
+	console.log('Update Cart Info For All! Im in card.addcomplete');
+	$.ajax({
+		type: 'GET',
+		url: '/cart?view=addcomplete',
+		async : false,
+		success: function(data) {
+			updateCart();
+			$('#modalAddComplete').html(data);
+			$('#modalAddCompleteBtn').trigger('click');
+		}
+	})
+}
+</script>
+
+<script>
+function UpdateCartFromCart() {
+	var self = this;
+	var listCart = document.querySelectorAll('[id^="updates_"]');
+	var tmp  = "";
+	var listVariantIdHasPromotion = [];
+	var listPromotionIdExisted = [];
+	var cartJustAdded = $('.modalAddComplete-content');
+	for(var i = 0; i < listCart.length; i++) {
+		var price = $(listCart[i]).attr('item-price');
+		var qty = 0;
+		var variant_id = $(listCart[i]).attr('id').replace('updates_', '');
+		if(price == 0) { 
+			qty = listCart[i].value;
+		}
+		else if(price > 0) {
+			qty = listCart[i].value;
+		}
+		if(i > 0) tmp += "&";
+		tmp += "updates[]=" + qty;
+	}
+	//console.log(listVariantIdHasPromotion);
+	$.post('/cart', tmp).always(function() {
+		for(var i = 0; i < listVariantIdHasPromotion.length; i++) {
+			if(listVariantIdHasPromotion[i].promotion_variant_id
+				 && listPromotionIdExisted.indexOf(listVariantIdHasPromotion[i].promotion_variant_id) < 0) {
+				self.AddCartItemPromotion(listVariantIdHasPromotion[i].promotion_variant_id,listVariantIdHasPromotion[i].count_buy/listVariantIdHasPromotion[i].count_gift);
+				listPromotionIdExisted.push(listVariantIdHasPromotion[i].promotion_variant_id);
+			}
+		}
+		setTimeout(function() { 
+			if(cartJustAdded.hasClass('show')){
+				updateAllCart();
+			}else{	
+				updateAllCart(); 
+			}
+		}, 500);
+	});
+}
+</script>
+
+<script>
+$("document").ready(function() {
+	$(function() {
+		$(".js-qty__num").keypress(function(event) {
+			if (event.which != 8 && event.which != 0 && (event.which < 48 || event.which > 57)) {
+				return false;
+			}
+		});
+	});
+});
+</script>

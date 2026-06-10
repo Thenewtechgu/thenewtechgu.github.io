@@ -1,0 +1,44 @@
+{%comment%}
+<section id="home-collection">
+	<div class="wrapper">
+		<div class="inner">
+			<div class="collec_all_title title">
+				<img src="{{ 'collecs_img_icon_bg.jpg' | asset_url}}" alt="iocn">
+				<h2>{{ settings.collecs_title_ }}</h2>
+			</div>
+			<div class="grid">
+				{%for i in (1..3)%}
+				{%capture _show_banner%}show_banner{{i}}{%endcapture%}
+				{%capture _collecs_%}collecs_{{i}}.jpg{%endcapture%}
+				{%capture _collecs_txt_small%}collecs_txt_small{{i}}{%endcapture%}
+				{%capture _collecs_txt_vua%}collecs_txt_vua{{i}}{%endcapture%}
+				{%capture _collecs_txt_to%}collecs_txt_to{{i}}{%endcapture%}
+				{%capture _collecs_title%}collecs_title{{i}}{%endcapture%}
+				{%capture _collecs_type%}collecs_type{{i}}{%endcapture%}
+				{%capture _collecs_link%}collecs_link{{i}}{%endcapture%}
+				<div class="grid__item large--two-sixths medium--six-tenths  small--one-whole">
+					<div class="collec_all">
+						<div class="collec_img">
+							<a class="banner_half_img" href="{{settings[_collecs_link]}}">
+								<img src="{{_collecs_ | asset_url}}" alt="{{settings[_collecs_title]}}">
+								<div class="ch_info">
+									<div class="ch_info_content">
+										<span>{{settings[_collecs_txt_small]}}</span>
+										<h3>{{settings[_collecs_txt_vua]}}</h3>
+										<h2>{{settings[_collecs_txt_to]}}</h2>
+									</div>
+								</div>
+							</a>
+						</div>
+						<div class="collec_info">     
+							<h4><a href="{{settings[_collecs_link]}}">{{settings[_collecs_title]}}</a></h4>
+							<p>{{settings[_collecs_type]}}</p>    
+						</div> 
+					</div>
+				</div>
+				{%endfor%}
+			</div>
+		</div>
+	</div>
+</section>
+{%endcomment%}

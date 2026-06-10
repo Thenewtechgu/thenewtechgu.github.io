@@ -1,0 +1,73 @@
+<div class="product_item ">
+	<div class="product_img">
+		<div class="product_imgs">
+			<div class="product_empty"></div>
+			<a  href="{{product_item.url}}">
+				<img 
+						 {%if settings.show_lazyload%}
+						 class="product_imgs_{{j}}  lazyload" src="{{ 'lazyload.jpg' | asset_url }}"
+						 data-src="{{ product_item.featured_image | product_img_url : 'large' }}"
+						 {%else%}
+						 src="{{ product_item.featured_image | product_img_url : 'large' }}"
+						 {%endif%}
+						 alt="{{ product_item.title }}">
+			</a>
+		</div>
+		{%if product_item.compare_at_price%}
+		<div class="product_sale clearfix">
+			<div class="inventory left">
+				{%if product_item.tags contains 'New'%}
+				<span>Mới</span>
+				{%endif%}
+				{%if product_item.available == false%}
+				<span>Hết hàng</span>
+				{%endif%}
+			</div>
+			<div class="product_sale_info right">
+				{%if product_item.compare_at_price > product_item.price%}
+				<span class="sp_sale">
+					-{{product_item.compare_at_price | minus: product_item.price | divided_by: product_item.compare_at_price |times: 100 | floor  }}%
+				</span>
+				{%endif%}	
+			</div>
+		</div>
+		{%endif%}	
+		<div class="product_cart">
+			<a class="a_a buy_now
+								{%if product_item.available%}
+								buy-now 
+								{%else%}
+								sold_out
+								{%endif%}
+								" href="javascript:viod(0)" data-id="{{product_item.selected_or_first_available_variant.id}}">
+				<i class="fas fa-shopping-bag"></i>
+			</a>
+			<a class="a_a quick_view  quick-view  tooltip" href="javascript:void(0)"  data-handle="{{product_item.url}}">
+				<i class="fa fa-eye" aria-hidden="true"></i>
+			</a>
+		</div>
+	</div>
+	<div class="product_info">
+		<div class="product_title">
+			<a href="{{ product_item.url }}">{{ product_item.title | strip_html | truncate: 20}}</a>
+		</div>
+		<div class="product_price">
+			<span class="sp1">{{ product_item.price | money}}</span>
+
+			{%if product_item.compare_at_price > product_item.price%}
+			<span class="sp2"><s>{{ product_item.compare_at_price | money}}</s></span>
+			{%endif%}
+		</div>
+		<div class="product_cart_bottom">
+			{%if product_item.available == false%}
+			<a class="add_to_cart not_cart button_at" href="javascript:void(0)">
+				Hết hàng
+			</a>
+			{%else%}
+			<a class="add_to_cart add-to-cart button_at" data-id="{{product_item.selected_or_first_available_variant.id}}" href="javascript:void(0)">
+				{{settings.add_cart_product}}
+			</a>
+			{%endif%}
+		</div>
+	</div>
+</div>

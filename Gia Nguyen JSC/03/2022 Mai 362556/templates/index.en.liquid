@@ -1,0 +1,7 @@
+{% layout 'en' %}
+{%for i in (1..8)%}
+{%capture section%}en_section_{{i}}{%endcapture%}
+{% unless settings[section] == "none" %}
+{% include settings[section] %}
+{% endunless %}
+{%endfor%}

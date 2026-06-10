@@ -1,0 +1,120 @@
+<section id="about_us">
+
+	{%if settings.about_intro_show%}
+	<section id="home-describe1">
+		<div class="wrapper">
+			<div class="inner">
+				<div class="grid">
+					<div class="grid__item mg-bt30 large--one-half medium--one-whole small--one-whole">
+						<div class="descr1_all">
+							<div class="descr1_title">
+								<img src="{{'about_intro_logo.png'| asset_url}}" alt="icon">
+								<h2>{{ settings.about_intro_title }}</h2>
+							</div>
+							<div class="descr1_content1">
+								<span>{{ settings.about_intro_title_txt }}</span>
+								<p>{{ settings.about_intro_txt }}</p>
+								<a class="button_all" href="{{ settings.about_intro_url }}">{{ settings.about_intro_bt }}</a>
+							</div>
+						</div>
+					</div>
+					<div class="grid__item large--one-half medium--one-whole small--one-whole">
+						<div class="descr1_all">
+							<img src="{{'about_intro_img.jpg'| asset_url}}" alt="{{ settings.about_intro_title }}">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	{%endif%}
+
+
+
+
+	{%if settings.about_parameter_show%}
+	{%include 'home-count-up'%}
+	{%endif%}
+
+
+	{%if settings.about_user_show%}
+	{%include 'home-blog1'%}
+	{%endif%}
+
+
+
+
+	{%if settings.about_member_show%}
+	<section id='team_members'>
+		<div class="wrapper">
+			<div class="inner">
+				<div class="team_members_title title">
+					<div class="">
+						<img src="{{ 'about_member_bg.png' | asset_url }}">
+					</div>
+					<h2>
+						{{ settings.about_member_title }}
+					</h2>
+				</div>
+				<div id="slide_member_owl" class="owl-carousel owl-theme my_nav">
+					{%for i in (1..6)%}
+					{%capture _about_member_img%}about_member_img{{i}}.png{%endcapture%}
+					{%capture _about_member_name%}about_member_name{{i}}{%endcapture%}
+					{%capture _about_member_leve%}about_member_leve{{i}}{%endcapture%}
+					{%capture _about_member_show%}about_member_show{{i}}{%endcapture%}
+					{%capture _about_member_fb%}about_member_fb{{i}}{%endcapture%}
+					{%capture _about_member_fb_show%}about_member_fb_show{{i}}{%endcapture%}
+					{%capture _about_member_ins%}about_member_ins{{i}}{%endcapture%}
+					{%capture _about_member_ins_show%}about_member_ins_show{{i}}{%endcapture%}
+					{%capture _about_member_tw%}about_member_tw{{i}}{%endcapture%}
+					{%capture _about_member_tw_show%}about_member_tw_show{{i}}{%endcapture%}
+
+
+					{%if settings[_about_member_show]%}
+					<div class="item">
+						<div class="member">
+							<div class="member_img">
+								<div class="member_social_network">
+
+									{%if settings[_about_member_fb_show]%}
+									<div class="member_so_a">
+										<a href="{{settings[_about_member_fb]}}" class="fb-icon"><i class="fab fa-facebook-f"></i></a>
+									</div>
+									{%endif%}
+
+									{%if settings[_about_member_ins_show]%}
+									<div class="member_so_a">
+										<a href="{{settings[_about_member_ins]}}" class="tw-icon"><i class="fab fa-twitter"></i></a>
+									</div>						
+									{%endif%}
+
+									{%if settings[_about_member_tw_show]%}
+									<div class="member_so_a">
+										<a href="{{settings[_about_member_tw]}}" class="ins-icon"><i class="fab fa-instagram"></i></a>
+									</div>								
+									{%endif%}	
+
+								</div>
+								<a href="{{ settings[_about_member_fb] }}">
+									<img src="{{ _about_member_img | asset_url }}" alt="{{settings[_about_member_name]}}">
+								</a>
+							</div>
+							<div class="member_info">
+								<h4>{{settings[_about_member_name]}}</h4>
+								<span>{{settings[_about_member_leve]}}</span>
+							</div>
+						</div>
+					</div>
+					{%endif%}
+					{%endfor%}
+				</div>
+			</div>
+		</div>
+	</section>
+	{%endif%}
+
+
+
+
+
+</section>

@@ -1,0 +1,73 @@
+{% layout none %}
+{{ '//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js' | script_tag }}
+<script>
+
+var url_string = window.location.href;
+var url = new URL(url_string);
+
+//items=[variantid]:[quantity],[variantid]:[quantity] - ex: items=12341235134:3,1351234134:5,1341325123$:3
+var itemsString = url.searchParams.get("items");
+var loginUrl = url.searchParams.get("loginUrl");
+var note = url.searchParams.get("note");
+if(loginUrl != null && loginUrl != "logout"){
+	loginUrl = decodeURIComponent(loginUrl).split(".myharavan.com")[1];
+	//window.location = loginUrl;
+}else{
+	loginUrl = "/account/logout";
+}
+jQuery.get(loginUrl, function (data, status) {
+    console.log(data);
+    //clear giỏ hàng về rỗng
+    jQuery.get("/cart/clear.js", function (data, status) {
+        //thêm sản phẩm vào giỏ hàng
+        var url = "/cart/" + itemsString;
+        jQuery.get(url, function (data, status) {
+            if (data != null) {
+                console.log(data);
+                //update cart note and cart attribute
+                jQuery.post("/cart/update.js",
+                    {
+                        "note": note,
+                        "attributes": {
+                            "source": "mobile app"
+                        }
+                    }
+                    , function (data, status) {
+                        console.log(data);
+                        window.location = "/checkout";
+                    });
+            } else {
+                alert("Sản phẩm bạn chọn đã vừa mới hết hàng!")
+            }
+        })
+
+    })
+}).fail(function() {
+     //clear giỏ hàng về rỗng
+    jQuery.get("/cart/clear.js", function (data, status) {
+        //thêm sản phẩm vào giỏ hàng
+        var url = "/cart/" + itemsString;
+        jQuery.get(url, function (data, status) {
+            if (data != null) {
+                console.log(data);
+                //update cart note and cart attribute
+                jQuery.post("/cart/update.js",
+                    {
+                        "note": note,
+                        "attributes": {
+                            "source": "mobile app"
+                        }
+                    }
+                    , function (data, status) {
+                        console.log(data);
+                        window.location = "/checkout";
+                    });
+            } else {
+                alert("Sản phẩm bạn chọn đã vừa mới hết hàng!")
+            }
+        })
+
+    })
+});
+
+</script>

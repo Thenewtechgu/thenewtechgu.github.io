@@ -1,0 +1,58 @@
+{% layout none %}
+{% capture no_img %}{{ 'no_image1.jpg' | asset_url }}{% endcapture %}
+
+{% capture results %}
+		{% paginate blog.articles by 12 %}
+				{% for article in blog.articles %}
+						{
+							"url": "{{shop.url}}{{ article.url }}?view=smb.json",
+							"seen": false,
+							"handle": "{{ article.handle }}",
+							"title": {{ article.title | json}},
+							"description": {{article.content | truncatewords : 30 | strip_html | json}},
+							"published_at": "{{ article.published_at }}",
+							"commentCount": "{{ article.comments_count }}",
+							{% if article.image %}
+								{% assign image = article.image.src | img_url: 'large' %}
+								{% else %}
+								{% if article.content contains "<img" %}
+									{% assign src = article.content | split: 'src="' %}
+									{% assign src = src[1] | split: '"' | first | replace: '//cdn', 'https://cdn' | replace: 'http:http://', 'https://' | remove: 'https:' %}                       
+									{% assign image = src %}
+									{% else %}
+									{% assign image = no_img %}
+								{% endif %}  
+							{% endif %}
+							"image": "https:{{ image }}"
+						}
+						{% unless forloop.last %},{% endunless %}
+				{% endfor %}
+		{% endpaginate %}
+{% endcapture %}
+
+
+{% capture outputpaginate %}
+
+    {% paginate blog.articles by 12 %}
+
+        {
+
+            "pages": {{paginate.pages}},
+
+            "items": {{paginate.items}},
+
+            "current_page": {{paginate.current_page}},
+
+            "hasNext": {% if paginate.next %}true{% else %}false{% endif %}
+
+        }
+
+    {% endpaginate %}
+
+{% endcapture %}
+
+{
+	"title": "{{blog.title}}",
+	"paginate": {{outputpaginate}},
+	"articles": [{{ results}}]
+}

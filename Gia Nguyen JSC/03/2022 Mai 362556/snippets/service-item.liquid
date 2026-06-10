@@ -1,0 +1,11 @@
+<div class="service_item">
+	<a href="{{ service_item.url }}">
+		<div class="service_img">
+			<img src="{{service_item.image.src | img_url: 'large'}}" alt="{{ service_item.title }}">
+		</div>
+		<div class="service_content">
+			<span>{{ service_item.tags }}</span>
+			<h4>{{ service_item.title }}</h4>
+		</div>
+	</a>
+</div>

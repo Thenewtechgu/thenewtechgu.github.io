@@ -1,0 +1,141 @@
+
+
+<div id="menu_mb" class="nav_mobile">
+	<div class="nav_mobile_all">
+		{%if settings.en_hd_search_show%}
+		<div class="nav_mb_search">
+			{%include 'en-search-form-wrapper1'%}
+		</div>
+		{%endif%}
+		<div class="nav_mb_tab">
+			<a href="javascript:void(0)" id="hide_nav_mb"><i class="fas fa-times"></i></a>
+			<div class="tab_content_all">
+				<div class="tab_content " id="tab1">
+					<!--menu 1-->
+					<ul class="no-bullets menu_mb_lv1">
+						{%for menu_mb_ngang in linklists[settings.en_menu_header_ngang]links%}
+						{% capture id_enable%}id_enable_{{forloop.index}}{% endcapture %}
+						{% capture id_url%}id_url_{{forloop.index}}{% endcapture %}
+						<li class="li1">
+							<div class="lidiv">
+
+
+								{%assign sale = menu_mb_ngang.title | split: '----'%}
+								{%assign salesize = sale | size%}
+
+								<a href="
+												 {% if settings[id_enable] %}
+												 {% if template == 'index.en' %}
+												 {{settings[id_url]}}
+												 {% else %}
+												 {{shop.url}}/?view=en{{settings[id_url]}}
+												 {% endif %}
+												 {% else %} 
+												 {{ menu_mb_ngang.url}}
+												 {% endif %}">
+									{{ sale[0] }}
+									{%if salesize == 2%}
+									<span class="{%if sale[1] == 'sale'%}sale{%else%}hot{%endif%}">
+										{{ sale[1]}}
+									</span>
+									{%endif%}
+
+								</a>
+								{%if linklists[menu_mb_ngang.handle]links%}
+								<span class="sp1"><i class="fas fa-chevron-right"></i></span>
+								{%endif%}
+							</div>
+							<!--menu 2-->
+							{%if linklists[menu_mb_ngang.handle]links%}
+							<ul class="no-bullets menu_mb_lv2">
+								{%for menu_mb_lv2 in linklists[menu_mb_ngang.handle]links%}
+								<li class="li2">
+									<div class="lidiv">
+
+										{%assign sale2 = menu_mb_lv2.title | split: '----'%}
+										{%assign salesize2 = sale2 | size%}
+
+										<a href="{{ menu_mb_lv2.url}}">
+											{{ sale2[0] }}
+											{%if salesize2 == 2%}
+											<span class="{%if sale2[1] == 'sale'%}sale{%else%}hot{%endif%}">
+												{{ sale2[1]}}
+											</span>
+											{%endif%}
+
+										</a>
+										{%if linklists[menu_mb_lv2.handle]links%}
+										<span class="sp1"><i class="fas fa-chevron-right"></i></span>
+										{%endif%}
+									</div>
+									<!--menu 3-->
+									{%if  linklists[menu_mb_lv2.handle]links%}
+									<ul class="no-bullets menu_mb_lv3">
+										{%for menu_mb_lv3 in linklists[menu_mb_lv2.handle]links%}
+										<li class="li3">
+											<div class="lidiv">
+												{%assign sale3 = menu_mb_lv3.title | split: '----'%}
+												{%assign salesize3 = sale3 | size%}
+
+												<a href="{{ menu_mb_lv3.url}}">
+													{{ sale3[0] }}
+													{%if salesize3 == 2%}
+													<span class="{%if sale3[1] == 'sale'%}sale{%else%}hot{%endif%}">
+														{{ sale3[1]}}
+													</span>
+													{%endif%}
+													{%if linklists[menu_mb_lv3.handle]links%}
+													<span class="sp1"><i class="fas fa-chevron-right"></i></span>
+													{%endif%}
+												</a>
+											</div>
+										</li>
+										{%endfor%}
+									</ul>
+									{%endif%}
+								</li>
+								{%endfor%}
+							</ul>
+							{%endif%}
+						</li>
+						{%endfor%}
+
+					</ul>
+					<ul class="no-bullets hd-lang">
+						<li>
+							<a href="/" class="vn">
+								<img src="{{ 'vn-rs.png' | asset_url }}" width="25px" />
+							</a>
+						</li>
+						<li>
+							<a href="/?view=en" class="en">
+								<img src="{{ 'end-rs.png' | asset_url }}" width="25px" />
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<script>
+$(document).ready(function(){
+	$('.tab_content .lidiv>.sp1').click(function(e){
+		e.preventDefault();
+		$(this).parents('.no-bullets').find(".lidiv").removeClass('active');
+		$(this).parent().parent().siblings('li').find('>ul').slideUp(200);
+		$(this).parent().parent().siblings('li').find('>.lidiv').find('>.sp1').removeClass('active');
+		$(this).toggleClass('active').parent().addClass("active").siblings('ul.no-bullets').slideToggle(200);
+	});
+});
+</script>
+
+
+
+
+
+
+

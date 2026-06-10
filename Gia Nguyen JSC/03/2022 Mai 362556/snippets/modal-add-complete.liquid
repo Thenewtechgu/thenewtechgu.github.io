@@ -1,0 +1,27 @@
+<div id="modalAddComplete">
+</div>
+
+<button type="button" id="modalAddCompleteBtn" style="display: none;"></button>
+
+<script>
+// Get the modal
+var modalAddComplete = document.getElementById('modalAddComplete');
+
+// Get the button that opens the modal
+var modalAddCompleteBtn = document.getElementById("modalAddCompleteBtn");
+
+// When the user clicks the button, open the modal 
+modalAddCompleteBtn.onclick = function() {
+	modalAddComplete.style.display = "block";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+	if (event.target == modalAddComplete) {
+		modalAddComplete.style.display = "none";
+	}
+}
+</script>
+
+
+

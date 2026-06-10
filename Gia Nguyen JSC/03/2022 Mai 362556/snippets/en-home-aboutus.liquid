@@ -1,0 +1,35 @@
+<section id="home-aboutus">
+	<div class="wrapper">
+		<div class="inner">
+			<div class="section-title wow fadeInDown text-center">
+				<h2>
+					{{settings.en_haboutus_title}}
+				</h2>
+				<span class="section-title-border"></span>
+			</div>
+			<div class="grid">
+				<div class="grid__item wow fadeInRight large--one-half medium--one-half small--one-whole float-right" data-wow-delay="0.5s">
+					<div class="haboutus-img">
+						<img src="{{'haboutus_img.jpg' | asset_url}}" alt="{{settings.en_haboutus_title}}" />
+					</div>
+				</div>
+				<div class="grid__item wow fadeInLeft large--one-half medium--one-half small--one-whole" data-wow-delay="0.5s">
+					<div class="haboutus-desc">
+						{%for i in (1..4)%}
+						{%capture haboutus_desc_enable%}en_haboutus_desc_enable{{i}}{%endcapture%}
+						{%capture haboutus_desc%}en_haboutus_desc{{i}}{%endcapture%}
+						{%if settings[haboutus_desc_enable]%}
+						<p>
+							{{settings[haboutus_desc]}}
+						</p>
+						{%endif%}
+						{%endfor%}
+					</div>
+					<div class="btn-viewmore">
+						<a href="{{settings.en_haboutus_btn_url}}">{{settings.en_haboutus_btn_text}}</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

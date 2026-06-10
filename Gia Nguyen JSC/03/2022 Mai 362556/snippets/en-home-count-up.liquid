@@ -1,0 +1,37 @@
+
+
+<section id="conet_up">
+	<div class="wrapper">
+		<div class="inner">
+			<div class="grid mg-left-10">
+				<div class="grid__item mg-bt30 pd-left10 large--one-quarter medium--one-half small--one-whole">
+					<div class="conet_up_all">
+						<div class="conet_up_num">
+							<h3 class="counter">{{settings.en_about_count_num1}}</h3>
+						</div>
+					</div>
+				</div>
+				{%for i in (2..4)%}
+				{%capture _about_count_img%}en_about_count_img{{i}}.png{%endcapture%}
+				{%capture _about_count_num%}en_about_count_num{{i}}{%endcapture%}
+				{%capture _about_count_txt%}en_about_count_txt{{i}}{%endcapture%}
+				{%capture _about_count_show%}en_about_count_show{{i}}{%endcapture%}
+				{%if settings[_about_count_show]%}
+				<div class="grid__item mg-bt30 pd-left10 large--one-quarter medium--one-half small--one-whole">
+					<div class="conet_up_all">
+						<div class="conet_up_cont">
+							<h3 class="counter" data-count="{{ settings[_about_count_num] }}">0</h3>
+							<p>{{ settings[_about_count_txt] }}</p>
+						</div>
+						<div class="conet_up_img">
+							<img src="{{ _about_count_img | asset_url }}" alt="{{ settings[_about_count_txt] }}">
+						</div>
+					</div>
+				</div>
+				{%endif%}
+				{%endfor%}
+			</div>
+		</div>
+	</div>
+</section>
+

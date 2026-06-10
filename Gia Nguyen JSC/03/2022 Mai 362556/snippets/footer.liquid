@@ -1,0 +1,125 @@
+
+{%if settings.show_foo%}
+{%assign _ft_links_select = settings.ft_links_select%}
+
+<footer id="footer" 	{%unless template contains 'index'%} class="mg_top" 	{%endunless%}>
+
+	<section id="home-policy">
+		<div class="wrapper">
+			<div class="inner">
+				<div class="grid">
+					<div class="grid__item large--four-tenths">
+						<div class="policy_all">
+							<div class="policy_img">
+								<img src="{{ 'policy_img1.png' | asset_url }}" alt="icon">
+							</div>
+							<div class="policy_text">
+								{{settings.foo_title_about}}	
+							</div>
+						</div>
+					</div>
+					{% for i in (1..2) %}
+					{% capture info%}hp_info_{{i}}{% endcapture %}
+					{% if settings[info] !='' %}
+					<div class="grid__item large--three-tenths">
+						{{settings[info]}}
+					</div>
+					{% endif %}
+					{% endfor %}
+				</div>
+
+
+			</div>
+		</div>
+	</section>
+
+	<div class="footer-content">
+		<div class="wrapper">
+			<div class="inner">
+				<div class="grid">
+
+
+
+					{%for i in (1..2)%}
+					{%capture _foo_menu%}foo_menu{{i}}{%endcapture%}
+					{%capture _foo_menu_title%}foo_menu_title{{i}}{%endcapture%}
+					{%assign menu_footer = settings[_foo_menu]%}
+
+					<div class="grid__item mg-bt40 large--one-third medium--one-half small--one-whole">
+						<div class="menu_foo">
+							<div class="foo_title">
+								<h3>
+									{{ settings[_foo_menu_title] }}
+								</h3>
+							</div>
+							<ul class="no-bullets menu_foo_ul">
+								{%for link_list in  linklists[menu_footer]links%}
+
+								<li><a href="{{ link_list.url }}">{{ link_list.title }}</a></li>
+
+								{%endfor%}
+							</ul>
+						</div>
+					</div>
+					{%endfor%}
+
+					<div class="grid__item mg-bt40 large--one-third medium--one-half small--one-whole">
+						<div class="ft_contacs">
+							<div class="foo_title">
+								<h3>
+									{{ settings.register_title }}
+								</h3>
+							</div>
+							<div class="ft_content">
+								<p>{{ settings.register_txt }}</p>
+							</div>
+							<div class="ft-sub-wrapper">
+								
+								{% form 'customer' %}
+								{{ form.errors | default_errors }}
+								{% if form.posted_successfully? %}
+								<p class="note form-success">{{ 'general.newsletter_form.confirmation' | t }}</p>
+								{% else %}
+								<input type="email" value="{% if customer %}{{ customer.email }}{% endif %}" placeholder="{{settings.register_plac}}" name="contact[email]" id="Email" aria-label="{{ 'general.newsletter_form.newsletter_email' | t }}">
+								<input type="hidden" name="contact[tags]" value="newsletter">											
+								<button type="submit" name="subscribe" id="subscribe" value="{{ 'general.newsletter_form.submit' | t }}"><img src="{{ 'register_send.png' | asset_url }}" alt="icon"></button>					
+								{% endif %}
+								{% endform %}
+								
+							</div>
+						</div>
+						<div class="ft_fb">
+							
+							<div class="fb-page" data-href="{{settings.social_facebook_link}}" data-width="379" data-height="200" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="{{settings.social_facebook_link}}" class="fb-xfbml-parse-ignore"><a href="{{settings.social_facebook_link}}">Facebook</a></blockquote></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="footer-copyrights">
+			<div class="wrapper">
+				<div class="inner">
+					<div class="grid">
+						<div class="grid__item large--one-half medium--one-half small--one-whole">
+							<div class="ft-copyrights-content">
+								<div class="txt_copyright">
+									<p>{{ settings.txt_copyright }}</p>
+								</div>
+							</div>
+						</div>
+						<div class="grid__item large--one-half medium--one-half small--one-whole">
+							<div class="ft-copyrights-content">
+								<div class="img_copyright">
+									<div class="ft-contact-logoicon">
+										<img src="{{'copyright_bank.png' | asset_url}}" alt="icon">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
+{%endif%}

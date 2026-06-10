@@ -1,0 +1,59 @@
+{%assign _size = 0%}
+{%for j in (1..4)%}
+{%capture _mobile_bot_nav_show%}en_mobile_bot_nav_show{{j}}{%endcapture%}
+{%if settings[_mobile_bot_nav_show] == true%}
+{%assign _size = _size  | plus: 1%}
+{%endif%}
+{%endfor%}
+
+<section id="mobile-bottom-navigation" class="large--hide medium--hide">
+	<div class="grid mg-left-0">
+		{% for i in (1..4) %}
+		{%capture mobile_bot_nav_icon%}en_mobile_bot_nav_icon{{i}}{%endcapture%}
+		{%capture mobile_bot_nav_title%}en_mobile_bot_nav_title{{i}}{%endcapture%}
+		{%capture mobile_bot_nav_url%}en_mobile_bot_nav_url{{i}}{%endcapture%}	
+		{%capture _mobile_bot_nav_show%}en_mobile_bot_nav_show{{i}}{%endcapture%}	
+		{%if settings[_mobile_bot_nav_show]%}
+		<div class="grid__item medium--two-tenths 
+								{%if _size == 3%}
+								small--one-third
+								{%elsif _size == 4%}
+								small--one-quarter
+								{%elsif _size == 5%}
+								small--two-tenths
+								{%endif%}
+								pd-left0">
+			<div class="mobile-nav-item {% if forloop.first %} mni_first {% elseif forloop.index == 3 %} mni_third {% endif %}">
+				<a href="{{settings[mobile_bot_nav_url]}} ">
+					{{settings[mobile_bot_nav_icon]}}<br />{{settings[mobile_bot_nav_title]}}
+				</a>
+			</div>
+		</div>
+		{%endif%}
+		{%endfor%}
+
+		{%if settings.en_mobile_bot_nav_show5%}
+		<div class="grid__item medium--two-tenths small--two-tenths pd-left0">
+			<div class="mobile-nav-item">
+				<a href="{{settings.en_mobile_bot_nav_url5}}">
+					{{settings.en_mobile_bot_nav_icon5}}<br />{{settings.en_mobile_bot_nav_title5}}
+					<span class="number">
+						{{ cart.item_count }}
+					</span>
+				</a>
+			</div>
+		</div>
+		{%endif%}
+	</div>
+</section>
+
+<script>
+$('.mni_third a').click(function(e){
+	e.preventDefault();
+	$('.show_form_service').trigger('click');
+});
+$('.mni_first a').click(function(e){
+	e.preventDefault();
+	$('.scroll_id').trigger('click');
+});
+</script>

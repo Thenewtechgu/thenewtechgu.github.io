@@ -1,0 +1,48 @@
+
+<section id="home-price">
+	<div class="wrapper">
+		<div class="inner">
+			<div class="title">
+				<div class="">
+					<img src="{{'en_price_img.png' |asset_url}}" alt="icon">
+				</div>
+				<h2>{{ settings.en_price_title }}</h2>
+			</div>
+			<div class="grid">
+				{%for j in (1..4)%}
+				{%capture _price_show%}en_price_show_{{j}}{%endcapture%}
+				{%capture _price_price%}en_price_price{{j}}{%endcapture%}
+				{%capture -price_time%}en_price_time{{j}}{%endcapture%}
+				{%capture _price_title%}en_price_title{{j}}{%endcapture%}			
+				{%capture _price_desc_1%}en_price_desc_1_{{j}}{%endcapture%}
+				{%capture _price_desc_2%}en_price_desc_2_{{j}}{%endcapture%}
+				{%capture _price_desc_3%}en_price_desc_3_{{j}}{%endcapture%}
+				{%capture _price_desc_4%}en_price_desc_4_{{j}}{%endcapture%}
+				{%capture _price_desc_5%}en_price_desc_5_{{j}}{%endcapture%}
+				{%capture _price_service%}en_price_service_{{j}}{%endcapture%}
+				{%if settings[_price_show]%}
+				<div class="grid__item  mg-bt30 large--one-quarter medium--one-hafl small--one-whole">
+					<div class="price_all">
+						<div class="price_title">
+							<p class="p1">{{settings[_price_price] | money}}</p>
+							<span class="p2">/ {{settings[price_time]}}</span>
+							<h3>{{settings[_price_title]}}</h3>
+						</div>	
+						<div class="price_content">
+							<ul class="no-bullets">
+								<li>{{settings[_price_desc_1]}}</li>
+								<li>{{settings[_price_desc_2]}}</li>
+								<li>{{settings[_price_desc_3]}}</li>
+								<li>{{settings[_price_desc_4]}}</li>
+								<li>{{settings[_price_desc_5]}}</li>
+							</ul>
+							<a class="show_form_service   button_all" href="javascript:void(0)">{{settings[_price_service]}}</a>
+						</div>
+					</div>
+				</div>
+				{%endif%}
+				{%endfor%}
+			</div>
+		</div>
+	</div>
+</section>

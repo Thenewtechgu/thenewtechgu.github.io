@@ -1,0 +1,21 @@
+
+<form action="/search" method="get" class="input-group search-bar" role="search">
+	<input type="hidden" name="type" value="article">
+	<input type="search" id="main-search-form-input" name="q" value="{{ search_terms }}" placeholder="{{ 'general.search.placeholder' | t }}" class="input-group-field" aria-label="{{ 'general.search.placeholder' | t }}">
+	<span class="input-group-btn">
+		<button type="submit" class="btn icon-fallback-text search-en">
+			<i class="fa fa-search" aria-hidden="true"></i>
+		</button>
+	</span>
+</form>
+<script>
+
+$('.search-en').each(function(){
+	$(this).submit(function() {
+		window.location = '/search/?q=' + $('input[name=q]', this).val() +'&view=en';
+
+		return false;
+	});
+});
+
+</script>

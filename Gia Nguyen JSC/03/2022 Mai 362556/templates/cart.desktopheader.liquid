@@ -1,0 +1,51 @@
+
+{%layout none%}
+<h2>
+	{% if cart.item_count > 0 %}
+	Giỏ hàng của tôi ({{cart.item_count}} sản phẩm)
+	{%else%}
+	Giỏ hàng trống
+	{%endif%}
+	<span class="btnCloseQVCart"><img src="{{ 'close_cart_img.png' | asset_url }}" alt="close"></span>
+</h2>
+<ul class="no-bullets cart_menu">
+	{% if cart.item_count > 0 %}
+	{% for item in cart.items %}
+	<li class="cart_item clearfix">
+		<div class="cart_img left">
+			<a href="{{ item.url | within: collections.all }}">
+				{%if item.variant.image%}
+				<img src="{{ item.variant.image | img_url: 'small' }}" alt="{{ item.title | escape }}" />
+				{%else%}
+				<img src="{{ item | img_url: 'small' }}" alt="{{ item.title | escape }}" />
+				{%endif%}
+			</a>
+		</div>
+		<div class="cart_info right">
+			<a href="{{ item.url }}">{{ item.title  | truncate: 50}}</a> 
+			{% unless item.variant.title contains 'Default' %}
+
+			{%assign ad = item.variant.title | split: '/' %}
+			<div class="variant">Màu: <span class="sp2" style="background-color:{{ ad[0] }}"></span> / Size:<span class="sp1"> {{ ad[1] }}</span></div>
+			{% endunless %}
+			<div class="cart_price_quantity">
+				<span class="quantity">Số lượng: <span class="sp2">{{ item.quantity }}</span></span>
+				<span class="current-price">Giá/sp: <span class="sp2">{{ item.price | money }}</span></span>
+			</div>
+		</div>
+		<a href="/cart/change?line={{ forloop.index }}&amp;quantity=0" class="cart__remove"><img src="{{ 'close_cart_img.png' | asset_url }}" alt="close"></a>
+	</li>
+	{%endfor%}
+	{%else%}
+	<li>Bạn chưa có sản phẩm nào trong giỏ hàng!</li>
+	{%endif%}
+</ul>
+{% if cart.item_count > 0 %}
+<div class="qv-cart-total">
+	Tạm tính: <span>{{cart.total_price | money}}</span>
+</div>
+<div class="quickview-cartactions clearfix">
+	<a class="viewcart" href="/cart">Xem giỏ hàng</a>
+	<a class="checkout" href="/checkout">Thanh toán</a>
+</div>
+{%endif%}

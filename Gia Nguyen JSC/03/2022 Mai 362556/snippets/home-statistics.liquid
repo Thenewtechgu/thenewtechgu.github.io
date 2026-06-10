@@ -1,0 +1,26 @@
+<section id="home-statistics">
+	<div class="hstatistics-overlay"></div>
+	<div class="wrapper">
+		<div class="inner">
+			<div class="grid-uniform md-mg-left-10">
+				{%for i in (1..4)%}
+				{%capture hau_sta_number%}hau_sta_number{{i}}{%endcapture%}
+				{%capture hau_sta_desc%}hau_sta_desc{{i}}{%endcapture%}
+				{%capture hau_sta_type%}hau_sta_type{{i}}{%endcapture%}
+				<div class="grid__item wow fadeInUp md-pd-left10 mg-bottom-30 large--one-quarter medium--one-quarter small--one-half text-center" 
+						data-wow-duration="0.75s"
+						 data-wow-delay="{{i | times:0.2}}s"
+						 >
+					<div class="hau-statistic-number">
+						<span data-count="{{settings[hau_sta_number]}}">0</span>{%if settings[hau_sta_type] == 'Cong'%}+{%else%}%{%endif%}
+					</div>
+					<div class="hau-stastic-border"></div>
+					<div class="hau-statistic-text">
+						{{settings[hau_sta_desc]}}
+					</div>
+				</div>
+				{%endfor%}
+			</div>
+		</div>
+	</div>
+</section>

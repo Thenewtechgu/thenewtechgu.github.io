@@ -1,0 +1,187 @@
+<section id="home-contact">
+	<div class="wrapper">
+		<div class="inner">
+			<div class="grid">
+				<div class="grid__item large--one-half push--large--one-half medium--six-tenths push--medium--two-tenths small--one-whole">
+					<div class="hcontact-wrapper wow fadeInUp">
+						<h2>
+							{{settings.hcontact_title}}
+						</h2>
+						<div class="hcontact-desc">
+							{{settings.hcontact_desc}}
+						</div>
+						<div class="hcontact-form">
+							<div class="form-vertical clearfix">
+								{% form 'contact' %}
+
+								{% comment %}
+								Successful message
+								{% endcomment %}
+								{% if form.posted_successfully? %}
+								<p class="note form-success">
+									{{ 'contact.form.post_success' | t }}
+								</p>
+								{% endif %}
+
+								{{ form.errors | default_errors }}
+
+								{% assign name_attr = 'contact.form.name' | t | handle %}
+								<label for="ContactFormName" class="hidden-label">{{ 'contact.form.name' | t }}</label>
+								<input type="text" id="ContactFormName" class="input-full" name="contact[name]" required placeholder="{{ 'contact.form.name' | t }}" autocapitalize="words" value="{% if form[name_attr] %}{{ form[name_attr] }}{% elsif customer %}{{ customer.name }}{% endif %}">
+
+								<label for="ContactFormEmail" class="hidden-label">{{ 'contact.form.email' | t }}</label>
+								<input type="email" id="ContactFormEmail" class="input-full" name="contact[email]" required placeholder="{{ 'contact.form.email' | t }}" autocorrect="off" autocapitalize="off" value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}">
+
+								{% assign name_attr = 'contact.form.phone' | t | handle %}
+								<label for="ContactFormPhone" class="hidden-label">{{ 'contact.form.phone' | t }}</label>
+								<input type="tel" id="ContactFormPhone" class="input-full" name="contact[phone]" required placeholder="{{ 'contact.form.phone' | t }}" pattern="[0-9\-]*" value="{% if form[name_attr] %}{{ form[name_attr] }}{% elsif customer %}{{ customer.phone }}{% endif %}">
+
+								<label for="ContactFormMessage" class="hidden-label">{{ 'contact.form.message' | t }}</label>
+								<textarea rows="10" id="ContactFormMessage" class="input-full" name="contact[body]" required placeholder="{{ 'contact.form.message' | t }}">{% if form.body %}{{ form.body }}{% endif %}</textarea>
+
+								<div class="text-center">
+									<input type="submit" class="btn btnContactSubmit" value="{{settings.hcontact_btn}}">
+								</div>
+
+								{% endform %}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+{%comment%}
+<footer id="footer">
+	<div class="footer-content">
+		<div class="wrapper">
+			<div class="inner">
+				<div class="grid-uniform">
+					<div class="grid__item large--one-quarter medium--one-half small--one-whole wow fadeInLeft">
+						<div class="ft-contact">
+							<h3 class="ft-title">
+								{{settings.ft_contact_title}}
+							</h3>
+							<div class="ft-contact-desc">
+								{{settings.ft_contact_desc}}
+							</div>
+							<div class="ft-contact-address">
+								<span class="ft-contact-icon"><i class="fas fa-map-marker-alt"></i></span>
+								<div class="ft-contact-detail">
+									{{settings.ft_contact_address}} {{settings.shop_address}}
+								</div>
+							</div>
+							<div class="ft-contact-tel">
+								<span class="ft-contact-icon"><i class="fas fa-phone"></i></span>
+								<div class="ft-contact-detail">
+									{{settings.ft_contact_tel}} <a href="tel:{{settings.shop_hotline1}}">{{settings.shop_hotline1}}</a>
+								</div>
+							</div>
+							<div class="ft-contact-email">
+								<span class="ft-contact-icon"><i class="fas fa-envelope"></i></span>
+								<div class="ft-contact-detail">
+									{{settings.ft_contact_email}}  <a href="mailto:{{settings.shop_email}}">{{settings.shop_email}}</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					{%for i in (1..2)%}
+					{%capture ft_nav_title%}ft_nav_title{{i}}{%endcapture%}
+					{%capture ft_nav_select%}ft_nav_select{{i}}{%endcapture%}
+					{%assign _ft_nav_select = settings[ft_nav_select]%}
+					<div class="grid__item large--one-quarter medium--one-half small--one-whole wow fadeInUp">
+						<div class="ft-nav">
+							<h3 class="ft-title">
+								{{settings[ft_nav_title]}}
+							</h3>
+							<ul class="no-bullets">
+								{%for ft_navlink in linklists[_ft_nav_select]links%}
+								<li>
+									<i class="fas fa-caret-right"></i> 
+									<a href="{{ft_navlink.url}}">{{ft_navlink.title}}</a></li>
+								{%endfor%}
+							</ul>
+						</div>
+					</div>
+					{%endfor%}
+					<div class="grid__item large--one-quarter medium--one-half small--one-whole wow fadeInRight">
+						<div class="ft-subscribe">
+							<h3 class="ft-title">
+								{{settings.ft_sub_title}}
+							</h3>
+							<div class="ft-subscribe-desc">
+								{{settings.ft_sub_desc}}
+							</div>
+							<div class="ft-sub-wrapper">
+								{% if settings.newsletter_form_action != blank %}
+								<form action="{{ settings.newsletter_form_action }}" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" target="_blank">
+									<input type="email" value="{% if customer %}{{ customer.email }}{% endif %}" placeholder="{{settings.ft_sub_placeholder}}" name="EMAIL" id="mail" aria-label="{{ 'general.newsletter_form.newsletter_email' | t }}">
+									<button type="submit" name="subscribe" id="subscribe" value="{{ 'general.newsletter_form.submit' | t }}">{{settings.ft_sub_btntext}}</button>								
+								</form>
+								{% else %}
+								{% form 'customer' %}
+								{{ form.errors | default_errors }}
+								{% if form.posted_successfully? %}
+								<p class="note form-success">{{ 'general.newsletter_form.confirmation' | t }}</p>
+								{% else %}
+								<input type="email" value="{% if customer %}{{ customer.email }}{% endif %}" placeholder="{{settings.ft_sub_placeholder}}" name="contact[email]" id="Email" aria-label="{{ 'general.newsletter_form.newsletter_email' | t }}">
+								<input type="hidden" name="contact[tags]" value="newsletter">											
+								<button type="submit" name="subscribe" id="subscribe" value="{{ 'general.newsletter_form.submit' | t }}">{{settings.ft_sub_btntext}}</button>									
+
+								{% endif %}
+								{% endform %}
+								{% endif %}
+							</div>
+						</div>
+						<div class="ft-social">
+							{%if settings.use_social_facebook%}
+							<a href="{{settings.social_facebook_link}}"><i class="fab fa-facebook-f"></i></a>
+							{%endif%}
+							{%if settings.use_social_twitter%}
+							<a href="{{settings.social_twitter_link}}"><i class="fab fa-twitter"></i></a>
+							{%endif%}
+							{%if settings.use_social_linkedin%}
+							<a href="{{settings.social_linkedin_link}}"><i class="fab fa-linkedin-in"></i></a>
+							{%endif%}
+							{%if settings.use_social_googleplus%}
+							<a href="{{settings.social_google_link}}"><i class="fab fa-google-plus-g"></i></a>
+							{%endif%}
+							{%if settings.use_social_youtube%}
+							<a href="{{settings.social_youtube_link}}"><i class="fab fa-youtube"></i></a>
+							{%endif%}
+							{%if settings.use_social_instagram%}
+							<a href="{{settings.social_instagram_link}}"><i class="fab fa-instagram"></i></a>
+							{%endif%}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="footer-copyrights">
+		<div class="wrapper">
+			<div class="inner">
+				<div class="grid">
+					<div class="grid__item large--one-half medium--one-whole small--one-whole float-right">
+						<div class="ft-copyrights-link text-right">
+							<ul class="no-bullets">
+								{%for ftcr_link in linklists[_ft_links_select]links%}
+								<li class="wow fadeInRight" data-wow-delay="{{forloop.index | times: 0.2}}s" data-wow-duration="0.75s"><a href="{{ftcr_link.url}}">{{ftcr_link.title}}</a></li>
+								{%endfor%}
+							</ul>
+						</div>
+					</div>
+					<div class="grid__item large--one-half medium--one-whole small--one-whole">
+						<div class="ft-copyrights-content wow fadeInLeft" data-wow-duration="0.75s" data-wow-delay="0.2s">
+							{{settings.ft_cr_content}}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
+
+{%endcomment%}

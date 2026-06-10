@@ -1,0 +1,16 @@
+<section id="home-collection2">
+	<div class="wrapper">
+		<div class="inner">
+			<div class="collec2_title title">
+				<h2>{{ settings.collec2_title }}</h2>
+			</div>
+			<div id="collec2_owl" class="owl-carousel owl-theme">
+				{%for product_item in collections[settings.collec2_product]products%}
+				<div class="item">
+					{%include 'product-slider'%}
+				</div>
+				{%endfor%}
+			</div>
+		</div>
+	</div>
+</section>

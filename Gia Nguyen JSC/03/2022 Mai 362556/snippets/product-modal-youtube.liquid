@@ -1,0 +1,46 @@
+{%for protag in product.tags%}
+{%if protag contains 'video_'%}
+<div id="hgModalYoutube">
+	<div class="hgmy-modal-content">
+		<span class="hgmy-close"><i class="fa fa-times" aria-hidden="true"></i></span>
+		<div class="hgmy-modal-body">
+			<iframe id="product-video-player" width="100%" height="100%" src="{{protag | split: 'video_' | last}}" frameborder="0" allowfullscreen></iframe>
+		</div>
+	</div>
+</div>
+
+<script>
+// Get the modal
+var hgModalYoutube = document.getElementById('hgModalYoutube');
+
+// Get the button that opens the modal
+var hgModalYoutubeBtn = document.getElementById("product-playYoutube");
+
+// Get the <span> element that closes the modal
+var hgModalYoutubeClose = document.getElementsByClassName("hgmy-close")[0];
+
+// When the user clicks the button, open the modal 
+hgModalYoutubeBtn.onclick = function() {
+	hgModalYoutube.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+hgModalYoutubeClose.onclick = function() {
+	hgModalYoutube.style.display = "none";
+	var videoURL = $('#product-video-player').prop('src');
+	videoURL = videoURL.replace("?autoplay=1", "");
+	$('#product-video-player').prop('src','');
+	$('#product-video-player').prop('src',videoURL);
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+	if (event.target == hgModalYoutube) {
+		hgModalYoutube.style.display = "none";
+	}
+}
+</script>
+{%endif%}
+{%endfor%}
+
+

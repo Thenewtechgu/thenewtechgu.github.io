@@ -1,0 +1,271 @@
+
+<header id="header" {%unless template contains 'index'%} class="postiton_satic" 	{%endunless%}>
+	{%if settings.en_header_top_show%}
+	<section id="header_top">
+		<div class="wrapper">
+			<div class="inner">
+				<div class="hd_top_all">
+					<div class="hd_top_null">
+
+					</div>
+					<div class="infor_shop">
+						<div class="logo left">
+							{%if settings.header_logo_show %}		
+							<h1>
+								{{shop.title}}
+								<a href="/?view=en">
+									<img src="
+														{% if template contains 'index' %}
+														{{'en_logo_menu.png' | asset_url}}
+														{%else%}
+														{{'en_logo_menu1.png' | asset_url}}
+														{%endif%}
+														" alt="{{shop.title}}" />
+								</a>
+							</h1>
+							{%else%}
+							<h1>
+								<a href="/?view=en">
+									{{shop.title}}
+								</a>
+							</h1>
+							{%endif%}
+						</div>
+						<div class="logo-text">
+							{{settings.en_logo_text}}
+						</div>
+					</div>
+					<div class="Socnetwork">
+						<ul class="no-bullets hd-lang">
+							<li>
+								<a href="/" class="vn">
+									<img src="{{ 'vn-rs.png' | asset_url }}" width="25px" />
+								</a>
+							</li>
+							<li>
+								<a href="/?view=en" class="en">
+									<img src="{{ 'end-rs.png' | asset_url }}" width="25px" />
+								</a>
+							</li>
+						</ul>
+						<ul class="no-bullets list-social-top">
+							<li>
+								{%if settings.use_social_facebook%}
+								<a href="{{settings.social_facebook_link}}" class="fb-icon" target="_blank"><span>Facebook</span></a>
+								{%endif%}
+							</li>
+								{% comment %}
+							<li>
+								{%if settings.use_social_googleplus%}
+								<a href="{{settings.social_google_link}}" class="gg-icon" target="_blank"><i class="fab fa-google-plus-g"></i></a>
+								{%endif%}
+							</li>
+							<li>
+								{%if settings.use_social_instagram%}
+								<a href="{{settings.social_instagram_link}}" class="ins-icon" target="_blank"><i class="fab fa-instagram"></i></a>
+								{%endif%}
+							</li>
+							<li>
+								{%if settings.use_social_twitter%}
+								<a href="{{settings.social_twitter_link}}" class="tw-icon" target="_blank"><i class="fab fa-twitter"></i></a>
+								{%endif%}
+							</li>
+							<li>
+								{%if settings.use_social_youtube%}
+								<a href="{{settings.social_youtube_link}}" class="yt-icon" target="_blank"><i class="fab fa-youtube"></i></a>
+								{%endif%}
+							</li>
+							<li>
+								{%if settings.use_social_linkedin%}
+								<a href="{{settings.social_linkedin_link}}" class="linkedin-icon" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+								{%endif%}
+							</li>
+								{% endcomment %}
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	{%endif%}
+	<section id="header-menu">
+		<div class="header-desktop">
+			<div class="wrapper">
+				<div class="inner">
+					<div class="grid mg-left-10">
+						<div class="grid__item pd-left10 large--four-fifths medium--one-half small--one-third">
+							<div class="menu clearfix">
+								<div class="logo-mb left large--hide" style="margin-top: 15px;">
+									{%if settings.header_logo_show %}		
+									<h1>
+
+										<a href="/">
+											<img src="
+																{% if template contains 'index' %}
+																{{'logo_menu.png' | asset_url}}
+																{%else%}
+																{{'logo_menu1.png' | asset_url}}
+																{%endif%}
+																" alt="{{shop.title}}" />
+										</a>
+									</h1>
+									{%else%}
+									<h1>
+										<a href="/">
+											{{shop.title}}
+										</a>
+									</h1>
+									{%endif%}
+								</div>
+								<div class="menu_ngang">
+									<ul class="clearfix no-bullets menu_ngang_ul">
+										{%for menu_header in linklists[settings.en_menu_header_ngang]links%}
+										{%assign j = forloop.index%}
+										{% capture id_enable%}en_id_enable_{{forloop.index}}{% endcapture %}
+										{% capture id_url%}en_id_url_{{forloop.index}}{% endcapture %}
+										{%capture show_megamenu_%}en_show_megamenu_{{j}}{%endcapture%}
+										{%capture show_product_megamenu%}en_show_product_megamenu_{{j}}{%endcapture%}
+										{%capture product_menu%}en_product_menu{{j}}{%endcapture%}
+										{%capture show_img_banner_megamenu%}en_show_img_banner_megamenu{{j}}{%endcapture%}
+										{%capture img_banner_megamenu%}en_img_banner_megamenu{{j}}.jpg{%endcapture%}
+										{%capture img_banner_megamenu_link%}en_img_banner_megamenu_link{{j}}{%endcapture%}
+										{%capture product_megamenu_title%}en_product_megamenu_title{{j}}{%endcapture%}
+
+										{%assign _product_menu = settings[product_menu]%}
+
+										<li class="li1 {%if menu_header.active%}active{%endif%} {%if settings[show_megamenu_]%}position_static {%endif%}">
+											<a 
+												 {% if settings[id_enable] %} class="scroll_id" {% endif %}
+
+												 href="
+															 {% if settings[id_enable] %}
+															 {% if template == 'index.en' %}
+															 {{settings[id_url]}}
+															 {% else %}
+															 {{shop.url}}/?view=en{{settings[id_url]}}
+															 {% endif %}
+															 {% else %} 
+
+															 {% if menu_header.url == '/' %}/?view=en {% else %}
+															 {{ menu_header.url }}
+															 {%  endif %}
+															 {% endif %}">{{ menu_header.title }}{%if linklists[menu_header.handle]links%}<i class="fas fa-sort-down"></i>{%endif%}</a>
+											<!--megamenu 3-->
+											{%if linklists[menu_header.handle]links%}
+											<div class="megamenu_pages 
+																	{%if settings[show_megamenu_]%}
+																	type1
+																	{%else%}
+																	type2
+																	{%endif%}
+																	">
+												<ul class="menu_lv2 clearfix no-bullets">
+													{%for link_lv2  in linklists[menu_header.handle]links%}
+													{%assign r = forloop.length%}
+													{%assign t = 100 | divided_by : r%}
+													{%if settings[show_megamenu_]%}
+													<li class="li2"
+															{%if settings[show_product_megamenu] == false and settings[show_img_banner_megamenu] == false%}
+															style="width:{{t}}%;"
+															{%endif%}
+															>
+														<a href="{{link_lv2.url}}"><span class="sp2">{{ link_lv2.title }}</span></a>
+
+														{%if linklists[link_lv2.handle]links%}
+														<ul class="menu_lv3 no-bullets">
+															{%for link_lv3 in linklists[link_lv2.handle]links%}
+															<li class="li3">
+
+																{%assign sale = link_lv3.title | split: '----'%}
+																{%assign salesize = sale | size%}
+																{%assign hot = link_lv3.title | split: '####'%}
+																{%assign hotsize = hot | size%}
+																<a href="{{ link_lv3.url}}">
+																	{{ sale[0] }}
+																	{%if salesize == 2%}
+																	<span class="{%if sale[1] == 'sale'%}sale{%else%}hot{%endif%}">
+																		{{ sale[1]}}
+																	</span>
+																	{%endif%}
+																</a>
+															</li>
+															{%endfor%}
+														</ul>
+														{%endif%}
+													</li>
+													{%else%}
+													<li class="li2_2">
+														<a href="{{ link_lv2.url}}">
+															{{link_lv2.title}}
+
+														</a>
+														{%if linklists[link_lv2.handle]links%}
+														<i class="right fas fa-angle-right"></i>
+														{%endif%}
+														{%if linklists[link_lv2.handle]links%}
+														<ul class="menu_lv3 submenu_vl3   no-bullets">
+															{%for link_lv3 in linklists[link_lv2.handle]links%}
+															<li class="li3">
+																{%assign sale = link_lv3.title | split: '----'%}
+																{%assign salesize = sale | size%}
+																{%assign hot = link_lv3.title | split: '####'%}
+																{%assign hotsize = hot | size%}
+																<a href="{{ link_lv3.url}}">
+																	{{ sale[0] }}
+																	{%if salesize == 2%}
+																	<span class="{%if sale[1] == 'sale'%}sale{%else%}hot{%endif%}">
+																		{{ sale[1]}}
+																	</span>
+																	{%endif%}
+																</a>
+															</li>
+															{%endfor%}
+														</ul>
+														{%endif%}
+													</li>
+													{%endif%}
+													{%endfor%}
+												</ul>
+											</div>
+											{%endif%}
+										</li>
+										{%endfor%}
+									</ul>
+								</div>
+							</div>
+						</div>
+						<div class="grid__item pd-left10 large--one-fifth medium--one-half small--two-thirds">
+							<div class="user">
+								<ul class="no-bullets user_ul">
+									<li class="li_search">
+										<a id="show_search" href="javascript:void(0)">
+											<i class="show_img fas fa-search"></i>
+											<i class="close fas fa-times"></i>
+										</a>
+
+										{%if settings.en_hd_search_show%}
+										<div id="search_form" class="search">
+											{%include 'en-search-form-wrapper'%}
+										</div>
+										{%endif%}
+									</li>
+									<li class="li_button_service">
+										<a class="show_form_service  button_all" href="javascript:void(0)">
+											{{ settings.en_button_service }}
+										</a>
+									</li>
+									<li class="li_nav_mobile">
+										<a id="show_navmobile" href="javascript:void(0)">
+											<span class="sp"></span>
+										</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</section>
+</header>

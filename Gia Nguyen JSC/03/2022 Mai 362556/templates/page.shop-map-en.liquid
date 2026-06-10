@@ -1,0 +1,42 @@
+{% layout 'en' %}
+<section id="page-wrapper">
+	<div class="wrapper">
+		<div class="inner">
+			<div>
+				<div id="shopmap-page">
+					<div class="content-page">
+						<div class="page-contact-shoplist">
+							<h1>{{ page.title }}</h1>
+							<div class="pcontact-shoplist-wrapper">
+								<div class="grid-uniform">
+									{%for i in (1..10)%}
+									{%capture store_enable%}en_store_enable_{{i}}{%endcapture%}
+									{%capture store_address%}en_store_address_{{i}}{%endcapture%}
+									{%capture store_tel%}en_store_tel_{{i}}{%endcapture%}
+									{%capture store_googlemap%}en_store_googlemap_{{i}}{%endcapture%}
+									{%capture store_img%}en_store_img_{{i}}.png{%endcapture%}
+									{%if settings[store_enable]%}
+									<div class="grid__item mg-bt40 large--one-third medium--one-third small--one-half">
+										<div class="pcontact-shop-item">
+											<div class="pcontact-shop-img">
+												<img src="{{store_img | asset_url}}" alt="{{settings[store_address]}}" />
+											</div>
+											<div class="pcontact-shop-address">
+												<a href="{{settings[store_googlemap]}}" target="_blank"><i class="fas fa-map-marker-alt"></i> {{settings[store_address]}}</a>
+											</div>
+											<div class="pcontact-shop-tel">
+												<a href="tel:{{settings[store_tel]}}"><i class="fas fa-phone-volume"></i> {{settings[store_tel]}}</a>
+											</div>
+										</div>
+									</div>
+									{%endif%}
+									{%endfor%}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

@@ -1,0 +1,171 @@
+{% assign found_option = false %}
+{% assign is_color = false %}
+{% assign option_index = 0 %}
+
+{% for option in product.options %}
+{% if option == swatch %}
+{% assign found_option = true %}
+{% assign option_index = forloop.index0 %}
+
+{% assign downcased_option = swatch | downcase %}
+{% if downcased_option contains 'màu sắc' or downcased_option contains 'màu' %}
+{% assign is_color = true %}
+{% endif %}
+{% endif %}
+{% endfor %}
+
+{% unless found_option %}
+
+{% else %}
+<div id="variant-swatch-{{option_index }}" class="swatch swatch-product-single clearfix" data-option="option{{option_index | plus: 1 }}" data-option-index="{{ option_index }}">
+	<div class="header">{{ swatch }}</div>
+	<div class="select-swap">
+		{% assign values = '' %}
+		{% for variant in product.variants %}
+		{% assign value = variant.options[option_index] %}
+		{% unless values contains value %}
+		{% assign values = values | join: ',' %}
+		{% assign values = values | append: ',' | append: value %} 
+		{% assign values = values | split: ',' %} 
+		<div data-value="{{ value | escape }}" class="n-sd swatch-element {% if is_color %}color {% endif %}{{ value | handle }} {% if option_index == 2 %}variant-3 {%endif%}" >
+			<input class="variant-{{option_index}} input-product" id="swatch-{{ option_index }}-{{ value | handle }}" type="radio" name="option{{ option_index | plus: 1 }}" value="{{ value | escape }}"{% if forloop.first %} checked{% endif %} {% if is_color %}data-img-src="{% unless img_url contains 'noDefaultImage6' %}{{variant.image.src | img_url: 'master'}}{%endunless%}"{% endif %} />
+			{% if is_color %}
+			{% assign img_url = variant.image.src | img_url: 'thumb' %}
+			<label class="{{ value | handle }} {% if img_url contains 'noDefaultImage6' %}no-thumb{% else %}has-thumb{% endif %}" for="swatch-{{ option_index }}-{{ value | handle }}" style="{% unless img_url contains 'noDefaultImage6' %}background: url({{variant.image.src | img_url: 'compact'}}) top left no-repeat {% endunless %}" >
+				<span>{{value}}</span>
+				<img class="crossed-out" src="{{ 'soldout.png' | asset_url }}" />
+				<img class="img-check" src="{{'select-pro.png' | asset_url }}" />
+			</label>
+			{% else %}
+			<label for="swatch-{{ option_index }}-{{ value | handle }}" >
+				{{ value }}
+				<img class="crossed-out" src="{{ 'soldout.png' | asset_url }}" />
+				<img class="img-check" src="{{'select-pro.png' | asset_url }}" />
+			</label>
+			{% endif %}
+		</div>
+		{% endunless %}
+		{% endfor %}
+	</div>
+</div>
+{% endunless %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% assign on_sale = false %}
+{% if product.available and product.compare_at_price > product.price %}
+{% assign on_sale = true %}
+{% endif %}
+
+{% comment %}Tính giá khuyến mãi{% endcomment %}
+{% if product.variants.first.compare_at_price > product.variants.first.price %}
+{% assign price_sale = 0 %}
+{% assign price_sale = product.variants.first.compare_at_price | minus: product.variants.first.price | divided_by:product.variants.first.compare_at_price | times : 100 | round : 0 %}
+{% endif %}
+
+{% assign label_new = false %}
+{% for tag in product.tags %}
+{% if tag == 'new' %}
+{% assign label_new = true %}
+{% endif %}
+{% endfor %}
+
+{% assign label_hot = false %}
+{% for tag in product.tags %}
+{% if tag == 'hot' %}
+{% assign label_hot = true %}
+{% endif %}
+{% endfor %}
+
+{% assign sold_out = true %}
+{% if product.available  %}
+{% assign sold_out = false %}
+{% endif %}  
+
+<div class="product-block product-resize site-animation" data-anmation="{{forloop.index}}">
+	<div class="product-img">
+
+		{% if sold_out %}<div class="sold-out"><span>Hết hàng</span></div>{% endif %}	
+		<a href="{{product.url}}" title="{{product.title}}" class="image-resize">
+			<picture>
+				<source media="(max-width: 767px)" srcset="{%if product.images.size > 0%}{{ product.featured_image.src | product_img_url: 'large' }}{%else%}{{'no_image.jpg' | asset_url}}{%endif%}">
+				<source media="(min-width: 768px)" srcset="{%if product.images.size > 0%}{{ product.featured_image.src | product_img_url: 'grande' }}{%else%}{{'no_image.jpg' | asset_url}}{%endif%}">
+				<img class="img-loop" alt="{% if product.featured_image.alt.size >0 %}{{ product.featured_image.alt | escape }}{% else%} {{product.title}} {% endif %}" src="{%if product.images.size > 0%}{{ product.featured_image.src | product_img_url: 'grande' }}{%else%}//hstatic.net/0/0/global/design/theme-default/no-image.png{%endif%}"  />
+			</picture>
+			{% if product.images.size > 1 %}{% endif %}
+			<picture>
+				<source media="(max-width: 767px)" srcset="{% if product.images.size > 1 %}{{ product.images[1] | product_img_url: 'large' }}{%else%}{%if product.images.size > 0%}{{ product.featured_image.src | product_img_url: 'large' }}{%else%}{{'no_image.jpg' | asset_url}}{%endif%}{%endif%}">
+				<source media="(min-width: 768px)" srcset="{% if product.images.size > 1 %}{{ product.images[1] | product_img_url: 'grande' }}{%else%}{%if product.images.size > 0%}{{ product.featured_image.src | product_img_url: 'grande' }}{%else%}{{'no_image.jpg' | asset_url}}{%endif%}{%endif%}">
+				<img class="img-loop img-hover" alt="{% if product.featured_image.alt.size > 1 %}{{ product.featured_image.alt | escape }}{% else%} {{product.title}} {% endif %}" src="{% if product.images.size > 1 %}{{ product.images[1] | product_img_url: 'grande' }}{%else%}{{ product.featured_image.src | product_img_url: 'grande' }}{%endif%}"/>
+			</picture>
+		</a>
+		<div class="button-add hidden">
+			<button type="submit" title="Buy now" class="action" onclick="buy_now('{{ product.variants.first.id }}')">Mua ngay<i class="fa fa-long-arrow-right"></i></button>
+		</div>	
+		<div class="pro-price-mb">	
+			<span class="pro-price">{{ product.variants.first.price | money }}</span>
+			{% if on_sale %}<span class="pro-price-del"><del class="compare-price">{{ product.variants.first.compare_at_price | money }}</del></span>{% endif %}
+		</div>
+	</div>
+	<div class="product-detail clearfix">
+		<div class="product-popup">
+			<button type="button" class="btn quick-view" data-handle="{{product.url}}">Nhận <br/> mẫu thử</button>
+		</div>
+		<div class="box-pro-detail">
+			<h3 class="pro-name">
+				<a href="{{product.url}}" title="{{product.title}}">
+					{{ product.title }} 
+					{% if label_new %}
+					<div class="product-sale new"><span>New</span></div>
+					{% endif %}
+					{% if label_hot %}
+					<div class="product-sale hot"><span>Hot</span></div>
+					{% endif %}
+				</a>
+			</h3>
+
+			<div class="box-pro-prices">	
+				<form id="add-item-form" action="/cart/add" method="post" class="variants clearfix">				
+					<div class="select clearfix">
+						<select id="product-select-{{product.id}}" class="select-variant-change" name="id">
+							{% for variant in product.variants %}
+							{% if variant.available %}
+							<option  
+											{% if variant == product.selected_or_first_available_variant %} class="selected"  selected="selected" {% endif %} 
+											value="{{ variant.price | money }}----{{product.id}}----{{variant.compare_at_price | minus: variant.price | divided_by:variant.compare_at_price | times : 100 | round : 0}}">
+								{{ variant.title }} 
+							</option>
+							{% else %}
+							<option disabled="disabled">
+								{{ variant.title }}
+							</option>
+							{% endif %}
+							{% endfor %}
+						</select>
+					</div>
+
+				</form>
+				<p class="pro-price {% if on_sale %}highlight{% endif %}">
+					<span id="{{product.id}}" class="price">{{ product.price | money }}</span>
+					{% if on_sale %} /-<span id="pro-sale-{{product.id}}">{{price_sale}}</span>% <img width="10" src="{{'iconrop.jpg' | asset_url}}" alt=""/>{% endif %}
+				</p>
+			</div>
+		</div>
+	</div>
+</div>	

@@ -1,0 +1,30 @@
+{%assign _ha_select = settings.en_harticles_select %}
+
+<section id="home-articles">
+	<div class="wrapper">
+		<div class="inner">
+			<div class="section-title wow fadeInDown text-center">
+				<h2>
+					{{settings.en_harticles_title}}
+				</h2>
+				<span class="section-title-border"></span>
+			</div>
+			<div class="grid">
+				{%if blogs[_ha_select]articles_count > 0 %}
+				<div id="owl-home-articles-slider" class="owl-carousel owl-theme">
+					{%for article_layout in blogs[_ha_select]articles limit: settings.en_harticles_limit %}
+					<div class="item grid__item wow fadeInUp" data-wow-delay="{{forloop.index | times:0.2}}s" data-wow-duration="0.75s">
+						{%include 'en-article-item'%}
+					</div>
+					{%endfor%}
+				</div>
+				{%else%}
+				<div class="grid__item large--one-whole">
+				No item in this category !
+				</div>
+				{%endif%}
+			</div>
+		</div>
+	</div>
+</section>
+

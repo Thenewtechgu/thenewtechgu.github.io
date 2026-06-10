@@ -1,0 +1,375 @@
+<!-- /templates/product.liquid -->
+
+<div itemscope itemtype="http://schema.org/Product">
+
+	<meta itemprop="url" content="{{ shop.url }}{{ product.url }}">
+	<meta itemprop="image" content="{{ product.featured_image.src | img_url: 'grande' }}">
+
+	{% comment %}
+	Get first variant, or deep linked one
+	{% endcomment %}
+	{% assign current_variant = product.selected_or_first_available_variant %}
+
+	{% include 'breadcrumb' %}
+
+	<div class="grid product-single">
+		<div class="grid__item large--one-half text-center">
+			<div class="product-single__photos" id="ProductPhoto">
+				{% if product.images.size > 1 %}
+				{% for image in product.images offset: 1 limit:2 %}
+				<div class="product-pattern" style="float: left">
+					<div class="pattern-wrapper" style="position: relative">
+						<div  class="parttern-background-image">
+							<img id="unbounded" class="product-pattern-border" src="{{ image.src | img_url: 'large' }}" alt="{{ image.alt | escape }}"  style="cursor: move; background-size: 86%;background-repeat: repeat;background-position: 268.75% -747.5%; background-image: url({{product.featured_image|img_url:'master'}})">
+						</div>
+					</div>
+				</div>
+				{% endfor %}
+				{%else%}
+				{% assign featured_image = current_variant.featured_image | default: product.featured_image %}
+				<img src="{{ featured_image | img_url: 'large' }}" alt="{{ featured_image.alt | escape }}" id="ProductPhotoImg">
+				{%endif%}    
+  			<div id="slider-vertical" style="height:200px;" style="float: right"></div>
+
+			</div>
+
+			{% comment %}
+			Create thumbnails if we have more than one product image
+			{% endcomment %}
+			{% if product.images.size > 1 %}
+			<ul class="product-single__thumbnails grid-uniform" id="ProductThumbs">
+
+				{% for image in product.images %}
+				<li class="grid__item one-quarter">
+					<a href="{{ image.src | img_url: 'large' }}" class="product-single__thumbnail">
+						<img src="{{ image.src | img_url: 'compact' }}" alt="{{ image.alt | escape }}">
+					</a>
+				</li>
+				{% endfor %}
+
+			</ul>
+
+			{% endif %}
+		</div>
+
+		<div class="grid__item large--one-half">
+
+			<h1 itemprop="name">{{ product.title }}</h1>
+
+			<div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+				<meta itemprop="priceCurrency" content="{{ shop.currency }}">
+
+				<link itemprop="availability" href="http://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}">
+
+				{% comment %}
+				ID addToCartForm is a selector for the ajax cart plugin
+				{% endcomment %}
+				<form action="/cart/add" method="post" enctype="multipart/form-data" id="AddToCartForm" class="form-vertical">
+
+					{% comment %}
+					Add product variants as a dropdown.
+					- By default, each variant (or combination of variants) will display as its own <option>
+					- To separate these into multiple steps, which we suggest, use option_selection.js (see below)
+
+					You can leverage jQuery to add a callback on page load and each time the select element changes:
+					- Include option_selection.js (as seen at the bottom of this file)
+					- This allows you to use JavaScript anytime the variant dropdown changes
+					- This also separates out your variant options (ie. size, color, etc.) to separate select elements
+
+					For more information on products with multiple options, visit:
+					- http://docs.haravan.com/support/your-website/themes/can-i-make-my-theme-use-products-with-multiple-options#update-product-liquid
+					{% endcomment %}
+					<select name="id" id="productSelect" class="product-single__variants">
+						{% for variant in product.variants %}
+						{% if variant.available %}
+
+						{% comment %}
+						Note: if you use option_selection.js, your <select> tag will be overwritten, meaning what you have inside <option> will not reflect what you coded below.
+						{% endcomment %}
+						<option {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %} data-sku="{{ variant.sku }}" value="{{ variant.id }}">{{ variant.title }} - {{ variant.price | money_with_currency }}</option>
+
+						{% else %}
+						<option disabled="disabled">
+							{{ variant.title }} - {{ 'products.product.sold_out' | t }}
+						</option>
+						{% endif %}
+						{% endfor %}
+						</select>
+
+						<span class="visually-hidden">{{ 'products.general.regular_price' | t }}</span>
+						<span id="ProductPrice" class="h2" itemprop="price" content="{{ current_variant.price | divided_by: 100.00 }}">
+							{{ current_variant.price | money }}
+						</span>
+
+						{% if product.compare_at_price_max > product.price %}
+						<span class="visually-hidden">{{ 'products.general.sale_price' | t }}</span>
+						<p id="ComparePrice">
+							{{ 'products.product.compare_at' | t }} {{ current_variant.compare_at_price | money }}
+						</p>
+						{% endif %}
+
+						<label for="Quantity" class="quantity-selector">{{ 'products.product.quantity' | t }}</label>
+						<input type="number" id="Quantity" name="quantity" value="1" min="1" class="quantity-selector">
+
+						<button type="submit" name="add" id="AddToCart" class="btn">
+							<span id="AddToCartText">{{ 'products.product.add_to_cart' | t }}</span>
+						</button>
+						</form>
+
+					</div>
+
+				<div class="product-description rte" itemprop="description">
+					{{ product.description }}
+				</div>
+
+				{% comment %}
+				If the user is on a collection product page (ie with /collections/collection-handle/products/product-handle)
+				in the URL, we can show next/previous links to other products in the collection.
+				{% endcomment %}
+				{% if collection %}
+				{% if collection.previous_product or collection.next_product %}
+				<p>
+					{% if collection.previous_product %}
+					<span class="left">
+						{{ 'products.general.previous_product_html' | t | link_to: collection.previous_product }}
+					</span>
+					{% endif %}
+					{% if collection.next_product %}
+					<span class="right">
+						{{ 'products.general.next_product_html' | t | link_to: collection.next_product }}
+					</span>
+					{% endif %}
+				</p>
+				{% endif %}
+				{% endif %}
+			</div>
+		</div>
+	</div>
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<script>
+	/**
+ * Draggable Background plugin for jQuery
+ *
+ * v1.2.2
+ *
+ * Copyright (c) 2014 Kenneth Chung
+ *
+ * Licensed under the MIT license:
+ *   http://www.opensource.org/licenses/mit-license.php
+ */
+	;(function($) {
+		var $window = $(window);
+
+		// Helper function to guarantee a value between low and hi unless bool is false
+		var limit = function(low, hi, value, bool) {
+			if (arguments.length === 3 || bool) {
+				if (value < low) return low;
+				if (value > hi) return hi;
+			}
+			return value;
+		};
+
+		// Adds clientX and clientY properties to the jQuery's event object from touch
+		var modifyEventForTouch = function(e) {
+			e.clientX = e.originalEvent.touches[0].clientX;
+			e.clientY = e.originalEvent.touches[0].clientY;
+		};
+
+		var getBackgroundImageDimensions = function($el) {
+			var bgSrc = ($el.css('background-image').match(/^url\(['"]?(.*?)['"]?\)$/i) || [])[1];
+			if (!bgSrc) return;
+
+			var imageDimensions = { width: 0, height: 0 },
+					image = new Image();
+
+			image.onload = function() {
+				if ($el.css('background-size') == "cover") {
+					var elementWidth = $el.innerWidth(),
+							elementHeight = $el.innerHeight(),
+							elementAspectRatio = elementWidth / elementHeight;
+					imageAspectRatio = image.width / image.height,
+						scale = 1;
+
+					if (imageAspectRatio >= elementAspectRatio) {
+						scale = elementHeight / image.height;
+					} else {
+						scale = elementWidth / image.width;
+					}
+
+					imageDimensions.width = image.width * scale;
+					imageDimensions.height = image.height * scale;
+				} else {
+					imageDimensions.width = image.width;
+					imageDimensions.height = image.height;
+				}
+			};
+
+			image.src = bgSrc;
+
+			return imageDimensions;
+		};
+
+		function Plugin(element, options) {
+			this.element = element;
+			this.options = options;
+			this.init();
+		}
+
+		Plugin.prototype.init = function() {
+			var $el = $(this.element),
+					bgSrc = ($el.css('background-image').match(/^url\(['"]?(.*?)['"]?\)$/i) || [])[1],
+					options = this.options;
+
+			if (!bgSrc) return;
+
+			// Get the image's width and height if bound
+			var imageDimensions = { width: 0, height: 0 };
+			if (options.bound) {
+				imageDimensions = getBackgroundImageDimensions($el);
+			}
+
+			$el.on('mousedown.dbg touchstart.dbg', function(e) {
+				if (e.target !== $el[0]) {
+					return;
+				}
+				e.preventDefault();
+
+				if (e.originalEvent.touches) {
+					modifyEventForTouch(e);
+				} else if (e.which !== 1) {
+					return;
+				}
+
+				var x0 = e.clientX,
+						y0 = e.clientY,
+						pos = $el.css('background-position').match(/(-?\d+).*?\s(-?\d+)/) || [],
+						xPos = parseInt(pos[1]) || 0,
+						yPos = parseInt(pos[2]) || 0;
+
+				$window.on('mousemove.dbg touchmove.dbg', function(e) {
+					e.preventDefault();
+
+					if (e.originalEvent.touches) {
+						modifyEventForTouch(e);
+					}
+
+					var x = e.clientX,
+							y = e.clientY;
+
+					xPos = options.axis === 'y' ? xPos : limit($el.innerWidth()-imageDimensions.width, 0, xPos+x-x0, options.bound);
+					yPos = options.axis === 'x' ? yPos : limit($el.innerHeight()-imageDimensions.height, 0, yPos+y-y0, options.bound);
+					x0 = x;
+					y0 = y;
+
+					$el.css('background-position', xPos + 'px ' + yPos + 'px');
+				});
+
+				$window.one('mouseup.dbg touchend.dbg mouseleave.dbg', function() {
+					if (options.done) {
+						options.done();
+					}
+
+					$window.off('mousemove.dbg touchmove.dbg');
+				});
+			});
+		};
+
+		Plugin.prototype.disable = function() {
+			var $el = $(this.element);
+			$el.off('mouseup.dbg mousedown.dbg touchstart.dbg touchend.dbg mouseleave.dbg');
+			$window.off('mousemove.dbg touchmove.dbg');
+		}
+
+		$.fn.backgroundDraggable = function(options) {
+			var options = options;
+			var args = Array.prototype.slice.call(arguments, 1);
+
+			return this.each(function() {
+				var $this = $(this);
+
+				if (typeof options == 'undefined' || typeof options == 'object') {
+					options = $.extend({}, $.fn.backgroundDraggable.defaults, options);
+					var plugin = new Plugin(this, options);
+					$this.data('dbg', plugin);
+				} else if (typeof options == 'string' && $this.data('dbg')) {
+					var plugin = $this.data('dbg');
+					Plugin.prototype[options].apply(plugin, args);
+				}
+			});
+		};
+
+		$.fn.backgroundDraggable.defaults = {
+			bound: true,
+			axis: undefined
+		};
+	}(jQuery));
+	</script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script>
+	$( function() {
+		$( "#slider-vertical" ).slider({
+			orientation: "vertical",
+			range: "min",
+			min: 30,
+			max: 100,
+			value: 50,
+			slide: function( event, ui ) {
+				$('#unbounded').css('background-size', $( "#slider-vertical" ).slider( "value" )+'%');
+			}
+		});
+		$('#unbounded').css('background-size', $( "#slider-vertical" ).slider( "value" )+'%');
+
+	} );
+	</script>
+	<script>
+	$(function() {
+		$('#unbounded').backgroundDraggable({ bound: false });
+		$('#unbounded').hover(function(){
+
+		})
+	});
+
+	</script>
+	{% comment %}
+	To take advantage of a callback on the select dropdown, add option_selection.js
+	and customize the JS in timber.productPage as needed.
+
+	Currently, timber.productPage does the following:
+	- Hides your <select> tag from above
+	- Breaks out the product variants into separate product options, if more than one exists
+	- Generates a <select> tag for each product option
+	- Enables/disables elements based on variant availability
+
+	Callback notes:
+	- Keep the callback available to the global scope (window.selectCallback) so that advanced
+	addons can override it.
+	* E.g. multiple currencies http://docs.haravan.com/manual/configuration/store-customization/currencies-and-translations/currencies/how-to-toggle-between-two-currencies
+	{% endcomment %}
+	{{ 'option_selection.js' | haravan_asset_url | script_tag }}
+	<script>
+	var selectCallback = function(variant, selector) {
+		timber.productPage({
+			money_format: "{{ shop.money_format }}",
+			variant: variant,
+			selector: selector
+		});
+	};
+
+	jQuery(function($) {
+		new Haravan.OptionSelectors('productSelect', {
+			product: {{ product | json }},
+																onVariantSelected: selectCallback,
+																enableHistoryState: true
+																});
+
+		// Add label if only one product option and it isn't 'Title'. Could be 'Size'.
+		{% if product.options.size == 1 and product.options.first != 'Title' %}
+		$('.selector-wrapper:eq(0)').prepend('<label for="productSelect-option-0">{{ product.options.first | escape }}</label>');
+		 {% endif %}
+
+		 // Hide selectors if we only have 1 variant and its title contains 'Default'.
+		 {% if product.variants.size == 1 and product.variants.first.title contains 'Default' %}
+		 $('.selector-wrapper').hide();
+			{% endif %}
+			});
+			</script>

@@ -1,0 +1,71 @@
+
+{%if settings.show_tab_product%}
+<section id="home-tab1">
+	<div class="wrapper">
+		<div class="inner">
+			<div class="tab_product_title1 title">
+				<div class="tab1_logo">
+					<img src="{{ 'en_service_img.png' | asset_url }}" alt="icon">
+				</div>
+				<h2>{{settings.en_service_title}}</h2>
+			</div>
+			<div class="tab_product_title">
+				<ul class="no-bullets tab_menu">
+					{%for i in (1..8)%}
+					{%capture _tab_product_title%}en_tab_product_title{{i}}{%endcapture%}
+					{%capture _show_product_title%}en_show_product_title{{i}}{%endcapture%}
+					{%if settings[_show_product_title]%}
+					<li class="tablinks" data-tab="tab_produc_cont{{i}}">
+						<a onclick="showtab(event,'tab_produc_cont{{i}}')" href="#">{{ settings[_tab_product_title] }}</a>
+					</li>
+					{%endif%}
+					{%endfor%}
+				</ul>
+			</div>
+
+			<div class="tab_all">
+				{%for k in (1..8)%}
+				{%capture _collection_prodct%}en_collection_prodct{{k}}{%endcapture%}
+				{%capture _show_product_title%}en_show_product_title{{k}}{%endcapture%}
+				{%capture _tab_product_limit%}en_tab_product_limit{{k}}{%endcapture%}
+				{%assign _collection_prodctasd = settings[_collection_prodct]%}
+				{%assign _blogs = settings[_collection_prodct]%}
+				{%if settings[_show_product_title]%}
+				<div id="tab_produc_cont{{k}}"  class="tabcontent">
+					<div class="grid-uniform">
+						{%if blogs[_blogs]articles_count > 0%}
+						{%for service_item in blogs[_blogs]articles limit: settings[_tab_product_limit]%}
+						<div class=" mg-bt30 grid__item large--one-third medium--one-half small--one-half">
+							<div class="service_item  ">
+								<a href="{{service_item.url}}">
+									<div class="service_img text-center">
+										<img src="{{service_item.image.src | img_url: 'compact'}}" alt="{{service_item.title}}" />
+									</div>
+									<div class="service_info">
+
+									</div>
+								</a>
+							</div>
+							<div class="service_title text-center">
+								<span>{{ service_item.tags }}</span>
+								<h4><a href="{{service_item.url}}">{{service_item.title | truncate: 90}}</a></h4>
+							</div>
+						</div>
+						{%endfor%}
+						{%else%}
+						<div class="mg-bt30  grid__item large--one-whole text-center">
+							No item in this category !
+						</div>
+						{%endif%}
+					</div>
+				</div>
+				{%endif%}
+				{%endfor%}
+			</div>
+		</div>
+	</div>
+</section>
+{%endif%}
+
+
+

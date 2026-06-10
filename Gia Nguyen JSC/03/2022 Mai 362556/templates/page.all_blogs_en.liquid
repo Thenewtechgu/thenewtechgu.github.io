@@ -1,0 +1,72 @@
+{% layout 'en' %}
+<section id="blog-wrapper" class="in-blog">
+	<div class="wrapper">
+		<div class="inner">
+
+			<h1 class="hide">
+				{{page.title}}
+			</h1>
+
+			<div class="grid">
+
+				<div class="grid__item large--nine-twelfths medium--one-whole small--one-whole float-right">
+					<div class="blog-content">
+
+						<!--- Loop all blogs --->
+						{%for link in linklists[settings.en_blog_sidebar_select].links%}
+						{%assign _blog = link.object%}
+						{%assign m = forloop.index%}
+						{%capture blog_si_limit%}en_blog_si_limit_{{m}}{%endcapture%}
+
+						{%capture show_blog_banner%}en_show_blog_banner_3_{{m}}{%endcapture%}
+						{%capture blog_banner_url%}en_blog_banner_url_3_{{m}}{%endcapture%}
+						{%capture blog_banner_img%}en_blog_banner_3_{{m}}.png{%endcapture%}
+						{%capture blog_banner_alt%}en_blog_banner_alt_3_{{m}}{%endcapture%}
+
+						{%if settings[show_blog_banner]%}
+						<div class="banner-horizontal">
+							<a href="{{settings[blog_banner_url]}}">
+								<img src="{{blog_banner_img | asset_url}}" alt="{{settings[blog_banner_alt]}}" />
+							</a>
+						</div>
+						{%endif%}
+
+						<div class="blog-single-item">
+							<div class="section-title clearfix">
+								<div class="title">
+									<h2>{{_blog.title}}</h2>
+								</div>
+								<div class="viewmore">
+									<a href="{{_blog.url}}">View more <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+								</div>
+								<div class="line"></div>
+							</div>
+							<div class="blog-single-slider grid">
+								{%if _blog.articles_count == 0%}
+								<p class="grid__item">
+									No item in this category !
+								</p>
+								{%else%}
+								<div id="owl-blog-single-slider{{ forloop.index }}" class="owl-carousel owl-theme">
+									{% for article_layout in _blog.articles limit: settings[blog_si_limit] %}
+									<div class="item grid__item">
+										{%include 'en-article-item'%}
+									</div>
+									{%endfor%}
+								</div>
+								{%endif%}
+							</div>
+						</div>
+						{%endfor%}
+						<!--- End loop all blogs --->
+					</div>
+				</div>
+
+				<div class="grid__item large--three-twelfths medium--one-whole small--one-whole">
+					{%include 'en-blog-sidebar'%}
+				</div>
+
+			</div>
+		</div>
+	</div>
+</section>

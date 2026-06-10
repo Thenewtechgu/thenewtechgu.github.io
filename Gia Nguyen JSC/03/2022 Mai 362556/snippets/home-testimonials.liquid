@@ -1,0 +1,44 @@
+<section id="home-testimonials">
+	<div class="wrapper">
+		<div class="inner">
+			<div class="section-title text-center">
+				<h2 class="wow fadeInDown">
+					{{settings.htesti_title}}
+				</h2>
+				<span class="section-title-border wow fadeInDown"></span>
+				<div class="htesti-title-desc wow fadeInDown" data-wow-delay="0.25s">
+					{{settings.htesti_desc}}
+				</div>
+			</div>
+			<div class="htesti-slider-wrapper grid">
+				<div id="owl-htesti-slider" class="owl-carousel owl-theme">
+					{%for i in (1..10)%}
+					{%capture htesti_enable%}htesti_enable{{i}}{%endcapture%}
+					{%capture htesti_cus_title%}htesti_cus_title{{i}}{%endcapture%}
+					{%capture htesti_cus_role%}htesti_cus_role{{i}}{%endcapture%}
+					{%capture htesti_cus_quote%}htesti_cus_quote{{i}}{%endcapture%}
+					{%capture htesti_cus_ava%}htesti_cus_ava{{i}}.jpg{%endcapture%}
+					{%if settings[htesti_enable]%}
+					<div class="item grid__item wow fadeInUp" data-wow-delay="{{i | times:0.2}}s" data-wow-duration="0.75s">
+						<div class="htesti-item text-center">
+							<div class="htesti-img">
+								<img src="{{htesti_cus_ava | asset_url}}" alt="{{settings[htesti_cus_title]}}" />
+							</div>
+							<div class="htesti-desc">
+								{{settings[htesti_cus_quote]}}
+							</div>
+							<div class="htesti-title">
+								{{settings[htesti_cus_title]}}
+							</div>
+							<div class="htesti-role">
+								{{settings[htesti_cus_role]}}
+							</div>
+						</div>
+					</div>
+					{%endif%}				
+					{%endfor%}
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

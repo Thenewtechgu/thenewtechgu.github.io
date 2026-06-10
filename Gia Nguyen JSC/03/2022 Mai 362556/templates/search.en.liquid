@@ -1,0 +1,123 @@
+{% layout 'en' %}
+<!-- /templates/search.liquid -->
+{%assign search_col = search.terms | split: "collectionid:product=" | last%}
+{%assign search_terms_col = search_col | split: ")" | first %}
+{%assign search_title = search.terms | split: "(title:product**" | last | remove: ")))"%}
+{%assign search_terms_title = search_title | split: ")" | first %}
+
+<script>
+$(window).on('load',function(){
+	var url_col = 'collection={{search_terms_col}}';
+	var url_title = 'title={{search_terms_title}}';
+	var param = '';
+
+	{%if search_terms_title == '*' or search_terms_title == ''%}
+	url_title = '';
+	{%endif%}
+
+	{%if search_terms_col == '*' or search_terms_title == ''  or search_terms_col contains 'filter=((title:product**'%}
+	url_col = '';
+	{%endif%}
+
+	//param = 'search?' + encodeURIComponent(url_col + url_title);
+	//param = 'search?' + url_col + url_title;
+	//window.history.pushState('Search', 'Search', param);
+})
+</script>
+
+{%if search_terms_col == '*' or search_terms_col contains 'filter=((title:product**'%}
+{%assign search_terms_col = '' %}
+{%else%}
+{%assign search_terms_col_a = search_terms_col | replace: "filter=((collectionid:product", "" | replace: "=0", "" %}
+{%assign search_terms_col = 'Nhóm sản phẩm: ' | append: search_terms_col_a | append: ' / '%}
+{%endif%}
+
+{%if search_terms_title == '*'%}
+{%assign q = ''%}
+{%assign search_terms_title = '' %}
+{%else%}
+{%assign q = search_terms_title%}
+{%assign search_terms_title = 'Keyword: ' | append: search_terms_title %}
+{%endif%}
+
+{% assign grid_results = true %}
+
+{% assign respond_js_secret_key = shop.domain | md5 %}
+{% unless search.terms == respond_js_secret_key %}
+
+{% paginate search.results by settings.col_pro_limit %}
+
+<section id="other-sections-wrapper">
+	<div class="wrapper">
+		<div class="inner">
+			<!-- /templates/search.liquid -->
+
+
+			<div  id="collection-wrapper" class="grid">
+
+				<div class="grid__item collection-content-wrapper">
+					{% if search.performed %}
+					{% if search.results_count == 0 %}
+					<h1 class="search-h1 text-center">Không tìm thấy kết quả tìm kiếm phù hợp cho:<br/><span class="check_query_text">{{search_terms_col}}</span> {{search_terms_title}}</h1>
+					{% else %}
+					<h1 class="search-h1 text-center">Kết quả tìm kiếm:<br/><span class="check_query_text">{{search_terms_col}}</span> {{search_terms_title}}</h1>
+					{% endif %}
+					{% else %}
+					<h1 class="search-h1 text-center">{{ 'general.search.title' | t }}</h1>
+					{% endif %}
+
+					<div class="" style="max-width: 500px; margin: 0px auto 10px auto;">
+						{% include 'en-search-form-wrapper1' %}
+					</div>
+
+					{% if search.performed %}
+
+					<div class="grid-uniform  product-loop">
+						{% for article_layout in search.results %}
+						{%assign count = count | plus:1%}
+
+						{% assign on_sale = false %}
+						{% if produc_item.compare_at_price > produc_item.price %}
+						{% assign on_sale = true %}
+						{% endif %}
+
+						{% assign sold_out = true %}
+						{% if produc_item.available %}
+						{% assign sold_out = false %}
+						{% endif %}
+						<div class="grid__item product--loop mg-bt30 product--grid-item large--one-quarter medium--one-third small--one-half  search-item">
+							{%include "en-article-item"%}
+						</div>
+
+						{% endfor %}
+					</div>
+
+					<div class="pagination">
+						{%include "pagination"%}
+					</div>
+
+					{% endif %}
+
+				</div>
+			</div>
+
+		</div>
+	</div>
+</section>
+
+{% endpaginate %}
+
+{% else %}
+{% include 'respond' %}
+{% layout none %}
+{% endunless %}
+
+<script>
+if($('.check_query_text').text() == "Nhóm sản phẩm: > / "){
+	$('.check_query_text').text("Tất cả sản phẩm / ");
+}
+jQuery(window).on('load', function(){
+	console.log($('#main-search-form-input').val());
+	$('#main-search-form-input').attr("value", "");
+});
+</script>

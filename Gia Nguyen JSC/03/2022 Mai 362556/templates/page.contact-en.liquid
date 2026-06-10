@@ -1,0 +1,193 @@
+{% layout 'en' %}
+<div id="page_contact">
+	<section id="commun">
+		<div class="wrapper">
+			<div class="inner">
+				<div class="grid ">
+					<div class="contact_address_title title">
+						<div class="contact_img">
+							<img src="{{ 'en_contact_address_logo1.png' | asset_url }}" alt="icon">
+						</div>
+						<h2>{{ settings.en_contact_address_title }}</h2>
+					</div>
+					{%if settings.en_contact_address_show1%}
+					<div class="grid__item  mg-bt40 large--one-quarter medium--one-half small--one-whole">
+						<div class="contact_address">
+							<div class="contact_address_content">
+								<div class="contact_icon">
+									<i class="fas fa-phone"></i>
+								</div>
+								<h4>{{ settings.en_contact_address_title1 }}</h4>
+								<a href="tel:{{ settings.en_shop_hotline1 }}">{{ settings.en_shop_hotline1 }}</a>
+							</div>
+						</div>
+					</div>
+					{%endif%}
+
+					{%if settings.en_contact_address_show2%}
+					<div class="grid__item  mg-bt40 large--one-quarter medium--one-half small--one-whole">
+						<div class="contact_address">
+							<div class="contact_address_content">
+								<div class="contact_icon">
+									<i class="fas fa-envelope"></i>
+								</div>
+								<h4>{{ settings.en_contact_address_title2 }}</h4>
+								<a href="mailto:{{ settings.en_shop_email }}">{{ settings.en_shop_email }}</a>
+							</div>
+						</div>
+					</div>
+					{%endif%}
+
+					{%if settings.en_contact_address_show3%}
+					<div class="grid__item  mg-bt40 large--one-quarter medium--one-half small--one-whole">
+						<div class="contact_address">
+							<div class="contact_address_content">
+								<div class="contact_icon">
+									<i class="fas fa-map-marker-alt"></i>
+								</div>
+								<h4>{{ settings.en_contact_address_title3 }}</h4>
+								<p>{{ settings.en_shop_address }}</p>
+							</div>
+						</div>
+					</div>
+					{%endif%}
+
+					{%if settings.en_contact_address_show4%}
+					<div class="grid__item  mg-bt40 large--one-quarter medium--one-half small--one-whole">
+						<div class="contact_address">
+							<div class="contact_address_content">
+								<div class="contact_icon">
+									<i class="fas fa-clock"></i>
+								</div>
+								<h4>{{ settings.en_contact_address_title4 }}</h4>
+								<p>{{ settings.en_contact_address_txt4 }}</p>
+							</div>
+						</div>
+					</div>
+					{%endif%}
+
+				</div>
+			</div>
+		</div>
+	</section>
+	{%if settings.en_contact_form_show%}
+	<section id="form_mess">
+		<div class="wrapper">
+			<div class="inner">
+				<div class="contact_form_title title">
+					<div class="contact_img">
+						<img src="{{ 'en_contact_address_logo2.png' | asset_url }}" alt="icon">
+					</div>
+					<h2>{{ settings.en_contact_form_title }}</h2>
+				</div>
+				<div class="grid">
+					<div class="grid__item  mg-bt50 large--one-whole medium--one-whole small--one-whole">
+						<div class="form-vertical contact_form clearfix">
+							{% form 'contact' %}
+							{% comment %}
+							Successful message
+							{% endcomment %}
+							{% if form.posted_successfully? %}
+							<p class="note form-success">
+								{{ 'contact.form.post_success' | t }}
+							</p>
+							{% endif %}
+
+							{{ form.errors | default_errors }}
+
+							{% assign name_attr = 'contact.form.name' | t | handle %}
+							<div class="grid mg-left-10">
+								<div class="grid__item large--one-half pd-left10">
+									<label for="ContactFormName" class="label_title">{{ settings.en_use_form_title_name }}</label>
+									<input type="text" id="ContactFormName" class="input-full" name="contact[name]" placeholder="Name" autocapitalize="words" value="{% if form[name_attr] %}{{ form[name_attr] }}{% elsif customer %}{{ customer.name }}{% endif %}">
+								</div>
+								<div class="grid__item large--one-half pd-left10">
+									<label for="ContactFormEmail" class="label_title">{{ settings.en_use_form_title_email }}</label>
+									<input type="email" id="ContactFormEmail" class="input-full" name="contact[email]" placeholder="Email" autocorrect="off" autocapitalize="off" value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}">
+
+								</div>
+							</div>
+
+							{% assign name_attr = 'contact.form.phone' | t | handle %}
+							<label for="ContactFormPhone" class="label_title">{{ settings.en_use_form_title_phone }}</label>
+							<input type="tel" id="ContactFormPhone" class="input-full" name="contact[phone]" placeholder="Phone" pattern="[0-9\-]*" value="{% if form[name_attr] %}{{ form[name_attr] }}{% elsif customer %}{{ customer.phone }}{% endif %}">
+
+							<label for="ContactFormMessage" class="label_title">{{ settings.en_use_form_title_mess }}</label>
+							<textarea rows="10" id="ContactFormMessage" class="input-full" name="contact[body]" placeholder="Message">{% if form.body %}{{ form.body }}{% endif %}</textarea>
+
+							<input type="submit" id="submit_form"  class="btn left btnContactSubmit" value="Submit">
+
+							{% endform %}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	{%endif%}
+	<section id="map">
+		<div class="wrapper-full">
+			<div class="inner">
+				<div class="contact_form_title title">
+					<div class="contact_img">
+						<img src="{{ 'en_contact_address_logo3.png' | asset_url }}" alt="icon">
+					</div>
+					<h2>{{ settings.en_contact_title_tab3 }}</h2>
+				</div>
+				<div class="contact_map">
+					{{settings.en_contact_map_frame}}
+				</div>
+			</div>
+		</div>
+	</section>
+
+	{%if settings.en_store_enable0%}
+	<section id="maps">
+		<div class="wrapper">
+			<div class="inner">
+				<div class="page-contact-shoplist">
+					<div class="home-section-head title clearfix">
+						<div class="contact_img">
+							<img src="{{ 'en_contact_address_logo4.png' | asset_url }}" alt="icon">
+						</div>
+						<h2>
+							{{settings.en_pcontact_shoplist_title}}
+						</h2>
+					</div>
+					<div class="pcontact-shoplist-wrapper">
+						<div class="grid-uniform md-mg-left-15">
+							{%for i in (1..10)%}
+							{%capture store_enable%}en_store_enable_{{i}}{%endcapture%}
+							{%capture store_address%}en_store_address_{{i}}{%endcapture%}
+							{%capture store_tel%}en_store_tel_{{i}}{%endcapture%}
+							{%capture store_googlemap%}en_store_googlemap_{{i}}{%endcapture%}
+							{%capture store_img%}en_store_img_{{i}}.png{%endcapture%}
+							{%if settings[store_enable]%}
+							<div class="grid__item md-pd-left15 mg-bt30 large--one-third medium--one-third small--one-half">
+								<div class="pcontact-shop-item">
+									<div class="pcontact-shop-img">
+										<img src="{{store_img | asset_url}}" alt="{{settings[store_address]}}" />
+									</div>
+									<div class="pcontact-shop-address">
+										<a href="{{settings[store_googlemap]}}" target="_blank"><i class="fas fa-map-marker-alt"></i> {{settings[store_address]}}</a>
+									</div>
+									<div class="pcontact-shop-tel">
+										<a href="tel:{{settings[store_tel]}}"><i class="fas fa-phone-volume"></i> {{settings[store_tel]}}</a>
+									</div>
+								</div>
+							</div>
+							{%endif%}
+							{%endfor%}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	{%endif%}
+</div>
+
+
+
+
+

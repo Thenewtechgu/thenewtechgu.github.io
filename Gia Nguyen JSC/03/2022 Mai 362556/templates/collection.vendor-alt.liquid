@@ -1,0 +1,50 @@
+{% paginate collection.products by settings.col_product_limit %}
+
+<section id="collection">
+	<div class="wrapper">
+		<div class="inner">
+			<div class="grid">
+				<div class="grid__item large--one-whole medium--one-whole small--one-whole float-right">
+
+					<div class="collection-content-wrapper">
+						<div class="collection-head">
+							{%if settings.col_sorttype%}
+							<div class="collection-sorting-wrapper">
+								{%include 'collection-sorting'%}
+							</div>
+							{%endif%}
+							{%unless collection.handle =="all"%}
+							<div class="collection-desc">
+								{{collection.description}}
+							</div>
+							{%endunless%}
+						</div>
+						<div class="collection-body">
+							<div class="grid-uniform md-mg-left-15 product-list">
+								{%if collection.products_count > 0%}
+								{%for product_item in collection.products%}
+								<div class="grid__item mg-bt30 large--one-quarter medium--one-third small--one-half md-pd-left15">
+									{%include 'product-item'%}
+								</div>
+								{%endfor%}
+								{%else%}
+								<div class="grid__item large--one-whole">
+									<p>
+										Chưa có sản phẩm nào trong nhóm này !
+									</p>
+								</div>
+								{%endif%}
+							</div>
+							<div class="pagination not-filter">
+								{%include "pagination"%}
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+{% endpaginate %}

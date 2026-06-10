@@ -1,0 +1,127 @@
+
+<div class="blog_sidebar">
+	{%if settings.blog_sidebar_category_show%}
+	<div class="blog_sidebar_1">
+		<div class="blog_sidebar_title">
+			<h3>{{ settings.blog_sidebar_category_title }}</h3>
+		</div>
+		<div class="blog_sidebar_cont">
+			<ul  class="no-bullets yeart_ul">
+				{%for category in linklists[settings.blog_sidebar_category_link]links %}
+				{%assign _blog = category.object%}
+				<li>
+					<a href="{{category.url }}"><img src="{{'blog_sidebar_recent_logo.png' | asset_url}}" alt="icon"><span>{{ category.title }}</span></a>
+				</li>
+				{%endfor%}
+			</ul>
+		</div>
+	</div>
+	{%endif%}
+
+
+
+	{%if settings.blog_sidebar_recent_show%}
+	<div class="blog_sidebar_1">
+		<div class="blog_sidebar_title">
+			<h3>{{ settings.blog_sidebar_recent_title }}</h3>
+		</div>
+		<div class="blog_sidebar_cont">
+			<ul class="no-bullets menu_blog_sidebar">
+				{%for artice_item_sidebar_recent in blogs[settings.blog_sidebar_recent_blog1]articles limit: settings.blog_sidebar_recent_limit%}
+				<li class="clearfix">
+					<div class="left blog_img">
+						<a href="{{artice_item_sidebar_recent.url}}"><img src="{{ artice_item_sidebar_recent.image.src | img_url:'small'}}" alt="{{ artice_item_sidebar_recent.title }}"></a>
+					</div>
+					<div class="left blog_info">
+						<h4><a href="{{ artice_item_sidebar_recent.url }}">{{ artice_item_sidebar_recent.title | strip_html | truncate: 40 }}</a></h4>
+						<p><i class="far fa-clock"></i>{{ artice_item_sidebar_recent.published_at | date: '%d/%m/%y' }}</p>
+					</div>
+				</li>
+				{%endfor%}
+			</ul>
+		</div>
+	</div>
+	{%endif%}
+
+
+	{%if settings.blog_sidebar_month_show%}
+	<div class="blog_sidebar_1">
+		<div class="blog_sidebar_title">
+			<h3>{{ settings.blog_sidebar_month_title }}</h3>
+		</div>
+		<div class="blog_sidebar_cont">
+			<ul class="no-bullets menu_blog_sidebar_2">
+				{%for artilce_item_sidebar in blogs[settings.blog_sidebar_month_blog2]articles limit: settings.blog_sidebar_month_limit%}
+				<li>
+					<a href="{{ artilce_item_sidebar.url }}"><img src="{{'blog_sidebar_recent_logo.png' | asset_url}}" alt="icon"><span>{{ artilce_item_sidebar.title | strip_html | truncate: 33}}</span></a>
+				</li>
+				{%endfor%}
+			</ul>
+		</div>
+	</div>
+	{%endif%}
+
+
+
+	{%if settings.blog_sidebar_tags_show%}
+	<div class="blog_sidebar_1">
+		<div class="blog_sidebar_title">
+			<h3>{{ settings.blog_sidebar_tags_title }}</h3>
+		</div>
+		<div class="blog_sidebar_cont">
+			<ul  class="no-bullets tag_ul">
+				{%for link_tag in linklists[settings.blog_sidebar_tags_blog3].links%}
+				{%assign _blog1 = link_tag.object%}
+				{% for tag in blogs[_blog1.handle]all_tags %}
+				<li>
+					<a class="tag-item" href="{{blogs[_blog1.handle]url}}/tagged/{{ tag | handle }}">
+						{{ tag }}</a>
+				</li>
+				{%endfor%}
+				{%endfor%}
+			</ul>
+		</div>
+	</div>
+	{%endif%}
+
+
+
+
+	{%assign a = settings.blog_sidebar_imgs_limit%}
+	{%if settings.blog_sidebar_imgs_show%}
+	<div class="blog_sidebar_1">
+		<div class="blog_sidebar_title">
+			<h3>{{ settings.blog_sidebar_imgs_title }}</h3>
+		</div>
+
+		<div class="blog_sidebar_cont">
+			<ul class="no-bullets blog_sidebar_imgs">
+				{%for j in (1..a)%}
+				{%capture _blog_sidebar_archive_img%}blog_sidebar_archive_img{{j}}.jpg{%endcapture%}
+				{%capture _blog_sidebar_archive_link%}blog_sidebar_archive_link{{j}}{%endcapture%}
+				<li>
+					<a href="{{ settings[_blog_sidebar_archive_link] }}"><img src="{{ _blog_sidebar_archive_img | asset_url }}" alt="instergram"></a>
+				</li>
+				{%endfor%}
+			</ul>
+		</div>
+	</div>
+	{%endif%}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+

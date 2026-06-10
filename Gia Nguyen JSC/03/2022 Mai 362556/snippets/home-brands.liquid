@@ -1,0 +1,28 @@
+<section id="home-brands">
+	<div class="wrapper">
+		<div class="inner">
+			<div class="section-title wow fadeInDown text-center">
+				<h2>
+					{{settings.hbrands_title}}
+				</h2>
+				<span class="section-title-border"></span>
+			</div>
+			<div class="grid">
+				<div id="owl-brands-slider" class="owl-carousel owl-theme">
+					{%for i in (1..10)%}
+					{%capture brand_show%}brand_show{{i}}{%endcapture%}
+					{%capture brand_img%}brand_img{{i}}.png{%endcapture%}
+					{%capture brand_url%}brand_url{{i}}{%endcapture%}
+					{%capture brand_alt%}brand_alt{{i}}{%endcapture%}
+					{%if settings[brand_show]%}
+					<div class="item grid__item wow fadeInUp" data-wow-delay="{{i | times: 0.2}}s" data-wow-duration="0.75s">
+						<a href="{{settings[brand_url]}}" class="text-center"><img src="{{ brand_img | asset_url}}" alt="{{settings[brand_alt]}}" /></a>
+					</div>
+					{%endif%}
+					{%endfor%}
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+

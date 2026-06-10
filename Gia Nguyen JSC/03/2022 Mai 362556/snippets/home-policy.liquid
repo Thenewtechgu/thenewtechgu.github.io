@@ -1,0 +1,24 @@
+
+<section id="home-policy">
+	<div class="wrapper">
+		<div class="inner">
+			{%for j in (1..4)%}
+			{%capture _policy_show%}policy_show{{j}}{%endcapture%}
+			{%capture _policy_img%}policy_img{{j}}.png{%endcapture%}
+			{%capture _policy_title%}policy_title{{j}}{%endcapture%}
+			{%capture _policy_txt%}policy_txt{{j}}{%endcapture%}
+			{%if settings[_policy_show]%}
+			<div class="policy_all">
+				<div class="policy_img">
+					<img src="{{ _policy_img | asset_url }}" alt="icon">
+				</div>
+				<div class="policy_content">
+					<h4>{{settings[_policy_title] }}</h4>
+					<p>{{settings[_policy_txt] }}</p>				
+				</div>
+			</div>
+			{%endif%}
+			{%endfor%}
+		</div>
+	</div>
+</section>

@@ -1,0 +1,46 @@
+{% if paginate.pages > 1 %}
+{%if template contains 'search'%}
+<div id="pagination-{{pagination}}" class="pagination-custom text-center clear-left">
+	{% if paginate.pages > 1 %}
+	{% if paginate.previous %}
+	<span class="prevePage"><a href="{{ paginate.previous.url | replace : '&(title','&&(title' | replace : '=&page','&page' | replace : '25',''}}"><i class="fas fa-angle-double-left"></i></a></span>
+	{% endif %}
+
+	{%for part in paginate.parts%}
+	{%if part.is_link%}
+	<span class="page"><a href="{{part.url| replace : '&(title','&&(title' | replace : '=&page','&page' | replace : '25',''}}">{{part.title}}</a></span>
+	{%else%}
+	<span class="page {%if part.title == paginate.current_page%}current{%endif%}">{{part.title}}</span>
+	{%endif%}
+	{%endfor%}
+
+	{% if paginate.next %}
+	<span class="nextPage"><a href="{{ paginate.next.url | replace : '&(title','&&(title' | replace : '=&page','&page' | replace : '25','' }}"><i class="fas fa-angle-double-right"></i></a></span>
+	{% endif %}
+
+	{% endif %}
+</div>
+{%else%}
+<div id="pagination-{{pagination}}" class="text-center clear-left">
+	<div class="pagination-custom">
+		{% if paginate.previous %}
+		<span class="prevePage"><a href="{{ paginate.previous.url }}"><i class="fas fa-angle-double-left"></i></a></span>
+		{% endif %}
+
+		{%for part in paginate.parts%}
+		{%if part.is_link%}
+		<span class="page"><a class="page-node" href="{{part.url}}">{{part.title}}</a></span>
+		{%else%}
+		<span class="page page-node {%if part.title == paginate.current_page%}current{%endif%}">{{part.title}}</span>
+		{%endif%}
+		{%endfor%}
+
+		{% if paginate.next %}
+		<span class="nextPage"><a href="{{ paginate.next.url }}"><i class="fas fa-angle-double-right"></i></a></span>
+		{% endif %}
+	</div>
+</div>
+{%endif%}
+{%endif%}
+
+

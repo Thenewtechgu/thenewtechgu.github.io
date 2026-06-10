@@ -1,0 +1,66 @@
+{%comment%} Đây là file của suplo app, nếu bạn muốn sử dụng thì không nên xóa.{%endcomment%} 
+{% layout none %}
+
+
+{% capture output %}
+
+    {% paginate search.results by 12 %}
+
+        {% for p in search.results limit:12 %}
+
+            {% capture number_of_images %}{{ p.images | size }}{% endcapture %}
+
+            {% assign number_images = number_of_images | plus:0 %}
+            {
+								"id": "{{p.id}}",
+								"first_variant": {{p.variants.first.id}},
+                "title": {{ p.title | json }},
+                "featured_image": {% if number_images > 1 %}"https:{{ p.images[0].src | img_url:'large' }}"{% else %}"https:{{ p.featured_image.src | img_url:'large'}}"{% endif %},
+                "handle": "{{p.handle}}",
+								"url": "{{shop.url}}{{p.url}}?view=smb.json ",
+								{% if p.variants.first.compare_at_price != '' %}
+								"compare_at_price": {{p.variants.first.compare_at_price}},
+                "compare_at_price_format": "{{p.variants.first.compare_at_price | money}}",
+								{% endif %}
+								"price": {{p.price}},
+								"price_format": "{{p.price | money}}",
+                "available": {{ p.available }},
+								"sale": "-{{p.variants.first.compare_at_price | minus: p.variants.first.price | divided_by: p.variants.first.compare_at_price | times : 100 | round : 0}}%"
+            }
+
+            {% unless forloop.last %},{% endunless %}
+
+        {% endfor %}
+
+    {% endpaginate %}
+
+{% endcapture %}
+
+{% capture outputpaginate %}
+
+    {% paginate search.results by 12 %}
+
+        {
+
+            "pages": {{paginate.pages}},
+
+            "items": {{paginate.items}},
+
+            "current_page": {{paginate.current_page}},
+
+            "hasNext": {% if paginate.next %}true{% else %}false{% endif %}
+
+        }
+
+    {% endpaginate %}
+
+{% endcapture %}
+
+
+{
+
+    "products": [{{output}}],
+		"total": {{paginate.items}},
+    "paginate": {{outputpaginate}}
+
+}

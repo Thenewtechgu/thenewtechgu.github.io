@@ -1,0 +1,130 @@
+{%comment%} Đây là file của suplo app, nếu bạn muốn sử dụng thì không nên xóa.{%endcomment%}
+{% layout none %}
+{% assign size_content = product.description | strip_html%}
+{%if product.description != null%}
+{%if product.description contains '<p>####</p>' %}
+
+{%assign desc_split_size = product.description | split: "<p>####</p>" | size%}
+
+{%else%}
+{%assign desc_split_size = product.description | split: "####" | size%}
+
+{%endif%}
+{%endif%}
+{%assign mota = product.description | replace: '//', 'https://'| replace: 'https:https://', 'https://'  | split: '####'%}
+{%assign detail_avail = false%}
+
+{%if desc_split_size >= 1%}
+	{%assign detail_avail = true%}
+{%endif%}
+{%assign thong_so_avail = false%}
+{%if desc_split_size >= 2%}
+	{%assign thong_so_avail = true%}
+{%endif%}
+{%assign video_avail = false%}
+{%if desc_split_size >= 3%}
+	{%assign video_avail = true%}
+{%endif%}
+
+{% if collection == null or collection.handle == 'frontpage' or collection.handle == 'all' %}
+{% assign found_a_collection = false %}
+{% for c in product.collections %}
+{% if found_a_collection == false and c.handle != 'frontpage' and c.handle != 'all' and c.all_products_count > 1 %}
+{% assign found_a_collection = true %}
+{% assign collection = c %}
+{% endif %}
+{% endfor %}
+{% endif %}
+
+{%capture output_related_products%}
+[
+{% if collection and collection.products_count > 1 %}
+				{% assign current_product = product %}
+				{% assign count = 0%}
+				{% for p in collection.products limit: 12 %}
+				{% if p.handle != current_product.handle %}
+					{% assign count = count|plus: 1%}
+					{%if count > 1%},{%endif%}
+					{
+						"id": "{{p.id}}",
+						"first_variant": {{p.variants.first.id}},
+						"title": {{ p.title | json }},
+						"featured_image": {% if number_images > 1 %}"https:{{ p.images[0].src | img_url:'large' }}"{% else %}"https:{{ p.featured_image.src | img_url:'large'}}"{% endif %},
+						"handle": "{{p.handle}}",
+						"url": "{{shop.url}}{{p.url}}?view=smb.json",
+						{% if p.variants.first.compare_at_price != '' %}
+						"compare_at_price": {{p.variants.first.compare_at_price}},
+						"compare_at_price_format": "{{p.variants.first.compare_at_price | money}}",
+						{% endif %}
+						"price": {{p.price}},
+						"price_format": "{{p.price | money}}",
+						"available": {{ p.available }},
+						"sale": "-{{p.variants.first.compare_at_price | minus: p.variants.first.price | divided_by: p.variants.first.compare_at_price | times : 100 | round : 0}}%"
+					}
+				{% endif %}
+				{% endfor %}
+{% endif %}
+]
+{%endcapture%}
+{% capture output %}
+{
+	"id": "{{product.metafields.smb.pid}}",
+	"id_hrv": {{product.id}},
+	"sale": "-{{product.variants.first.compare_at_price | minus: product.variants.first.price | divided_by:product.variants.first.compare_at_price | times : 100 | round : 0}}%",
+	"body_html": {%if thong_so_avail%}{{mota[1] | json}}{%elsif  detail_avail and size_content.size != 0 %}{{mota[0] | json}}{%else%}null{%endif%},
+	"thong_so": {%if detail_avail and size_content.size != 0 %}{%if size_content.size > 500%}{{mota[0] | truncatewords: 100| json}}{%else%}{{mota[0] | json}}{%endif%}{%else%}null{%endif%},
+	"video": "{%if video_avail%}{{mota[2] | strip_html}}{%else%}null{%endif%}",
+	"handle": "{{product.handle}}",
+	"url": "{{shop.url}}{{product.url}}?view=smb.json",
+	"title": {{product.title | json}},
+	"product_type": "{{product.type}}",
+	"price": {{ product.price }},
+	"price_format": "{{ product.price | money }}",
+	"compare_at_price": {{ product.compare_at_price }},
+	"compare_at_price_format": "{{ product.compare_at_price | money }}",
+	"available": {{product.available}},
+	"vendor": "{{product.vendor}}",
+	"tags": [{%for tag in product.tags%}"{{tag}}"{%unless forloop.last%},{%endunless%}{%endfor%}],
+	"images": [{%for image in product.images%}"https:{{image.src | product_img_url : 'large'}}"{%unless forloop.last%},{%endunless%}{%endfor%}],
+	"options": [
+		{% for option in product.options %}
+		{
+		"name": "{{option.name}}",
+		"position": "{{option.position}}"
+		}
+		{% unless forloop.last %},{% endunless %}
+		{% endfor %}
+	],
+
+	"variants": [
+	{%for variant in product.variants%}
+		{
+		"compare_at_price": {{variant.compare_at_price}},
+		"compare_at_price_format": "{{variant.compare_at_price | money }}",
+		"id": {{variant.id}},
+		"handle": "{{product.handle}}",
+		"option1": {{variant.option1 | json}},
+		"option2": {{variant.option2 | json}},
+		"option3": {{variant.option3 | json}},
+		"price": {{variant.price}},
+		"price_format": "{{variant.price | money}}",
+		"sku": {{variant.sku | json}},
+		"title": {{variant.title | json}},
+		"vendor": {{product.vendor | json}},
+		{% if variant.inventory_management != 'haravan' or variant.inventory_policy == "continue" %}
+		"inventory_quantity": 100,
+		{% else %}
+		"inventory_quantity": {{variant.inventory_quantity}},
+		{% endif %}
+		"image": "{{variant.image.src}}",
+		"available": {{variant.available}},
+		"sale": "-{{variant.compare_at_price | minus: variant.price | divided_by:variant.compare_at_price | times : 100 | round : 0}}%"
+		}{%unless forloop.last%},{%endunless%}
+	{%endfor%}
+	],
+	"related_product":  {{output_related_products}},
+	"related_link": "{{shop.url}}{{collection.url}}?view=smb.json"
+}
+{% endcapture %}
+
+{{output}}

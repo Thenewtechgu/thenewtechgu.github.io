@@ -1,0 +1,4 @@
+{% layout none %}
+{%paginate search.results by settings.col_pro_limit %}
+{{paginate.pages}}####{{search.results_count}}
+{%endpaginate%}

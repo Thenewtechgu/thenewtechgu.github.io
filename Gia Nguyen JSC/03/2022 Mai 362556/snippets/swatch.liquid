@@ -1,0 +1,67 @@
+{% assign found_option = false %}
+{% assign is_color = false %}
+{% assign option_index = 0 %}
+
+{% for option in product.options %}
+{% if option == swatch %}
+{% assign found_option = true %}
+{% assign option_index = forloop.index0 %}
+
+{% assign downcased_option = swatch | downcase %}
+{% if downcased_option contains 'màu sắc' or downcased_option contains 'màu' %}
+{% assign is_color = true %}
+{% endif %}
+{% endif %}
+{% endfor %}
+
+{% unless found_option %}
+
+{% else %}
+<div id="variant-swatch-{{option_index }}" class="swatch swatch-product-single clearfix" data-option="option{{option_index | plus: 1 }}" data-option-index="{{ option_index }}">
+	<div class="header">{{ swatch }}:</div>
+	<div class="select-swap">
+		{% assign values = '' %}
+		{% for variant in product.variants %}
+		{% assign value = variant.options[option_index] %}
+		{% unless values contains value %}
+		{% assign values = values | join: ',' %}
+		{% assign values = values | append: ',' | append: value %} 
+		{% assign values = values | split: ',' %} 
+		<div data-value="{{ value | escape }}" class="n-sd swatch-element {% if is_color %}color {% endif %}{{ value | handle }} {% if option_index == 2 %}variant-3 {%endif%}" >
+			<input class="variant-{{option_index}} input-product" id="swatch-{{ option_index }}-{{ value | handle }}" type="radio" name="option{{ option_index | plus: 1 }}" value="{{ value | escape }}"{% if forloop.first %} checked{% endif %} {% if is_color %}data-img-src="{% unless img_url contains 'noDefaultImage6' %}{{variant.image.src | img_url: 'master'}}{%endunless%}"{% endif %} />
+			{% if is_color %}
+			{% assign img_url = variant.image.src | img_url: 'thumb' %}
+			<label style="
+										display: flex;
+										justify-content: center;
+										align-items: center;
+										padding: 0;
+										" class="color_  {{ value | handle }} {% if img_url contains 'noDefaultImage6' %}no-thumb{% else %}has-thumb{% endif %}" for="swatch-{{ option_index }}-{{ value | handle }}" style="{% unless img_url contains 'noDefaultImage6' %}background: url({{variant.image.src | img_url: 'compact'}}) top left no-repeat {% endunless %}" >
+				<span style="background-color: {{value}} ;
+										 width: 15px;
+										 height: 15px;
+										 display: flex;
+										 border-radius: 100%;
+										 border: solid 1px #e4e4e4;"></span>
+				<img class="crossed-out" src="{{ 'soldout.png' | asset_url }}" />
+				<img class="img-check" src="{{'select-pro.png' | asset_url }}" />
+			</label>
+			{% else %}
+			<label style="
+										display: flex;
+										justify-content: center;
+										align-items: center;
+										padding: 0;
+										" for="swatch-{{ option_index }}-{{ value | handle }}" >
+				{{value}}
+				<img class="crossed-out" src="{{ 'soldout.png' | asset_url }}" />
+				<img class="img-check" src="{{'select-pro.png' | asset_url }}" />
+			</label>
+			{% endif %}
+		</div>
+		{% endunless %}
+		{% endfor %}
+	</div>
+</div>
+{% endunless %}
+

@@ -1,0 +1,223 @@
+{% layout settings.customer_layout %}
+<div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+    <div id="layout-page" class="clearfix">
+        <span class="header-contact header-page clearfix">
+            <h1>Địa chỉ</h1>
+        </span>
+        <div class="content-page">
+            <div class="col-md-5">
+                <div id="address_tables">
+                    {% for address in customer.addresses %}
+                    {%if address == customer.default_address %}
+                    <div class="address_table">
+                        <div id="view_address_{{address.id}}" class="customer_address">
+                            <h4 class="address_title">
+                                {{ customer.default_address.street }}
+                            </h4>
+                            <span class="default_address note">(Địa chỉ mặc định)</span>
+                            <div class="view_address">
+                                <p>{{address.last_name }} {{ address.first_name }}</p>
+                                <p>{{ address.company }}</p>
+                                <p>{{ address.address1 }}</p>
+                                <p>{{ address.address2 }}</p>
+                                <p>{{ address.province }}, {{ address.country }} </p>
+                                <p>{{ address.phone }}</p>
+                            </div>
+                            <p class="address_actions">
+                                <span class="action_link action_edit">{{ 'Sửa' | edit_customer_address_link: address.id }}</span>
+                                <span class="action_link action_delete">{{ 'Xóa' | delete_customer_address_link: address.id }}</span>
+                            </p>
+                        </div>
+                        <div id="edit_address_{{address.id}}" class="customer_address edit_address" style="display:none;">
+                            {% form 'customer_address', address %}
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                <td class="value"><input type="text" id="address_last_name_{{form.id}}" class="form-control textbox" name="address[last_name]" size="40" value="{{form.last_name}}" placeholder="Họ">
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                <input type="text" id="address_first_name_{{form.id}}" class="form-control textbox" name="address[first_name]" size="40" value="{{form.first_name}}" placeholder="Tên">
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+                                <input type="text" for="address_company_{{form.id}}" class="form-control textbox" name="address[company]" size="40" value="{{form.company}}" placeholder="Công ty">
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+                                <input type="text" id="address_address1_{{form.id}}" class="form-control textbox" name="address[address1]" size="40" value="{{form.address1}}" placeholder="Địa chỉ 1">
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+                                <input type="text" id="address_address2_{{form.id}}" class="form-control textbox" name="address[address2]" size="40" value="{{form.address2}}" placeholder="Địa chỉ 2">
+                            </div>{%comment%}
+                            <div class="input-group" style="display:none">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-map-marker"></i></span>
+                                <input type="text" id="address_city_{{form.id}}" class="form-control textbox" name="address[city]" size="40" value="{{form.city}}">
+                            </div>{%endcomment%}
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-map-marker"></i></span>
+                                <select class="form-control" id="address_country_{{form.id}}" name="address[country]" data-default="{{form.country}}">{{ country_option_tags }}</select>
+                            </div>
+                            <div class="input-group" id="address_province_container_{{address.id}}" style="display:none">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-map-marker"></i></span>
+                                <select id="address_province_{{form.id}}" class="form-control" name="address[province]" data-default="{{form.province}}"></select>
+                            </div>
+                            <div class="input-group" style="display:none">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-credit-card"></i></span>
+                                <input type="text" id="address_zip_{{form.id}}" class="form-control textbox" name="address[zip]" size="40" value="{{form.zip}}">
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-phone-alt"></i></span>
+                                <input type="text" id="address_phone_{{form.id}}" class="form-control textbox" name="address[phone]" size="40" value="{{form.phone}}" placeholder="Số điện thoại">
+                            </div>
+                            <div class="input-group">
+                                {{ form.set_as_default_checkbox }}  Đặt làm địa chỉ mặc định.
+                            </div>
+                            <div class="action_bottom">
+                                <input class="btn bt-primary" type="submit" value="Cập nhật" />
+                                <span class="">hoặc <a href="/" onclick="Haravan.CustomerAddress.toggleForm({{form.id}}); return false;">Hủy</a></span>
+                            </div>
+                            {% endform %}
+                        </div>
+                    </div>
+                    {%endif%}
+                    {%endfor%}
+                    {% for address in customer.addresses%}
+                    {%unless address == customer.default_address%}
+                    <div class="address_table">
+                        <div id="view_address_{{address.id}}" class="customer_address">
+                            <h4 class="address_title">
+                                {{ address.street }}
+                            </h4>
+                            <div class="view_address">
+                                <p>{{address.last_name }} {{ address.first_name }}</p>
+                                <p>{{ address.company }}</p>
+                                <p>{{ address.address1 }}</p>
+                                <p>{{ address.address2 }}</p>
+                                <p>{{ address.province }}, {{ address.country }} </p>
+                                <p>{{ address.phone }}</p>
+                            </div>
+                            <p class="address_actions">
+                                <span class="action_link action_edit">{{ 'Sửa' | edit_customer_address_link: address.id }}</span>
+                                <span class="action_link action_delete">{{ 'Xóa' | delete_customer_address_link: address.id }}</span>
+                            </p>
+                        </div>
+                        <div id="edit_address_{{address.id}}" class="customer_address edit_address" style="display:none;">
+                            {% form 'customer_address', address %}
+
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                <td class="value"><input type="text" id="address_last_name_{{form.id}}" class="form-control textbox" name="address[last_name]" size="40" value="{{form.last_name}}" placeholder="Họ">
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                <input type="text" id="address_first_name_{{form.id}}" class="form-control textbox" name="address[first_name]" size="40" value="{{form.first_name}}" placeholder="Tên">
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+                                <input type="text" for="address_company_{{form.id}}" class="form-control textbox" name="address[company]" size="40" value="{{form.company}}" placeholder="Công ty">
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+                                <input type="text" id="address_address1_{{form.id}}" class="form-control textbox" name="address[address1]" size="40" value="{{form.address1}}" placeholder="Địa chỉ 1">
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+                                <input type="text" id="address_address2_{{form.id}}" class="form-control textbox" name="address[address2]" size="40" value="{{form.address2}}" placeholder="Địa chỉ 2">
+                            </div>{%comment%}
+                            <div class="input-group" style="display:none">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-map-marker"></i></span>
+                                <input type="text" id="address_city_{{form.id}}" class="form-control textbox" name="address[city]" size="40" value="{{form.city}}">
+                            </div>{%endcomment%}
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-map-marker"></i></span>
+                                <select class="form-control" id="address_country_{{form.id}}" name="address[country]" data-default="{{form.country}}">{{ country_option_tags }}</select>
+                            </div>
+                            <div class="input-group" id="address_province_container_{{address.id}}" style="display:none">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-map-marker"></i></span>
+                                <select id="address_province_{{form.id}}" class="form-control" name="address[province]" data-default="{{form.province}}"></select>
+                            </div>
+                            <div class="input-group" style="display:none">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-credit-card"></i></span>
+                                <input type="text" id="address_zip_{{form.id}}" class="form-control textbox" name="address[zip]" size="40" value="{{form.zip}}">
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-phone-alt"></i></span>
+                                <input type="text" id="address_phone_{{form.id}}" class="form-control textbox" name="address[phone]" size="40" value="{{form.phone}}" placeholder="Số điện thoại">
+                            </div>
+                            <div class="input-group">
+                                {{ form.set_as_default_checkbox }}  Đặt làm địa chỉ mặc định.
+                            </div>
+                            <div class="action_bottom">
+                                <input class="btn bt-primary" type="submit" value="Cập nhật" />
+                                <span class="">hoặc <a href="/" onclick="Haravan.CustomerAddress.toggleForm({{form.id}}); return false;">Hủy</a></span>
+                            </div>
+                            {% endform %}
+                        </div>
+                    </div>
+                    {%endunless%}
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-12 col-xs-12 col-lg-6 pt20">
+                <a href="#" onclick="Haravan.CustomerAddress.toggleNewForm(); return false;" class="add-new-address">Nhập địa chỉ mới</a>
+                <div id="add_address" class="customer_address edit_address" style="display:none;">
+                    {% form 'customer_address', customer.new_address %}
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        <td class="value"><input type="text" id="address_last_name_new" class="form-control textbox" name="address[last_name]" size="40" value="{{ settings.lbl_last_name }}" placeholder="Họ" />
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        <input type="text" id="address_first_name_new" class="form-control textbox" name="address[first_name]" size="40" value="{{ settings.lbl_first_name }}" placeholder="Tên" />
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+                        <input type="text" for="address_company_new" class="form-control textbox" name="address[company]" size="40" value="{{ settings.lbl_company }}" placeholder="Công ty" />
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+                        <input type="text" id="address_address1_new" class="form-control textbox" name="address[address1]" size="40" value="{{ settings.lbl_address1 }}" placeholder="Địa chỉ 1" />
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+                        <input type="text" id="address_address2_new" class="form-control textbox" name="address[address2]" size="40" value="{{ settings.lbl_address2 }}" placeholder="Địa chỉ 2" />
+                    </div>
+                    {%comment%}
+                    <div class="input-group" style="display:none">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-map-marker"></i></span>
+                        <input type="text" id="address_city_new" class="form-control textbox" name="address[city]" size="40" value="{{ settings.lbl_city }}" />
+                    </div>
+                    {%endcomment%}
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-map-marker"></i></span>
+                        <select class="form-control textbox" id="address_country_new" name="address[country]" data-default="{{form.country}}">{{ country_option_tags }}</select>
+                    </div>
+                    <div class="input-group" id="address_province_container_new" style="display:none">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-map-marker"></i></span>
+                        <select id="address_province_new" class="form-control textbox" name="address[province]" data-default="{{form.province}}"></select>
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-phone-alt"></i></span>
+                        <input type="text" id="address_phone_new" class="form-control textbox" name="address[phone]" size="40" value="{{ settings.lbl_phone }}" placeholder="Số điện thoại" />
+                    </div>
+                    <div class="input-group">
+                        {{ form.set_as_default_checkbox }} Đặt làm địa chỉ mặc định.
+                    </div>
+                    <div class="action_bottom">
+                        <input class="btn btn-primary" type="submit" value="Thêm mới" />
+                        <span class="">hoặc <a href="#" onclick="Haravan.CustomerAddress.toggleNewForm(); return false;">Hủy</a></span>
+                    </div>
+                    {% endform %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" charset="utf-8">
+    // initialize observers on address selectors
+    new Haravan.CountryProvinceSelector('address_country_new', 'address_province_new', {hideElement: 'address_province_container_new'});
+    {% for address in customer.addresses %}
+    new Haravan.CountryProvinceSelector('address_country_{{address.id}}', 'address_province_{{address.id}}', {hideElement: 'address_province_container_{{address.id}}'});
+    {% endfor %}
+</script>
